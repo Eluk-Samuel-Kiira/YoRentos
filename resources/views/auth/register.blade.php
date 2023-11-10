@@ -20,6 +20,20 @@
             </div>
 
             <div class="mt-4">
+                <x-label for="phone_number" value="{{ __('Phone Number') }}" />
+                <x-input id="phone_number" class="block mt-1 w-full" type="number" name="phone_number" :value="old('phone_number')" required autocomplete="phone_number" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="role" value="{{ __('User Type') }}" />
+                <select id="role_id" class="w-full font-medium text-sm rounded text-gray-700" name="role_id" required>
+                    <option class="block mt-1 w-full" value="">Select Your Part</option>
+                    <option class="block mt-1 w-full" value="1">Rental Client</option>
+                    <option class="block mt-1 w-full" value="2">Landlord</option>
+                </select>
+            </div>
+
+            <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             </div>
