@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,10 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('dashboard.dashboard');
     })->name('dashboard');
+
+    // User Routes
+    Route::post('/user-location', [UserController::class, 'userLocation'])->name('update.user_location');
+    Route::get('/users-index-page',[UserController::class, 'userIndex'])->name('user');
 });
