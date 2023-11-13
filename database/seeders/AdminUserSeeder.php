@@ -15,14 +15,6 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        // //Register the Super Admin by default
-        // User::create([
-        //     'name' => 'Samuel Kiira Eluk',
-        //     'email' => 'samuelkiiraeluk@gmail.com',
-        //     // 'mobile' => '256754428612',
-        //     'password' => bcrypt('Samuel@13Kiira')
-        // ]);
-
         //Give him all the permissions
         $adminRole = Role::create(['name' => 'Admin']);
         $permission = Permission::create(['name' => 'manage all']);

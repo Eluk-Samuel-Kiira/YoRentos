@@ -9,6 +9,22 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto p-6">
+                    <button id="openRoleModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Add Role
+                    </button>
+                    <h5>    
+                        @if(session('error'))
+                            <span class="bg-red-500 text-white rounded">
+                                {{ session('error') }}
+                            </span>
+                        @endif
+                        @if(session('success'))
+                            <span class="bg-green-500 text-white rounded">
+                                {{ session('success') }}
+                            </span>
+                        @endif
+                    </h5>
+                    @include('users.create-role')
                     <div class="container mx-auto mt-8">
                         <table class="min-w-full border border-blue-500 text-gray-500">
                             <thead>
@@ -19,16 +35,8 @@
                                     <th class="py-2 px-4 border border-blue-500">Role</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <div id="user-list">
-                                        <!-- Users will be displayed here -->
-                                    </div>
-                                    <td class="py-2 px-4 border-b border-r">1</td>
-                                    <td class="py-2 px-4 border-b border-r">John Doe</td>
-                                    <td class="py-2 px-4 border-b border-r">john@example.com</td>
-                                    <td class="py-2 px-4 border-b">Admin</td>
-                                </tr>
+                            <tbody id="user-list">
+                                
                             </tbody>
                         </table>
                     </div>
@@ -41,7 +49,7 @@
     $(document).ready(function() {
         // Make an AJAX request to fetch users
         $.ajax({
-            url: '{{ route('user') }}',
+            url: '{{ route('users.details') }}',
             method: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -58,10 +66,15 @@
             var userList = $('#user-list');
             userList.empty(); // Clear existing content
 
-            // Loop through the users and append them to the #user-list div
+            // Loop through the users and append them to the table
             users.forEach(function(user) {
-                var userHtml = '<div>ID: ' + user.id + ', Name: ' + user.name + ', Email: ' + user.email + '</div>';
-                userList.append(userHtml);
+                var userRow = '<tr>' +
+                                '<td class="py-2 px-4 border-b border-r">' + user.id + '</td>' +
+                                '<td class="py-2 px-4 border-b border-r">' + user.name + '</td>' +
+                                '<td class="py-2 px-4 border-b border-r">' + user.email + '</td>' +
+                                '<td class="py-2 px-4 border-b">' + user.role_id + '</td>' +
+                                '</tr>';
+                userList.append(userRow);
             });
         }
     });
