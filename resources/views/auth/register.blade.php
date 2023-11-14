@@ -24,12 +24,17 @@
                 <x-input id="phone_number" class="block mt-1 w-full" type="number" name="phone_number" :value="old('phone_number')" required autocomplete="phone_number" />
             </div>
 
+            @php
+                $roles = DB::table('roles')->where('name', '=', 'Client')->orWhere('name', '=', 'Landlord')->get();
+            @endphp
+
             <div class="mt-4">
                 <x-label for="role" value="{{ __('User Type') }}" />
-                <select id="role_id" class="w-full font-medium text-sm rounded text-gray-700" name="role_id" required>
+                <select id="role" class="w-full font-medium text-sm rounded text-gray-700" name="role" required>
                     <option class="block mt-1 w-full" value="">Select Your Part</option>
-                    <option class="block mt-1 w-full" value="1">Rental Client</option>
-                    <option class="block mt-1 w-full" value="2">Landlord</option>
+                    @foreach ($roles as $role)
+                        <option class="block mt-1 w-full" value="{{ $role->name }}">{{ $role->name }}</option>
+                    @endforeach
                 </select>
             </div>
 

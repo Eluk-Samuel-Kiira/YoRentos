@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class User extends Authenticatable
 {
@@ -29,7 +31,7 @@ class User extends Authenticatable
         'name',
         'email',
         'phone_number',
-        'role_id',
+        'role',
         'slug',
         'password',
 
@@ -69,4 +71,9 @@ class User extends Authenticatable
     {
         return 'slug';
     }
+
+    // public function roles()
+    // {
+    //     return $this->hasOne(Role::class, 'role_id');
+    // }
 }

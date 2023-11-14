@@ -17,6 +17,13 @@ use App\Http\Controllers\UserController;
 Route::get('/', function () {
     return view('landing_page.home');
 });
+   
+Route::get('/all-role',[UserController::class, 'userRoles'])->name('user.roles');
+
+
+
+
+
 
 Route::middleware([
     'auth:sanctum',

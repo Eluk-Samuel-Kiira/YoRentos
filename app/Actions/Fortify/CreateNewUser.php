@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -23,7 +25,7 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'phone_number' => ['required', 'numeric', 'min:10'],
-            'role_id' => ['required', 'numeric', 'min:1'],
+            'role' => ['required', 'string'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
@@ -31,13 +33,18 @@ class CreateNewUser implements CreatesNewUsers
 
         //create a slug
         $slug = Str::slug($input['name']);
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'slug' => $slug,
             'phone_number' => $input['phone_number'],
-            'role_id' => $input['role_id'],
+            'role' => $input['role'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+        
+        // Give user_role permissions
+        $user->syncRoles($input['role']);
+
+        return $user;
     }
 }

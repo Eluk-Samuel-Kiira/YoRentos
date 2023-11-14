@@ -23,7 +23,7 @@ class AdminUserSeeder extends Seeder
         $adminUser = User::factory()->create([
             'name' => 'Samuel Kiira Eluk',
             'phone_number' => '0754428612',
-            'role_id' => '3',
+            'role' => 'Admin',
             'slug' => 'samuel-kiira-admin',
             'email' => 'samuelkiiraeluk@gmail.com',
             'password' => bcrypt('Samuel@13Kiira')

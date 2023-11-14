@@ -23,7 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('status')->default(1);
             $table->unsignedBigInteger('deleted')->default(0);
             $table->string('slug')->nullable();
-            $table->unsignedBigInteger('role_id')->default(1);
+            $table->string('role')->default('Client');
             $table->string('phone_number')->nullable();
             $table->string('longitude')->nullable();
             $table->string('latitude')->nullable();

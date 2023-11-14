@@ -33,10 +33,23 @@ class UserController extends Controller
         return view('users.index', compact('permissions'));
     }
 
+    public function userRoles()
+    {
+        $roles = DB::table('roles')->whereNot('name', 'Admin')->get();
+        return response()->json([
+            'roles' => $roles,
+        ]);
+    }
+
     public function userDetails()
     {
         $users = User::where('status', 1)->latest()->get();
-        return response()->json(['users' => $users]);
+        $roles = Role::with('permissions')->get();
+
+        return response()->json([
+            'users' => $users,
+            'roles' => $roles,
+        ]);
     }
 
     public function userPermissions()
