@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('landing_page.home');
 });
    
-Route::get('/all-role',[UserController::class, 'userRoles'])->name('user.roles');
+// Route::get('/all-role',[UserController::class, 'userRoles'])->name('user.roles');
 
 
 
@@ -41,4 +41,10 @@ Route::middleware([
 
     Route::get('/users-permissions',[UserController::class, 'userPermissions'])->name('user.permissions');
     Route::post('/role', [UserController::class, 'createColesAndPermissions'])->name('create.role');
+    Route::post('/role-permission', [UserController::class, 'editRolePermission'])->name('edit.role');
+    Route::post('/role-change', [UserController::class, 'changeRole'])->name('change.role');
+    Route::get('/change-status/{id}', [UserController::class, 'changeStatus']); 
+    Route::get('/delete-role/{role_id}', [UserController::class, 'deleteRole']);
+
+
 });

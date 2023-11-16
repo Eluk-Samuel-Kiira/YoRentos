@@ -30,7 +30,8 @@ class UserController extends Controller
     public function userIndex()
     {
         $permissions = Permission::whereNot('name', 'manage all')->get();
-        return view('users.index', compact('permissions'));
+        $roles = Role::whereNot('name', 'Admin')->get();
+        return view('users.index', compact('permissions','roles'));
     }
 
     public function userRoles()
@@ -43,18 +44,24 @@ class UserController extends Controller
 
     public function userDetails()
     {
-        $users = User::where('status', 1)->latest()->get();
+        $users = User::latest()->get();
         $roles = Role::with('permissions')->get();
-
+        
         return response()->json([
             'users' => $users,
             'roles' => $roles,
         ]);
     }
 
-    public function userPermissions()
+    public function editRolePermission(Request $request)
     {
-        //
+        $roleName = $request->role;
+        $permissions = $request->permissions;
+
+        // Create a new role and permissions
+        $userRole = Role::where('name', $roleName)->first();
+        $userRole->syncPermissions($permissions);
+        return redirect()->route('user')->with('success', 'Role edited successfully');
     }
 
     public function createColesAndPermissions(Request $request)
@@ -75,5 +82,43 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
 
+    }
+
+    public function changeRole(Request $request)
+    {
+        $roleName = $request->newRole;
+        $user_id = $request->user;
+
+        User::where('id', $user_id)->whereNot('role', 'Admin')->update(['role' => $roleName]);
+        return redirect()->route('user')->with('success', 'Role changed successfully');
+    }
+
+    public function changeStatus($id)
+    {
+        $user = User::where('id', $id)->whereNotIn('role', ['Admin'])->first();
+
+        if ($user) {
+            if ($user->status == 1) {
+                $user->where('id', $id)->update(['status' => 0]);
+            } else {
+                $user->where('id', $id)->update(['status' => 1]);
+            }
+            
+            return redirect()->route('user')->with('success', 'User Status Changed successfully');
+        } else {
+            return redirect()->route('user')->with('error', 'User Not found or an Admin');
+        }
+    }
+
+    public function deleteRole($role_id)
+    {
+        $role = Role::where('id', $role_id)->whereNotIn('name', ['Admin','Landlord','Broker','Client'])->first();
+        if ($role) {
+            $role->delete();
+            
+            return redirect()->route('user')->with('success', 'Role DELETED successfully');
+        } else {
+            return redirect()->route('user')->with('error', 'Role Not found or an undeletable');
+        }
     }
 }

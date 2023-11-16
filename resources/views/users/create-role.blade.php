@@ -2,7 +2,7 @@
     <div class="modal-content bg-white w-2/3 mx-auto my-10 p-4 relative sm:rounded-lg">        
         <!-- Close button -->
         <span id="closeRoleModal" class="cursor-pointer absolute top-0 right-0 p-2 bg-red-500 hover:bg-red-700 text-white rounded">
-            &times;
+            &times; close
         </span>        
         <!-- Form content -->
         <h6 class="font-semibold text-xl text-gray-800 leading-tight">
