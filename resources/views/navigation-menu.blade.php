@@ -20,6 +20,9 @@
                             {{ __('Users') }}
                         </x-nav-link>
                     @endrole
+                    <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
+                        {{ __('Rentals') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -155,6 +158,11 @@
                 </x-responsive-nav-link>
             </div>
         @endrole
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
+                {{ __('Rentals') }}
+            </x-responsive-nav-link>
+        </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

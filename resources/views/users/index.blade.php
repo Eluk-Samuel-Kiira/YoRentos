@@ -4,7 +4,6 @@
             {{ __('Users List') }} 
         </h2>
     </x-slot>
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -118,7 +117,7 @@
                                     '<a href="/change-status/' + user.id + '" class="py-1 px-2 ' + (user.status == 1 ? 'bg-green-300' : 'bg-red-300') + ' text-white rounded hover:' + (user.status == 1 ? 'bg-green-500' : 'bg-red-500') + '">' +
                                         (user.status == 1 ? 'Active' : 'Inactive') +
                                     '</a>' +
-                                '</td>'
+                                '</td>'+
                             '</tr>';
                 userList.append(userRow);
             });

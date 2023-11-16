@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RentalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,5 +47,10 @@ Route::middleware([
     Route::get('/change-status/{id}', [UserController::class, 'changeStatus']); 
     Route::get('/delete-role/{role_id}', [UserController::class, 'deleteRole']);
 
+
+    // Rental Routes
+    Route::resource('rental', RentalController::class); 
+    Route::get('/rental-status/{id}', [RentalController::class, 'rentalStatus']);    
+    Route::get('/delete-rental/{rental_id}', [RentalController::class, 'deleteRental']);
 
 });
