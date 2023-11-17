@@ -15,10 +15,44 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create Default Roles
+        $all_roles = [
+            'Landlord',
+            'Tenant',
+            'Broker',
+            'Admin'
+        ];
+        foreach ($all_roles as $role) {
+            Role::create(['name' => $role]);
+        }
+
+
+        // All Other Permissions
+        $permissions = [
+            'manage all',
+            'create rentals',
+            'edit rentals',
+            'update status',
+            'delete rentals',
+            'create user',
+            'edit user',
+            'delete user',
+            'create estate',
+            'edit estate',
+            'delete estate',
+            'create location',
+            'edit location',
+            'delete location',
+        ];
+
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
+
         //Give him all the permissions
-        $adminRole = Role::create(['name' => 'Admin']);
-        $permission = Permission::create(['name' => 'manage all']);
-        $permission->assignRole($adminRole);
+        $adminRole = Role::where(['name' => 'Admin'])->first();
+        $permissions = Permission::all(); // Change $permission to $permissions
+        $adminRole->syncPermissions($permissions);
  
         $adminUser = User::factory()->create([
             'name' => 'Samuel Kiira Eluk',

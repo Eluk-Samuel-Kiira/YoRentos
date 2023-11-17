@@ -19,6 +19,9 @@
                         <x-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
                             {{ __('Users') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('location') }}" :active="request()->routeIs('location')">
+                            {{ __('Locations') }}
+                        </x-nav-link>
                     @endrole
                     <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
                         {{ __('Rentals') }}
@@ -155,6 +158,11 @@
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
                     {{ __('Users') }}
+                </x-responsive-nav-link>
+            </div>
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('location') }}" :active="request()->routeIs('location')">
+                    {{ __('Locations') }}
                 </x-responsive-nav-link>
             </div>
         @endrole

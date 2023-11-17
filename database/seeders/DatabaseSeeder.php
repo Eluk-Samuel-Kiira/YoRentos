@@ -20,18 +20,5 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
         ]);
 
-        // All Other Permissions
-        $permissions = [
-            'create rentals',
-            'edit rentals',
-            'delete rentals',
-            'create user',
-            'edit user',
-            'delete user',
-        ];
-
-        foreach ($permissions as $permission) {
-            Permission::create(['name' => $permission]);
-        }
     }
 }

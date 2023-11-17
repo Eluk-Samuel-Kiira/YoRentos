@@ -25,7 +25,7 @@
             </div>
 
             @php
-                $roles = DB::table('roles')->where('name', '=', 'Client')->orWhere('name', '=', 'Landlord')->get();
+                $roles = DB::table('roles')->where('name', '=', 'Tenant')->orWhere('name', '=', 'Landlord')->get();
             @endphp
 
             <div class="mt-4">

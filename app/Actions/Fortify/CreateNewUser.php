@@ -42,9 +42,13 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
         ]);
         
-        // Give user_role permissions
-        $user->syncRoles($input['role']);
+        $userRole = Role::where('name', $input['role'])->first(); 
 
+        if ($userRole) {
+            $user->syncRoles([$userRole]); 
+        } else {
+            dd("nothing");
+        }
         return $user;
     }
 }

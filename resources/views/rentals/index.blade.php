@@ -14,6 +14,11 @@
                             Add Rental
                         </button>
                     @endcan
+                    @can('create estate')
+                        <button id="openCreateEstate" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Add Estate
+                        </button>
+                    @endcan
                     <h4>  
                         <x-validation-errors class="mb-4" />  
                         @if(session('error'))
@@ -32,6 +37,9 @@
                         <div class="container mx-auto mt-8">
                             @can('manage all')
                                 @include('rentals.create')
+                            @endcan
+                            @can('create estate')
+                                @include('estates.create')
                             @endcan
                             <table class="min-w-full border border-blue-500 text-gray-500">
                                 <thead>
