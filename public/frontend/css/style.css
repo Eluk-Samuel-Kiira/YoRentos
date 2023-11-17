@@ -950,5 +950,54 @@ a:focus {
   color: #ffffff;
 }
 
+
 /* end footer section*/
 /*# sourceMappingURL=style.css.map */
+
+/* image slider */
+
+.img-box {
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.carousel {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slide {
+  flex: 0 0 100%;
+}
+
+button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: #ffffff;
+}
+
+.prev {
+  left: 10px;
+}
+
+.next {
+  right: 10px;
+}
+
+.arrow {
+  color: darkblue;
+  margin-right: 5px;
+}
+
+.btn-small {
+  padding: 0.2rem 0.5rem; /* Adjust padding as needed */
+  font-size: 0.8rem; /* Adjust font size as needed */
+  line-height: 1.2; 
+}

@@ -59,4 +59,7 @@ Route::middleware([
     Route::get('/location',[LocationController::class, 'locationIndex'])->name('location');
 
 
+    // Tenant Dashboard
+    Route::get('/tenant/dashboard',[LocationController::class, 'tenantIndex'])->name('tenant.dashboard');
+    
 });

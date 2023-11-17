@@ -99,4 +99,5 @@ class RentalController extends Controller
             return redirect()->route('rental.index')->with('error', 'Rental Not found');
         }
     }
+
 }

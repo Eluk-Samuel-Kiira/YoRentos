@@ -25,6 +25,7 @@
   <!-- responsive style -->
   <link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet" />
 
+
   <!-- jetstream helpers -->
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.bunny.net">
@@ -35,4 +36,5 @@
 
   <!-- Styles -->
   @livewireStyles
+
 

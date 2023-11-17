@@ -10,4 +10,10 @@ class LocationController extends Controller
     {
         return view('locations.index');
     }
+
+    public function tenantIndex()
+    {
+        return view('tenant.dashboard');
+    }
+
 }
