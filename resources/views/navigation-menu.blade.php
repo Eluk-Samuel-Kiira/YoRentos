@@ -15,11 +15,13 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @role('Admin')
+                    @can('create user')
                         <x-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
                             {{ __('Users') }}
                         </x-nav-link>
-                        <x-nav-link href="{{ route('location') }}" :active="request()->routeIs('location')">
+                    @endcan
+                    @role('Admin')
+                        <x-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
                             {{ __('Locations') }}
                         </x-nav-link>
                     @endrole
@@ -154,14 +156,16 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-        @role('Admin')
+        @can('create user')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
                     {{ __('Users') }}
                 </x-responsive-nav-link>
             </div>
+        @endcan
+        @role('Admin')
             <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('location') }}" :active="request()->routeIs('location')">
+                <x-responsive-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
                     {{ __('Locations') }}
                 </x-responsive-nav-link>
             </div>

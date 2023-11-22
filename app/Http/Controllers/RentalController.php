@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rental;
 use App\Http\Requests\StoreRentalRequest;
 use App\Http\Requests\UpdateRentalRequest;
+use Illuminate\Support\Str;
 
 class RentalController extends Controller
 {
@@ -35,6 +36,7 @@ class RentalController extends Controller
     {
         $rental = new Rental();
         $rental->name = $request->name;
+        $rental->slug = Str::slug($request->name);
         $rental->save();
         return redirect()->route('rental.index')->with('success', 'New Rental Type Created Successfully');
     }

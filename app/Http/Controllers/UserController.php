@@ -112,7 +112,7 @@ class UserController extends Controller
 
     public function deleteRole($role_id)
     {
-        $role = Role::where('id', $role_id)->whereNotIn('name', ['Admin','Landlord','Broker','Client'])->first();
+        $role = Role::where('id', $role_id)->whereNotIn('name', ['Admin','Landlord','Broker','Tenant'])->first();
         if ($role) {
             $role->delete();
             

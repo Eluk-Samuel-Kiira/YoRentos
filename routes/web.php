@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\CountryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -56,7 +57,8 @@ Route::middleware([
 
 
     //Location Routes
-    Route::get('/location',[LocationController::class, 'locationIndex'])->name('location');
+    Route::resource('country', CountryController::class);
+    Route::get('/country-status/{id}', [CountryController::class, 'changeCountryStatus'])->name('country.status');   
 
 
     // Tenant Dashboard

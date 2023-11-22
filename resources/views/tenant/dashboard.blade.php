@@ -38,7 +38,7 @@
                                 <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
                             </span>
                             <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
-                                {{__('/4 months')}}
+                                {{__('per month')}}
                             </span>
                         </p>
                     </div>

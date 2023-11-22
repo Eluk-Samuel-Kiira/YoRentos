@@ -10,6 +10,11 @@ class Rental extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'status','deleted'
+        'name','slug', 'status','deleted'
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }

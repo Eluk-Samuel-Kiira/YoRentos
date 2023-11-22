@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('rentals', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
+            $table->string('slug')->nullable();
             $table->unsignedBigInteger('status')->default(1);
             $table->unsignedBigInteger('deleted')->default(0);
             $table->timestamps();

@@ -38,7 +38,7 @@ return [
         'sqlite' => [
             'driver' => 'sqlite',
             'url' => env('DATABASE_URL'),
-            'database' => env('DB_DATABASE', database_path('database.sqlite')),
+            'database' => env('DB_SQLITE_DATABASE', database_path('database.sqlite')),
             'prefix' => '',
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
@@ -62,6 +62,28 @@ return [
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
+
+        'mysql_locations' => [
+            'driver' => 'mysql',
+            'url' => env('SECOND_DATABASE_URL'), 
+            'host' => env('SECOND_DB_HOST', '127.0.0.1'), 
+            'port' => env('SECOND_DB_PORT', '3306'), 
+            'database' => env('SECOND_DB_DATABASE', 'forge'), 
+            'username' => env('SECOND_DB_USERNAME', 'forge'), 
+            'password' => env('SECOND_DB_PASSWORD', ''), 
+            'unix_socket' => env('SECOND_DB_SOCKET', ''), 
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('SECOND_MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+        
+
 
         'pgsql' => [
             'driver' => 'pgsql',

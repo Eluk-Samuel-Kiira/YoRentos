@@ -12,7 +12,7 @@
           <div class="navbar-collapse" id="">
 
             <div class="custom_menu-btn">
-              <button onclick="openNav()">
+              <button onclick="toggleNav()">
                 <span class="s-1">
 
                 </span>
@@ -27,7 +27,7 @@
             <div id="myNav" class="overlay">
               <div class="overlay-content">
                 @foreach($rental as $item)
-                  <a href="{{$item->id}}">{{ $item->name }}</a>
+                  <a href="{{$item->slug}}">{{ $item->name }}</a>
                 @endforeach
                 <a href="contact.html">{{__('Contact Us')}}</a>
                 <!-- Authentication -->
