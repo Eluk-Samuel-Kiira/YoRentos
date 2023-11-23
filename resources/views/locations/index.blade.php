@@ -95,11 +95,11 @@
                                                 </a>
                                             </td>
                                             <td class="py-2 px-4 border-b border-r">
-                                                <a href="#" onclick="openModal({{ json_encode($district) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
+                                                <a href="#" onclick="openDistrictModal({{ json_encode($district) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
                                                     {{__('Edit') }}
                                                 </a>
                                             </td>
-                                            @include('locations.edit-country')
+                                            @include('locations.edit-district')
                                         </tr>
                                     @empty
                                         <td class="py-2 px-4 border-b border-r">{{__('No District Available')}}</td>

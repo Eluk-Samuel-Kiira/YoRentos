@@ -75,7 +75,11 @@ class DistrictController extends Controller
      */
     public function update(UpdateDistrictRequest $request, District $district)
     {
-        //
+        $district->update($request->validated());
+        $district->district = $request->input('district');
+        $district->country_id = $request->input('country_id');
+        $district->slug = Str::slug($request->input('district'));
+        return redirect()->route('country.index')->with('success', 'The District Has Been Updated Successfully');
     }
 
     /**
