@@ -6,6 +6,8 @@ use App\Http\Controllers\RentalController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\DistrictController;
+use App\Http\Controllers\CountyController;
+use App\Http\Controllers\SubcountyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +65,12 @@ Route::middleware([
 
     Route::resource('district', DistrictController::class);
     Route::get('/district-status/{slug}', [DistrictController::class, 'changeDistrictStatus'])->name('district.status');   
+
+    Route::resource('county', CountyController::class);
+    Route::get('/county-status/{slug}', [CountyController::class, 'changeCountyStatus'])->name('county.status'); 
+    
+    Route::resource('subcounty', SubcountyController::class);
+    Route::get('/subcounty-status/{slug}', [SubcountyController::class, 'changeSubcountyStatus'])->name('subcounty.status'); 
 
     // Tenant Dashboard
     Route::get('/tenant/dashboard',[LocationController::class, 'tenantIndex'])->name('tenant.dashboard');

@@ -20,14 +20,17 @@
                             {{ __('Users') }}
                         </x-nav-link>
                     @endcan
-                    @role('Admin')
-                        <x-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
-                            {{ __('Locations') }}
-                        </x-nav-link>
-                    @endrole
                     <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
                         {{ __('Rentals') }}
                     </x-nav-link>
+                    @role('Admin')
+                        <x-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
+                            {{ __('Districts') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('county.index') }}" :active="request()->routeIs('county.index')">
+                            {{ __('Counties') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
@@ -163,18 +166,23 @@
                 </x-responsive-nav-link>
             </div>
         @endcan
-        @role('Admin')
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
-                    {{ __('Locations') }}
-                </x-responsive-nav-link>
-            </div>
-        @endrole
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
                 {{ __('Rentals') }}
             </x-responsive-nav-link>
         </div>
+        @role('Admin')
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
+                    {{ __('Districts') }}
+                </x-responsive-nav-link>
+            </div>
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('county.index') }}" :active="request()->routeIs('county.index')">
+                    {{ __('Counties') }}
+                </x-responsive-nav-link>
+            </div>
+        @endrole
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

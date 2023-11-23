@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Location List') }} 
+            {{ __('Countries and Districts') }} 
         </h2>
     </x-slot>
     
@@ -71,6 +71,7 @@
                     <!-- district table -->
                     <div class="table-responsive" style="overflow-x: auto;">
                         <div class="container mx-auto mt-8">
+                            <input type="text" class="rounded" id="districtSearch" placeholder="Search District or Country">
                             <table class="min-w-full border border-blue-500 text-gray-500">
                                 <thead>
                                     <tr>
@@ -81,7 +82,7 @@
                                         <th class="py-2 px-4 border border-blue-500">Edit</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="districtTableBody">
                                     @forelse($districts as $district)
                                         <tr>
                                             <td class="py-2 px-4 border-b border-r">{{ $district->uid }}</td>
@@ -113,3 +114,35 @@
         </div>
     </div>
 </x-app-layout>
+<script>
+    // Get the input element and table body
+    const searchInput = document.getElementById('districtSearch');
+    const tableBody = document.getElementById('districtTableBody');
+
+    // Add event listener to the search input
+    searchInput.addEventListener('input', function () {
+        const searchValue = this.value.toLowerCase().trim();
+        const rows = tableBody.getElementsByTagName('tr');
+
+        // Loop through all table rows to check for matches and display/hide accordingly
+        for (let row of rows) {
+            const districtName = row.getElementsByTagName('td')[1]; // District name column index
+            const countryName = row.getElementsByTagName('td')[2]; // Country name column index
+
+            if (districtName && countryName) {
+                const textDistrict = districtName.textContent || districtName.innerText;
+                const textCountry = countryName.textContent || countryName.innerText;
+
+                if (
+                    textDistrict.toLowerCase().includes(searchValue) ||
+                    textCountry.toLowerCase().includes(searchValue)
+                ) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+    });
+
+</script>

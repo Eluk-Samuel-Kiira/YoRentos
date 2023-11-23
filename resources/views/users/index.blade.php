@@ -45,6 +45,7 @@
                             </table>
                         </div>
                     </div>
+                    <!-- users table -->
                     <div class="table-responsive" style="overflow-x: auto;">
                         <div class="container mx-auto mt-8">
                             <input class="rounded" type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchUsers()">
