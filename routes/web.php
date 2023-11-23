@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RentalController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CountryController;
+use App\Http\Controllers\DistrictController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,8 @@ Route::middleware([
     Route::resource('country', CountryController::class);
     Route::get('/country-status/{id}', [CountryController::class, 'changeCountryStatus'])->name('country.status');   
 
+    Route::resource('district', DistrictController::class);
+    Route::get('/district-status/{slug}', [DistrictController::class, 'changeDistrictStatus'])->name('district.status');   
 
     // Tenant Dashboard
     Route::get('/tenant/dashboard',[LocationController::class, 'tenantIndex'])->name('tenant.dashboard');

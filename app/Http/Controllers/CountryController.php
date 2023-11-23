@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use App\Models\District;
 use App\Http\Requests\StoreCountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
 use Illuminate\Support\Str;
@@ -15,7 +16,11 @@ class CountryController extends Controller
     public function index()
     {
         $countries = Country::on('mysql_locations')->get();
-        return view('locations.index', compact('countries'));
+        $districts = District::on('mysql_locations')->get();
+        return view('locations.index', compact(
+            'countries',
+            'districts',
+        ));
     }
 
     /**

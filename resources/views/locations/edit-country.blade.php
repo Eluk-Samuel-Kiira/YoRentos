@@ -14,7 +14,7 @@
             
             <div class="mt-6">
                 <x-label for="country" value="{{ __('Country Name') }}" class="font-semibold text-xl"/>
-                <x-input id="country" class="block mt-1 w-full" type="text" name="country" required autofocus autocomplete="country" />
+                <x-input id="countryName" class="block mt-1 w-full" type="text" name="country" required autofocus autocomplete="country" />
             </div>
 
             <x-button class="mt-8">
@@ -29,7 +29,7 @@
     function openModal(country) {
         document.getElementById('counrtyEditModal').classList.remove('hidden');
 
-        document.getElementById('country').value = country.country;
+        document.getElementById('countryName').value = country.country;
         document.getElementById('editCountryForm').action = "{{ route('country.update', '') }}" + "/" + country.slug;
     }
 
