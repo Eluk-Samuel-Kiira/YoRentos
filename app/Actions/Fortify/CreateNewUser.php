@@ -47,7 +47,7 @@ class CreateNewUser implements CreatesNewUsers
         if ($userRole) {
             $user->syncRoles([$userRole]); 
         } else {
-            dd("nothing");
+            //
         }
         return $user;
     }

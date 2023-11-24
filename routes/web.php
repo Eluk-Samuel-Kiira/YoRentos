@@ -54,6 +54,10 @@ Route::middleware([
     Route::get('/change-status/{id}', [UserController::class, 'changeStatus']); 
     Route::get('/delete-role/{role_id}', [UserController::class, 'deleteRole']);
 
+    Route::post('/create-broker', [UserController::class, 'createBroker'])->name('create.broker');
+    Route::get('/broker-status/{id}', [UserController::class, 'changeBrokerStatus'])->name('broker_name.status');
+    Route::get('/broker-delete/{id}', [UserController::class, 'deleteBroker'])->name('broker_name.delete');
+
 
     // Rental Routes
     Route::resource('rental', RentalController::class); 

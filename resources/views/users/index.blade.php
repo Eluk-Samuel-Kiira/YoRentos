@@ -14,8 +14,11 @@
                     <button id="editRoleModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Edit Role
                     </button>
-                    <span id="user-count" class="bg-green-500 text-white font-bold py-2 px-4 rounded"></span>
-                    <h4>    
+                    <button id="createBrokerModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Create Broker
+                    </button>
+                    <h4>
+                        <x-validation-errors class="mb-4" />    
                         @if(session('error'))
                             <span class="bg-red-500 text-white rounded">
                                 {{ session('error') }}
@@ -28,7 +31,10 @@
                         @endif
                     </h4>
                     <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8">
+                        <div class="container mx-auto mt-8" id="roleTable">
+                            <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                &times;Hide
+                            </button>
                             <table class="min-w-full border border-blue-500 text-gray-500">
                                 @include('users.create-role')
                                 @include('users.edit-role')
@@ -45,11 +51,61 @@
                             </table>
                         </div>
                     </div>
+
+                    <!-- brokers table -->
+                    <div class="table-responsive" style="overflow-x: auto;">
+                        <div class="container mx-auto mt-8" id="brokerTable">
+                            <span class="bg-green-500 text-white font-bold py-2 px-4 rounded">{{ $broker_names->count()}} {{__('Brokers')}}</span>
+                            <button onclick="hideTable3()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                &times;Hide
+                            </button>
+                            <table class="min-w-full border border-blue-500 text-gray-500">
+                                @include('users.create-broker')
+                                <thead>
+                                    <tr>
+                                        <th class="py-2 px-4 border border-blue-500">ID</th>
+                                        <th class="py-2 px-4 border border-blue-500">Name</th>
+                                        <th class="py-2 px-4 border border-blue-500">District</th>
+                                        <th class="py-2 px-4 border border-blue-500">Status</th>
+                                        <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse($broker_names as $broker_name)
+                                        <tr>
+                                            <td class="py-2 px-4 border-b border-r">{{ $broker_name->id }}</td>
+                                            <td class="py-2 px-4 border-b border-r">{{ $broker_name->brokerName->name }}</td>
+                                            <td class="py-2 px-4 border-b border-r">{{ $broker_name->brokerDistrict->district }}</td>
+                                            <td class="py-2 px-3 border-b border-r">
+                                                <a href="{{ route('broker_name.status',$broker_name->id) }}" class="py-1 px-2 
+                                                    {{ $broker_name->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                    text-white rounded hover:{{ $broker_name->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                    {{ $broker_name->status == 1 ? 'Active' : 'Inactive' }}
+                                                </a>
+                                            </td>
+                                            <td class="py-2 px-4 border-b border-r">
+                                                <a href="{{ route('broker_name.delete',$broker_name->id) }}" class="py-1 px-2 bg-red-300 text-white rounded hover:bg-red-500">
+                                                    {{__('Delete') }}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <td class="py-2 px-4 border-b border-r">{{__('No Broker Available')}}</td>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <!-- users table -->
                     <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8">
-                            <input class="rounded" type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchUsers()">
+                        <div class="container mx-auto mt-8" id="userTable">
+                            <input class="rounded text-gray-500" type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchUsers()">
+                            <span id="user-count" class="bg-green-500 text-white font-bold py-2 px-4 rounded"></span>
+                            <button onclick="hideTable2()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                &times;Hide
+                            </button>
                             <table class="min-w-full border border-blue-500 text-gray-500">
+                                @include('users.create-broker')
                                 <thead>
                                     <tr>
                                         <th class="py-2 px-4 border border-blue-500">ID</th>
@@ -173,4 +229,24 @@
         }
     } 
 
+    function hideTable() {
+        const table = document.getElementById('roleTable');
+        if (table) {
+            table.style.display = 'none';
+        }
+    }
+
+    function hideTable2() {
+        const table = document.getElementById('userTable');
+        if (table) {
+            table.style.display = 'none';
+        }
+    }
+
+    function hideTable3() {
+        const table = document.getElementById('brokerTable');
+        if (table) {
+            table.style.display = 'none';
+        }
+    }
 </script>
