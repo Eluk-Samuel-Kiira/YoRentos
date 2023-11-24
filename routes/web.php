@@ -8,6 +8,8 @@ use App\Http\Controllers\CountryController;
 use App\Http\Controllers\DistrictController;
 use App\Http\Controllers\CountyController;
 use App\Http\Controllers\SubcountyController;
+use App\Http\Controllers\ParishController;
+use App\Http\Controllers\VillageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,7 +72,15 @@ Route::middleware([
     Route::get('/county-status/{slug}', [CountyController::class, 'changeCountyStatus'])->name('county.status'); 
     
     Route::resource('subcounty', SubcountyController::class);
-    Route::get('/subcounty-status/{slug}', [SubcountyController::class, 'changeSubcountyStatus'])->name('subcounty.status'); 
+    Route::get('/subcounty-status/{slug}', [SubcountyController::class, 'changeSubcountyStatus'])->name('subcounty.status');
+    
+    Route::resource('parish', ParishController::class);
+    Route::get('/parish-status/{slug}', [ParishController::class, 'changeParishStatus'])->name('parish.status');
+
+    Route::resource('village', VillageController::class);
+    Route::get('/village-status/{slug}', [VillageController::class, 'changevillageStatus'])->name('village.status');
+
+
 
     // Tenant Dashboard
     Route::get('/tenant/dashboard',[LocationController::class, 'tenantIndex'])->name('tenant.dashboard');

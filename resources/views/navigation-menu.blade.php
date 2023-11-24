@@ -30,6 +30,9 @@
                         <x-nav-link href="{{ route('county.index') }}" :active="request()->routeIs('county.index')">
                             {{ __('Counties') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('parish.index') }}" :active="request()->routeIs('parish.index')">
+                            {{ __('Parishes') }}
+                        </x-nav-link>
                     @endrole
                 </div>
             </div>
@@ -180,6 +183,11 @@
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('county.index') }}" :active="request()->routeIs('county.index')">
                     {{ __('Counties') }}
+                </x-responsive-nav-link>
+            </div>
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('parish.index') }}" :active="request()->routeIs('parish.index')">
+                    {{ __('Parishes') }}
                 </x-responsive-nav-link>
             </div>
         @endrole
