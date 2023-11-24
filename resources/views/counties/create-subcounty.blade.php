@@ -11,6 +11,11 @@
         <form method="POST" action="{{ route('subcounty.store') }}">
             @csrf
 
+            <div class="mt-6">
+                <x-label for="subcounty" value="{{ __('Sub-County Name') }}" class="font-semibold text-xl"/>
+                <x-input id="subcounty" class="block mt-1 w-full rounded text-gray-700" type="text" name="subcounty" :value="old('subcounty')" required autofocus autocomplete="subcounty" />
+            </div>
+
             <div class="mt-4">
                 <x-label for="county_id" value="{{ __('Select County') }}" class="font-semibold text-xl"/>
                 <select id="county_id" class="w-full font-medium py-2 rounded text-gray-700" name="county_id" required>
@@ -19,11 +24,6 @@
                         <option class="block mt-1 w-full" value="{{ $county->id }}">{{ $county->county }}</option>
                     @endforeach
                 </select>
-            </div>
-
-            <div class="mt-6">
-                <x-label for="subcounty" value="{{ __('Sub-County Name') }}" class="font-semibold text-xl"/>
-                <x-input id="subcounty" class="block mt-1 w-full rounded text-gray-700" type="text" name="subcounty" :value="old('subcounty')" required autofocus autocomplete="subcounty" />
             </div>
 
             <x-button class="mt-8">

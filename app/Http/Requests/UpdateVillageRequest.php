@@ -11,7 +11,7 @@ class UpdateVillageRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,19 @@ class UpdateVillageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'village' => 'required|string|max:50|unique:mysql_locations.villages',
+            'parish_id' => 'required|integer',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'village.required' => 'The village field is required.',
+            'village.string' => 'The village must be a string.',
+            'village.max' => 'The village may not be greater than 50 characters.',
+            'village.unique' => 'The village has already been taken.',
+            'parish_id.required' => 'The parish_id field is required.',
+            'parish_id.integer' => 'The parish_id must be an integer.',
         ];
     }
 }

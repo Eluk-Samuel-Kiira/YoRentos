@@ -30,8 +30,11 @@
                     </h4>
                     <!-- Parishes table -->
                     <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8" id="subcountyTable">
-                            <input type="text" class="rounded" id="parishSearch" placeholder="Search SubCounty or parish">
+                        <div class="container mx-auto mt-8" id="parishTable">
+                            <input type="text" class="rounded text-gray-500" id="parishSearch" placeholder="Search SubCounty or parish">
+                            <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                {{$parishes->count()}} {{__('Parishes')}}
+                            </button>
                             <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                                 &times;Hide
                             </button>
@@ -75,9 +78,15 @@
                     </div>
 
                     <!-- villages table -->
-                    <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8">
-                            <input type="text" class="rounded" id="subcountySearch" placeholder="Search parish or village">
+                    <div class="table-responsive" style="overflow-x: auto;" >
+                        <div class="container mx-auto mt-8" id="villageTable">
+                            <input type="text" class="rounded text-gray-500" id="villageSearch" placeholder="Search parish or village">
+                            <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                {{$villages->count()}} {{__('Villages')}}
+                            </button>
+                            <button onclick="hideTable2()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                &times;Hide
+                            </button>
                             <table class="min-w-full border border-blue-500 text-gray-500">
                                 @include('parishes.create-village')
                                 <thead>
@@ -89,7 +98,7 @@
                                         <th class="py-2 px-4 border border-blue-500">Edit</th>
                                     </tr>
                                 </thead>
-                                <tbody id="subcountyTableBody">
+                                <tbody id="villageTableBody">
                                     @forelse($villages as $village)
                                         <tr>
                                             <td class="py-2 px-4 border-b border-r">{{ $village->uid }}</td>
@@ -153,38 +162,45 @@
         }
     });
 
-    // // Get the input element and table body
-    // const searchInputSubcounty = document.getElementById('subcountySearch');
-    // const subtableBody = document.getElementById('subcountyTableBody');
+    // Get the input element and table body
+    const searchInputVillage = document.getElementById('villageSearch');
+    const villagetableBody = document.getElementById('villageTableBody');
 
-    // // Add event listener to the search input
-    // searchInputSubcounty.addEventListener('input', function () {
-    //     const searchValueSub = this.value.toLowerCase().trim();
-    //     const rowsSub = subtableBody.getElementsByTagName('tr');
+    // Add event listener to the search input
+    searchInputVillage.addEventListener('input', function () {
+        const searchValueVillage = this.value.toLowerCase().trim();
+        const rowsVillage = villagetableBody.getElementsByTagName('tr');
 
-    //     // Loop through all table rows to check for matches and display/hide accordingly
-    //     for (let row of rowsSub) {
-    //         const subcountyName = row.getElementsByTagName('td')[1]; // District name column index
-    //         const countyName = row.getElementsByTagName('td')[2]; // Country name column index
+        // Loop through all table rows to check for matches and display/hide accordingly
+        for (let row of rowsVillage) {
+            const villageName = row.getElementsByTagName('td')[1]; // District name column index
+            const parishName = row.getElementsByTagName('td')[2]; // Country name column index
 
-    //         if (countyName && subcountyName) {
-    //             const textCounty = subcountyName.textContent || subcountyName.innerText;
-    //             const textSubcounty = countyName.textContent || countyName.innerText;
+            if (parishName && villageName) {
+                const textVillage = villageName.textContent || villageName.innerText;
+                const textParish = parishName.textContent || parishName.innerText;
 
-    //             if (
-    //                 textCounty.toLowerCase().includes(searchValueSub) ||
-    //                 textSubcounty.toLowerCase().includes(searchValueSub)
-    //             ) {
-    //                 row.style.display = '';
-    //             } else {
-    //                 row.style.display = 'none';
-    //             }
-    //         }
-    //     }
-    // });
+                if (
+                    textVillage.toLowerCase().includes(searchValueVillage) ||
+                    textParish.toLowerCase().includes(searchValueVillage)
+                ) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+    });
 
     function hideTable() {
-        const table = document.getElementById('subcountyTable');
+        const table = document.getElementById('parishTable');
+        if (table) {
+            table.style.display = 'none';
+        }
+    }
+
+    function hideTable2() {
+        const table = document.getElementById('villageTable');
         if (table) {
             table.style.display = 'none';
         }

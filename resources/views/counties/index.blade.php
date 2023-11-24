@@ -30,8 +30,11 @@
                     </h4>
                     
                     <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8" id="subcountyTable">
-                            <input type="text" class="rounded" id="countySearch" placeholder="Search County or District">
+                        <div class="container mx-auto mt-8" id="countyTable">
+                            <input type="text" class="rounded text-gray-500" id="countySearch" placeholder="Search County or District">
+                            <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                {{$counties->count()}} {{__('Counties')}}
+                            </button>
                             <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                                 &times;Hide
                             </button>
@@ -76,15 +79,21 @@
 
                     <!-- sub-counties table -->
                     <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8">
-                            <input type="text" class="rounded" id="subcountySearch" placeholder="Search Subcounty">
+                        <div class="container mx-auto mt-8" id="subcountyTable">
+                            <input type="text" class="rounded text-gray-500" id="subcountySearch" placeholder="Search Subcounty">
+                            <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                {{$subcounties->count()}} {{__('Sub-Counties')}}
+                            </button>
+                            <button onclick="hideTable2()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                &times;Hide
+                            </button>
                             <table class="min-w-full border border-blue-500 text-gray-500">
                                 @include('counties.create-subcounty')
                                 <thead>
                                     <tr>
                                         <th class="py-2 px-4 border border-blue-500">ID</th>
                                         <th class="py-2 px-4 border border-blue-500">Sub-County</th>
-                                        <th class="py-2 px-4 border border-blue-500">Country</th>
+                                        <th class="py-2 px-4 border border-blue-500">County</th>
                                         <th class="py-2 px-4 border border-blue-500">Status</th>
                                         <th class="py-2 px-4 border border-blue-500">Edit</th>
                                     </tr>
@@ -184,6 +193,13 @@
     });
 
     function hideTable() {
+        const table = document.getElementById('countyTable');
+        if (table) {
+            table.style.display = 'none';
+        }
+    }
+
+    function hideTable2() {
         const table = document.getElementById('subcountyTable');
         if (table) {
             table.style.display = 'none';

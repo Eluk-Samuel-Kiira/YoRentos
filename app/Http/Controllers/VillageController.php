@@ -74,7 +74,11 @@ class VillageController extends Controller
      */
     public function update(UpdateVillageRequest $request, Village $village)
     {
-        //
+        $village->update($request->validated());
+        $village->village = $request->input('village');
+        $village->parish_id = $request->input('parish_id');
+        $village->slug = Str::slug($request->input('village'));
+        return redirect()->route('parish.index')->with('success', 'The Village Has Been Updated Successfully');
     }
 
     /**

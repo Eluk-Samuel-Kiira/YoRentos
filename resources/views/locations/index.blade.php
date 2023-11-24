@@ -29,10 +29,16 @@
                         @endif
                     </h4>
                     <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8">
+                        <div class="container mx-auto mt-8" id="countryTable">
+                            <input type="text" class="rounded text-gray-500" id="countrySearch" placeholder="Search Country">
+                            <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                {{$countries->count()}} {{__('Countries')}}
+                            </button>
+                            <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                &times;Hide
+                            </button>
                             <table class="min-w-full border border-blue-500 text-gray-500">
                                 @include('locations.create-country')
-                                @include('locations.create-district')
                                 <thead>
                                     <tr>
                                         <th class="py-2 px-4 border border-blue-500">ID</th>
@@ -41,7 +47,7 @@
                                         <th class="py-2 px-4 border border-blue-500">Edit</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="countryTableBody">
                                     @forelse($countries as $country)
                                         <tr>
                                             <td class="py-2 px-4 border-b border-r">{{ $country->uid }}</td>
@@ -70,9 +76,16 @@
 
                     <!-- district table -->
                     <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8">
-                            <input type="text" class="rounded" id="districtSearch" placeholder="Search District or Country">
+                        <div class="container mx-auto mt-8" id="districtTable">
+                            <input type="text" class="rounded text-gray-500" id="districtSearch" placeholder="Search District or Country">
+                            <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                {{$districts->count()}} {{__('Districts')}}
+                            </button>
+                            <button onclick="hideTable2()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                &times;Hide
+                            </button>
                             <table class="min-w-full border border-blue-500 text-gray-500">
+                                @include('locations.create-district')
                                 <thead>
                                     <tr>
                                         <th class="py-2 px-4 border border-blue-500">ID</th>
@@ -144,5 +157,46 @@
             }
         }
     });
+
+    // Get the input element and table body
+    const searchInputCountry = document.getElementById('countrySearch');
+    const countryTableBody = document.getElementById('countryTableBody');
+
+    // Add event listener to the search input
+    searchInputCountry.addEventListener('input', function () {
+        const searchValueCountry = this.value.toLowerCase().trim();
+        const rowsCountry = countryTableBody.getElementsByTagName('tr');
+
+        // Loop through all table rows to check for matches and display/hide accordingly
+        for (let row of rowsCountry) {
+            const countryName = row.getElementsByTagName('td')[1]; // Country name column index
+
+            if (countryName) {
+                const textCountry = countryName.textContent || countryName.innerText;
+
+                if (
+                    textCountry.toLowerCase().includes(searchValueCountry)
+                ) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        }
+    });
+
+    function hideTable() {
+        const table = document.getElementById('countryTable');
+        if (table) {
+            table.style.display = 'none';
+        }
+    }
+
+    function hideTable2() {
+        const table = document.getElementById('districtTable');
+        if (table) {
+            table.style.display = 'none';
+        }
+    }
 
 </script>
