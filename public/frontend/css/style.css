@@ -1001,3 +1001,68 @@ button {
   font-size: 0.8rem; /* Adjust font size as needed */
   line-height: 1.2; 
 }
+
+.slider-container {
+  position: relative;
+  width: 90%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.slider {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slided {
+  flex: 0 0 auto;
+  border-right: 2px solid #ccc; /* Border between slides */
+  padding-right: 10px; /* Adjust spacing */
+  box-sizing: border-box;
+}
+
+.slided img {
+  max-width: 138px; /* Reduce image size */
+  height: 170px;
+  display: block;
+}
+
+.small {
+  flex: 0 0 auto;
+  border-right: 2px solid #ccc; /* Border between slides */
+  padding-right: 10px; /* Adjust spacing */
+  box-sizing: border-box;
+}
+
+.small img{
+  max-width: 138px; /* Reduce image size */
+  height: 90px;
+  display: block;
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 768px) {
+  .slider {
+    scroll-snap-type: none; /* Disable scroll snap on smaller screens */
+    overflow-x: scroll; /* Allow horizontal scrolling on smaller screens */
+  }
+
+}
+
+button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.previous {
+  left: 10px;
+}
+
+.nexts {
+  right: 10px;
+}

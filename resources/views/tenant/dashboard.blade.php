@@ -1,18 +1,116 @@
 @include('layouts.header')
 <title>Dashboard | YoRentos</title>
 @include('layouts.menu')
+    <section class="deal_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="detail-box">
+                        <div class="heading_container">
+                            <h2>
+                                {{__('Houses Available For Renting Near You!')}}
+                            </h2>
+                        </div>
+                        <p>
+                            {{__('There are many units available under the various categories Eg Appartments, Offices, Ware Houses etc...')}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <!-- sale section -->
+    <!-- newest sponsored -->
+    <div class="slider-container">
+        <div class="slider">
+            <div class="slided">
+                <img src="{{asset('frontend/images/d-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/d-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/d-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <!-- Add more images as needed -->
+        </div>
+            <button class="previous" onclick="moveSlide(-1)"><</button>
+            <button class="nexts" onclick="moveSlide(1)">></button>
+        </div>
+    </div>
+    <!-- end newest sponsored -->
+
+    <!-- old sponsored section -->
     <section class="sale_section layout_padding">
         <div class="container-fluid">
-            <div class="heading_container">
-                <h2>
-                    {{__('Houses Available For Renting Near You!')}}
-                </h2>
-                <p>
-                    {{__('There are many units available under the various categories Eg Appartments, Offices, Ware Houses etc...')}}
-                </p>
-            </div>
             <div class="sale_container">
                 <div class="box">
                     <div class="img-box">
@@ -26,7 +124,7 @@
                     </div>
                     <div class="detail-box">
                         <h6>
-                            Nalika Heights                            
+                            <a href="{{ route('unit.detail') }}">Nalika Heights </a>                           
                             <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
                                 {{__('Ugx:')}} 150k - 305k
                             </span>
@@ -116,6 +214,30 @@
             </div>
         </div>
     </section>
-    <!-- end sale section -->
+    <!-- end old sponsored section -->
 
 @include('layouts.footer')
+
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slided');
+
+    function moveSlide(n) {
+    slideIndex += n;
+    if (slideIndex < 0) {
+        slideIndex = slides.length - 1;
+    } else if (slideIndex >= slides.length) {
+        slideIndex = 0;
+    }
+    updateSliderPosition();
+    }
+
+    function updateSliderPosition() {
+    const slideWidth = slides[0].offsetWidth;
+    const offset = -slideIndex * slideWidth;
+    document.querySelector('.slider').style.transform = `translateX(${offset}px)`;
+    }
+
+    // Update slider position initially
+    updateSliderPosition();
+</script>

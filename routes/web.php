@@ -63,6 +63,7 @@ Route::middleware([
     Route::resource('rental', RentalController::class); 
     Route::get('/rental-status/{id}', [RentalController::class, 'rentalStatus']);    
     Route::get('/delete-rental/{rental_id}', [RentalController::class, 'deleteRental']);
+    Route::get('/unit-rental', [RentalController::class, 'unitDetails'])->name('unit.detail');
 
 
     //Location Routes

@@ -57,6 +57,11 @@ class RentalController extends Controller
         //
     }
 
+    public function unitDetails()
+    {
+        return view('tenant.estate-unit');
+    }
+
     /**
      * Update the specified resource in storage.
      */
