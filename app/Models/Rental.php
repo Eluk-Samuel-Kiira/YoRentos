@@ -7,6 +7,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rental extends Model
 {
+    /**
+     * The connection name for the model.
+     *
+     * @var string
+     */
+    protected $connection = 'mysql_estates';
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'rentals';
+
     use HasFactory;
 
     protected $fillable = [

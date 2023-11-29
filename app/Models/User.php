@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use App\Models\Broker;
 
 class User extends Authenticatable
 {
@@ -36,6 +37,13 @@ class User extends Authenticatable
         'password',
 
     ];
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -72,8 +80,8 @@ class User extends Authenticatable
         return 'slug';
     }
 
-    // public function roles()
-    // {
-    //     return $this->hasOne(Role::class, 'role_id');
-    // }
+    public function brokerUser()
+    {
+        return $this->hasOne(Broker::class, 'broker_id');
+    }
 }

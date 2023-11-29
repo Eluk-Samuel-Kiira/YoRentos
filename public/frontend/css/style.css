@@ -40,11 +40,13 @@ body {
           flex-direction: column;
 }
 
+
 .heading_container h2 {
   padding-left: 5px;
   position: relative;
   border-left: 7px solid #0f2480;
   font-weight: bold;
+  font-size: 30px;
 }
 
 /*header section*/
@@ -359,6 +361,13 @@ a:focus {
   margin: 10px 0;
 }
 
+.find_section .description {
+  padding: 10px 45px;
+  -webkit-box-shadow: 0px 0px 20px 11px rgba(0, 0, 0, 0.09);
+  box-shadow: 0px 0px 20px 11px rgba(0, 0, 0, 0.09);
+  background-color: #ffffff;
+}
+
 .find_section form button {
   background-color: #f97616;
   color: #ffffff;
@@ -382,6 +391,7 @@ a:focus {
 
 .about_section .img-box img {
   width: 100%;
+  height: 400px;
 }
 
 .about_section .detail-box p {
@@ -415,6 +425,11 @@ a:focus {
 
 .about_section .square-box img {
   width: 100%;
+}
+
+.about_section h3 {
+  font-size: 35px;
+  border-left: 7px solid #0f2480;
 }
 
 .sale_section .heading_container {
@@ -1066,3 +1081,4 @@ button {
 .nexts {
   right: 10px;
 }
+

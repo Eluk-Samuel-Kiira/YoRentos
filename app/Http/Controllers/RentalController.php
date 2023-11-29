@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Rental;
+use App\Models\Estate;
 use App\Http\Requests\StoreRentalRequest;
 use App\Http\Requests\UpdateRentalRequest;
 use Illuminate\Support\Str;
@@ -14,7 +15,12 @@ class RentalController extends Controller
      */
     public function index()
     {
-        return view('rentals.index');
+        $rentals = Rental::on('mysql_estates')->get();
+        $estates = Estate::on('mysql_estates')->get();
+        return view('rentals.index', compact(
+            'rentals',
+            'estates',
+        ));
     }
 
     /**
@@ -35,6 +41,7 @@ class RentalController extends Controller
     public function store(StoreRentalRequest $request)
     {
         $rental = new Rental();
+        $rental->setConnection('mysql_estates');
         $rental->name = $request->name;
         $rental->slug = Str::slug($request->name);
         $rental->save();

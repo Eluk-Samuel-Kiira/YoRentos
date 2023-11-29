@@ -30,19 +30,27 @@ class AdminUserSeeder extends Seeder
         // All Other Permissions
         $permissions = [
             'manage all',
+            'update status',
             'create rentals',
             'edit rentals',
-            'update status',
             'delete rentals',
+            'update rentals',
             'create user',
             'edit user',
             'delete user',
+            'update user',
             'create estate',
             'edit estate',
             'delete estate',
+            'update estate',
             'create location',
             'edit location',
             'delete location',
+            'update location',
+            'create unit',
+            'edit unit',
+            'delete unit',
+            'update unit',
         ];
 
         foreach ($permissions as $permission) {

@@ -46,7 +46,73 @@
                 </span>
             </div>
             <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
                 <img src="{{asset('frontend/images/d-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
+                <div class="detail-box">
+                    <h6>
+                        {{__('Name')}}
+                    </h6>
+                </div>
+                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
+                </span>
+            </div>
+            <div class="slided">
+                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
                 <div class="detail-box">
                     <h6>
                         {{__('Name')}}

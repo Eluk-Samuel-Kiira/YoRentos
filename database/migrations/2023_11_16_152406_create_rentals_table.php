@@ -7,11 +7,18 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
+     * The connection name for the model.
+     *
+     * @var string
+     */
+    protected $connection = 'mysql_estates';
+
+    /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('rentals', function (Blueprint $table) {
+        Schema::connection('mysql_estates')->create('rentals', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->nullable();

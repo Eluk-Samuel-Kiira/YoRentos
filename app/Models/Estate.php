@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
+use App\Models\Rental;
+use App\Models\User;
+use App\Models\Broker;
+use App\Models\Village;
+
+class Estate extends Model
+{
+    /**
+     * The connection name for the model.
+     *
+     * @var string
+     */
+    protected $connection = 'mysql_estates';
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'estates';
+    use HasFactory;
+
+    protected $fillable = [
+        'estate',
+        'slug',
+        'uid',
+        'landlord_id',
+        'broker_id',
+        'village_id',
+        'images',
+        'latitude',
+        'longitude',
+        'video',
+        'unit_no',
+        'description',
+        'sponsored',
+        'status',
+        'deleted'
+    ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public function rentalEstate()
+    {
+        return $this->belongsTo(Rental::class,'rental_id');
+    }
+
+    // public function brokeEstate()
+    // {
+    //     return User::join('brokers', 'users.id', '=', 'brokers.broker_id')
+    //         ->join('yo_rentos_estates.estates', 'brokers.id', '=', 'estates.broker_id')
+    //         ->select('users.*')
+    //         ->first();
+    // }
+
+
+    public function villageEstate()
+    {
+        return $this->belongsTo(Village::class, 'village_id');
+    }
+}

@@ -10,6 +10,7 @@ use App\Http\Controllers\CountyController;
 use App\Http\Controllers\SubcountyController;
 use App\Http\Controllers\ParishController;
 use App\Http\Controllers\VillageController;
+use App\Http\Controllers\EstateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +66,9 @@ Route::middleware([
     Route::get('/delete-rental/{rental_id}', [RentalController::class, 'deleteRental']);
     Route::get('/unit-rental', [RentalController::class, 'unitDetails'])->name('unit.detail');
 
+    //Estates
+    Route::resource('estate', EstateController::class); 
+    Route::get('/estate-status/{id}', [EstateController::class, 'changeEstateStatus'])->name('estate.status');
 
     //Location Routes
     Route::resource('country', CountryController::class);

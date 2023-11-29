@@ -13,6 +13,9 @@
                         <button id="openCreateRental" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Add Rental
                         </button>
+                        <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                            {{$estates->count()}} {{__('Estates')}}
+                        </button>
                     @endcan
                     @can('create estate')
                         <button id="openCreateEstate" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -33,14 +36,14 @@
                         @endif
                     </h4>
                     
-                    <div class="table-responsive" style="overflow-x: auto;">
+                    <div class="table-responsive" style="overflow-x: auto;" id="rentalTable">
                         <div class="container mx-auto mt-8">
-                            @can('manage all')
+                            @can('create estate')
                                 @include('rentals.create')
                             @endcan
-                            @can('create estate')
-                                @include('estates.create')
-                            @endcan
+                            <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                &times;Hide
+                            </button>
                             <table class="min-w-full border border-blue-500 text-gray-500">
                                 <thead>
                                     <tr>
@@ -53,6 +56,74 @@
                                     </tr>
                                 </thead>
                                 <tbody id="rental-list">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Estates Table -->
+                    <div class="table-responsive" style="overflow-x: auto;">
+                        <div class="container mx-auto mt-8">                            
+                            <input type="text" class="rounded text-gray-500" id="estateSearch" placeholder="Search Estate or uid or village">
+                            <table class="min-w-full border border-blue-500 text-gray-500">
+                                @can('create estate')
+                                    @include('estates.create')
+                                @endcan
+                                <thead>
+                                    <tr>
+                                        <th class="py-2 px-4 border border-blue-500">ID</th>
+                                        <th class="py-2 px-4 border border-blue-500">Rental Name</th>
+                                        <th class="py-2 px-4 border border-blue-500">Estate Name</th>
+                                        <th class="py-2 px-4 border border-blue-500">Broker</th>
+                                        <th class="py-2 px-4 border border-blue-500">Village</th>
+                                        <th class="py-2 px-4 border border-blue-500">Latitude</th>
+                                        <th class="py-2 px-4 border border-blue-500">Longitude</th>
+                                        <th class="py-2 px-4 border border-blue-500">Unit No</th>
+                                        @can('update estate')
+                                            <th class="py-2 px-4 border border-blue-500">Status</th>
+                                            <th class="py-2 px-4 border border-blue-500">View</th>
+                                        @endcan
+                                        @can('edit estate')
+                                            <th class="py-2 px-4 border border-blue-500">Edit</th>
+                                        @endcan
+                                    </tr>
+                                </thead>
+                                <tbody id="estateTableBody">
+                                @forelse($estates as $estate)
+                                    <tr>
+                                        <td class="py-2 px-4 border-b border-r">{{ $estate->uid }}</td>
+                                        <td class="py-2 px-4 border-b border-r">{{ $estate->rentalEstate->name }}</td>
+                                        <td class="py-2 px-4 border-b border-r">{{ $estate->estate }}</td>
+                                        <td class="py-2 px-4 border-b border-r">{{ $estate->broker_id }}</td>
+                                        <td class="py-2 px-4 border-b border-r">{{ $estate->villageEstate->village}}</td>
+                                        <td class="py-2 px-4 border-b border-r">{{ $estate->latitude}}</td>
+                                        <td class="py-2 px-4 border-b border-r">{{ $estate->longitude}}</td>
+                                        <td class="py-2 px-4 border-b border-r">{{ $estate->unit_no}}</td>
+                                        @can('update estate')
+                                            <td class="py-2 px-3 border-b border-r">
+                                                <a href="{{ route('estate.status',$estate) }}" class="py-1 px-2 
+                                                    {{ $estate->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                    text-white rounded hover:{{ $estate->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                    {{ $estate->status == 1 ? 'Active' : 'Inactive' }}
+                                                </a>
+                                            </td>
+                                            <td class="py-2 px-4 border-b border-r">
+                                            <a href="{{ route('estate.show',$estate) }}" class="py-1 px-2 bg-green-300 text-white rounded hover:bg-green-500">
+                                                {{__('Show')}}
+                                            </td>
+                                        @endcan
+                                        @can('edit estate')
+                                            <td class="py-2 px-4 border-b border-r">
+                                                <a href="#" onclick="openVillageModal({{ json_encode($estate) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
+                                                    {{__('Edit') }}
+                                                </a>
+                                            </td>
+                                            @include('estates.edit-estate')
+                                        @endcan
+                                    </tr>
+                                @empty
+                                    <td class="py-2 px-4 border-b border-r">{{__('No Estate Available')}}</td>
+                                @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -87,7 +158,7 @@
                                     '<td class="py-2 px-4 border-b border-r">' + rental.id + '</td>' +
                                     '<td class="py-2 px-4 border-b border-r">' + rental.name + '</td>' +
                                     @can('manage all')
-                                        '<td class="py-2 px-3 border-b">' +
+                                        '<td class="py-2 px-3 border-b border-r">' +
                                             '<a href="/rental-status/' + rental.id + '" class="py-1 px-2 ' + (rental.status == 1 ? 'bg-green-300' : 'bg-red-300') + ' text-white rounded hover:' + (rental.status == 1 ? 'bg-green-500' : 'bg-red-500') + '">' +
                                                 (rental.status == 1 ? 'Active' : 'Inactive') +
                                             '</a>' +
@@ -103,5 +174,45 @@
             });
         }
     });
+
+    function hideTable() {
+        const table = document.getElementById('rentalTable');
+        if (table) {
+            table.style.display = 'none';
+        }
+    }
+
+    const searchInputEstate = document.getElementById('estateSearch');
+    const tableBodyEstate = document.getElementById('estateTableBody');
+
+    // Add event listener to the search input
+    searchInputEstate.addEventListener('input', function () {
+        const searchValueParish = this.value.toLowerCase().trim();
+        const rowsParish = tableBodyEstate.getElementsByTagName('tr');
+
+        // Loop through all table rows to check for matches and display/hide accordingly
+        for (let row of rowsParish) {
+            const estateId = row.getElementsByTagName('td')[0];
+            const estateName = row.getElementsByTagName('td')[2];
+            const villageName = row.getElementsByTagName('td')[4];
+
+            if (villageName && estateName && estateId) {
+                const textVillage = villageName.textContent || villageName.innerText;
+                const textEstate = estateName.textContent || estateName.innerText;
+                const textId = estateId.textContent || estateId.innerText;
+
+                if (
+                    textVillage.toLowerCase().includes(searchValueParish) ||
+                    textEstate.toLowerCase().includes(searchValueParish) ||
+                    textId.toLowerCase().includes(searchValueParish)
+                ) {
+                    row.style.display = ''; // Show the row if it contains the search input value
+                } else {
+                    row.style.display = 'none'; // Hide the row if it doesn't match the search input value
+                }
+            }
+        }
+    });
+
 
 </script>

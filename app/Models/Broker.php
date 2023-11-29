@@ -8,6 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Broker extends Model
 {
     use HasFactory;
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'brokers';
+
     protected $fillable = [
         'broker_id','district_id', 'status','deleted'
     ];
