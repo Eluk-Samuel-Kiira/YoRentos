@@ -69,6 +69,7 @@ Route::middleware([
     //Estates
     Route::resource('estate', EstateController::class); 
     Route::get('/estate-status/{id}', [EstateController::class, 'changeEstateStatus'])->name('estate.status');
+    Route::post('/update-video', [EstateController::class, 'videoUpdate'])->name('estate.video');
 
     //Location Routes
     Route::resource('country', CountryController::class);

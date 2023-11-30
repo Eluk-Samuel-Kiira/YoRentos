@@ -7,6 +7,9 @@ use App\Models\User;
 use App\Http\Requests\StoreEstateRequest;
 use App\Http\Requests\UpdateEstateRequest;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use File;
+use Illuminate\Support\Facades\Validator;
 
 
 class EstateController extends Controller
@@ -61,6 +64,7 @@ class EstateController extends Controller
         $estate->save();
         return redirect()->route('rental.index')->with('success', 'New Estate Created Successfully');
     }
+    
 
     /**
      * Display the specified resource.
@@ -92,6 +96,7 @@ class EstateController extends Controller
         return redirect()->route('rental.index')->with('success', 'The Estate Block Has Been Updated Successfully');
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
@@ -116,5 +121,40 @@ class EstateController extends Controller
             return redirect()->route('rental.index')->with('error', 'Estate Not found');
         }
     }
+
+    public function videoUpdate(Request $request)
+    { 
+        $validator = Validator::make($request->all(), [
+            'video' => 'required|file|mimes:mp4|max:20480', 
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $estate = Estate::where('landlord_id', $request->landlord_id)->where('uid', $request->estate_id)->first();
+        if ($estate)
+        {
+            $video = $request->file('video');
+            if ($video != null) {
+                $db_video = 'app/public/estate_videos/'.$estate->video;
+                $per_video = storage_path($db_video);
+
+                if(File::exists($per_video)) {
+                    File::delete($per_video);
+                }
+
+                $videoName = time().'.'.$video->extension();
+                $video->move(storage_path('app/public/estate_videos'),$videoName);
+                $estate->update(['video' => $videoName]);
+
+                return redirect()->route('estate.index')->with('success', 'Estate Video Added successfully');
+            }else {
+                return redirect()->route('estate.index')->with('error', 'An Error Occured');
+            }
+        } else {
+            return redirect()->route('estate.index')->with('error', 'Estate Not found');
+        }
+    }
+
 }
 
