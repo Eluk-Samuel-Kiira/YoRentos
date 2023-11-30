@@ -23,6 +23,9 @@
                     <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
                         {{ __('Rentals') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
+                        {{ __('Estates') }}
+                    </x-nav-link>
                     @role('Admin')
                         <x-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
                             {{ __('Districts') }}
@@ -172,6 +175,11 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
                 {{ __('Rentals') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
+                {{ __('Estates') }}
             </x-responsive-nav-link>
         </div>
         @role('Admin')

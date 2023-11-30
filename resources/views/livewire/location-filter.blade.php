@@ -64,7 +64,7 @@
         <select class="w-full font-medium py-2 rounded text-gray-700" name="broker_id">
             <option value=""></option>
             @foreach ($brokers as $broker)
-                <option value="{{ $broker->id }}">{{ $broker->brokerName->name }}</option>
+                <option value="{{ $broker->broker_id }}">{{ $broker->brokerName->name }}</option>
             @endforeach
         </select>
     </div>

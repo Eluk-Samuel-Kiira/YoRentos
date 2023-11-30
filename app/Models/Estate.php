@@ -42,7 +42,7 @@ class Estate extends Model
         'description',
         'sponsored',
         'status',
-        'deleted'
+        'deleted',
     ];
 
     public function getRouteKeyName()
@@ -55,17 +55,13 @@ class Estate extends Model
         return $this->belongsTo(Rental::class,'rental_id');
     }
 
-    // public function brokeEstate()
-    // {
-    //     return User::join('brokers', 'users.id', '=', 'brokers.broker_id')
-    //         ->join('yo_rentos_estates.estates', 'brokers.id', '=', 'estates.broker_id')
-    //         ->select('users.*')
-    //         ->first();
-    // }
-
-
     public function villageEstate()
     {
         return $this->belongsTo(Village::class, 'village_id');
     }
+    
+    // public function brokerName()
+    // {
+    //     return $this->belongsTo(User::class, 'broker_id');
+    // }
 }

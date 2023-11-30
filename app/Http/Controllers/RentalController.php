@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Rental;
 use App\Models\Estate;
+use App\Models\User;
 use App\Http\Requests\StoreRentalRequest;
 use App\Http\Requests\UpdateRentalRequest;
 use Illuminate\Support\Str;
@@ -17,9 +18,11 @@ class RentalController extends Controller
     {
         $rentals = Rental::on('mysql_estates')->get();
         $estates = Estate::on('mysql_estates')->get();
+        $users = User::on('mysql')->get();
         return view('rentals.index', compact(
             'rentals',
             'estates',
+            'users',
         ));
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estate;
+use App\Models\User;
 use App\Http\Requests\StoreEstateRequest;
 use App\Http\Requests\UpdateEstateRequest;
 use Illuminate\Support\Str;
@@ -15,7 +16,12 @@ class EstateController extends Controller
      */
     public function index()
     {
-        //
+        $estates = Estate::on('mysql_estates')->get();
+        $users = User::on('mysql')->get();
+        return view('estates.index', compact(
+            'estates',
+            'users',
+        ));
     }
 
     /**
@@ -61,7 +67,7 @@ class EstateController extends Controller
      */
     public function show(Estate $estate)
     {
-        //
+        return view('estates.index', compact('estate'));
     }
 
     /**
@@ -77,7 +83,13 @@ class EstateController extends Controller
      */
     public function update(UpdateEstateRequest $request, Estate $estate)
     {
-        //
+        $estate->update($request->validated());
+        $estate->estate = $request->input('estate');
+        $estate->village_id = $request->input('village_id');
+        $estate->broker_id = $request->input('broker_id');
+        $estate->rental_id = $request->input('rental_id');
+        $estate->slug = Str::slug($request->input('estate'));
+        return redirect()->route('rental.index')->with('success', 'The Estate Block Has Been Updated Successfully');
     }
 
     /**

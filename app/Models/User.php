@@ -13,6 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use App\Models\Broker;
+use App\Models\Estate;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,8 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
+    protected $table = 'users';
+    protected $connection = 'mysql';
 
     /**
      * The attributes that are mass assignable.
@@ -37,13 +40,6 @@ class User extends Authenticatable
         'password',
 
     ];
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -84,4 +80,5 @@ class User extends Authenticatable
     {
         return $this->hasOne(Broker::class, 'broker_id');
     }
+    
 }
