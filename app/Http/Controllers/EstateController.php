@@ -156,5 +156,114 @@ class EstateController extends Controller
         }
     }
 
+    public function imageUpload(Request $request)
+    { 
+        $validator = Validator::make($request->all(), [
+            'images' => 'required|array|max:10', // Assuming a maximum of 10 images are allowed
+            'images.*' => 'file|mimes:png,jpeg,jpg,gif|max:5120'
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $estate = Estate::where('landlord_id', $request->landlord_id)->where('uid', $request->estate_id)->first();
+
+        if ($estate) {
+            $currentImages = $estate->images;
+            if ($currentImages)
+            {
+                $imageArray = explode(',', $currentImages);
+                $imageCount = count($imageArray);
+                if ($imageCount > 10)
+                {
+                    return redirect()->route('estate.index')->with('error', 'Images should not exceed 10, Kindly delete others');
+                }
+            }
+            
+            $images = $request->file('images');
+
+            if ($images != null) {
+                $updatedImages = $currentImages; 
+
+                foreach ($images as $image) {
+                    $length = 10;
+                    $characters = '0123456789abcdefghijklmnopqrstuvwxyz'; // Define the characters allowed in the ID
+                    $charactersLength = strlen($characters);
+                    $randomId = '';
+                
+                    for ($i = 0; $i < $length; $i++) {
+                        $randomId .= $characters[rand(0, $charactersLength - 1)];
+                    }
+
+                    $imageExtension = $image->extension();
+                    $imageName = $randomId.'.'.$imageExtension;
+                    $image->move(storage_path('app/public/estate_images/' . $request->landlord_id), $imageName);
+
+                    if ($updatedImages) {
+                        $updatedImages .= ',' . $imageName; 
+                    } else {
+                        $updatedImages = $imageName; 
+                    }
+                }
+
+                $estate->update(['images' => $updatedImages]);
+                return redirect()->route('estate.index')->with('success', 'Estate Images Added successfully');
+            } else {
+                return redirect()->route('estate.index')->with('error', 'No images were uploaded');
+            }
+        } else {
+            return redirect()->route('estate.index')->with('error', 'Estate Not found');
+        }
+
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $imageName = $request->input('image');
+        $landlord_id = $request->input('estateLandlordId');
+        $estate_id = $request->input('estateUid');
+        
+        $estate = Estate::where('landlord_id', $landlord_id)->where('uid', $estate_id)->first();
+
+        $imagePath = 'app/public/estate_images/'.$landlord_id .'/'. $imageName;
+        $per_image = storage_path($imagePath);
+
+        if (File::exists($per_image)) {
+            File::delete($per_image);
+            $imageArray = explode(',', $estate->images);
+            // Find and remove the deleted image name from the array
+            if (($key = array_search($imageName, $imageArray)) !== false) {
+                unset($imageArray[$key]);
+            }
+            
+            $updatedImages = implode(',', $imageArray);
+            $estate->update(['images' => $updatedImages]);
+
+            // Return a JSON response indicating success
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false, 'message' => 'Image not found or unable to delete.']);
+    }
+
+    public function estateLocation(Request $request)
+    {
+        $latitude = $request->input('estate_latitude');
+        $longitude = $request->input('estate_longitude');
+        $landlord_id = $request->input('estate_landlord');
+        $estate_id = $request->input('estate_uid');
+        
+        $estate = Estate::where('landlord_id', $landlord_id)->where('uid', $estate_id)->first();
+        if ($estate)
+        {
+            $estate->update([
+                'latitude' => $latitude,
+                'longitude' => $longitude,
+            ]);
+        } else {
+            return response()->json(['message' => 'Estate Not Found']);
+        }
+        return response()->json(['message' => 'Location Updated successfully']);
+    }
+
 }
 

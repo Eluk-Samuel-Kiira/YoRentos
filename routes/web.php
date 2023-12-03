@@ -70,6 +70,9 @@ Route::middleware([
     Route::resource('estate', EstateController::class); 
     Route::get('/estate-status/{id}', [EstateController::class, 'changeEstateStatus'])->name('estate.status');
     Route::post('/update-video', [EstateController::class, 'videoUpdate'])->name('estate.video');
+    Route::post('/update-images', [EstateController::class, 'imageUpload'])->name('estate.images');
+    Route::post('/delete-image', [EstateController::class, 'deleteImage'])->name('image.delete');
+    Route::post('/estate-location', [EstateController::class, 'estateLocation'])->name('estate.location');
 
     //Location Routes
     Route::resource('country', CountryController::class);

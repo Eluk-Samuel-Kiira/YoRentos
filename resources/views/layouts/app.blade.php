@@ -18,6 +18,7 @@
 
         <!-- Styles -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/ui/trumbowyg.min.css">
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
@@ -45,5 +46,10 @@
 
         @livewireScripts
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Load jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Load Trumbowyg JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/trumbowyg.min.js"></script>
+
     </body>
 </html>
