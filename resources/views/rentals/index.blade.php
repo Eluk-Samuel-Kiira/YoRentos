@@ -92,50 +92,52 @@
                                 </thead>
                                 <tbody id="estateTableBody">
                                 @forelse($estates as $estate)
-                                    <tr>
-                                        <td class="py-2 px-4 border-b border-r">{{ $estate->uid }}</td>
-                                        <td class="py-2 px-4 border-b border-r">{{ $estate->rentalEstate->name }}</td>
-                                        <td class="py-2 px-4 border-b border-r">{{ $estate->estate }}</td>
-                                        <td class="py-2 px-4 border-b border-r">
-                                        @foreach($users as $user)
-                                            @if ($estate->broker_id == $user->id)
-                                                {{ $user->name }}
-                                            @endif
-                                        @endforeach
-                                        </td>
-                                        <td class="py-2 px-4 border-b border-r">{{ $estate->villageEstate->village}}</td>
-                                        <td class="py-2 px-4 border-b border-r">{{ $estate->latitude}}</td>
-                                        <td class="py-2 px-4 border-b border-r">{{ $estate->longitude}}</td>
-                                        <td class="py-2 px-4 border-b border-r">{{ $estate->unit_no}}</td>
-                                        <td class="py-2 px-4 border-b border-r">
-                                            <a href="{{ route('estate.status',$estate) }}" class="py-1 px-2 
-                                                {{ $estate->sponsored == 1 ? 'bg-green-300' : 'bg-red-300' }} 
-                                                text-white rounded hover:{{ $estate->sponsored == 1 ? 'bg-green-500' : 'bg-red-500' }}">
-                                                {{ $estate->sponsored == 1 ? 'Yes' : 'No' }}
-                                            </a>
-                                        </td>
-                                        @can('update estate')
-                                            <td class="py-2 px-3 border-b border-r">
+                                    @if(auth()->user()->role == 'Admin' || auth()->user()->id == $estate->landlord_id || auth()->user()->id == $estate->broker_id)
+                                        <tr>
+                                            <td class="py-2 px-4 border-b border-r">{{ $estate->uid }}</td>
+                                            <td class="py-2 px-4 border-b border-r">{{ $estate->rentalEstate->name }}</td>
+                                            <td class="py-2 px-4 border-b border-r">{{ $estate->estate }}</td>
+                                            <td class="py-2 px-4 border-b border-r">
+                                            @foreach($users as $user)
+                                                @if ($estate->broker_id == $user->id)
+                                                    {{ $user->name }}
+                                                @endif
+                                            @endforeach
+                                            </td>
+                                            <td class="py-2 px-4 border-b border-r">{{ $estate->villageEstate->village}}</td>
+                                            <td class="py-2 px-4 border-b border-r">{{ $estate->latitude}}</td>
+                                            <td class="py-2 px-4 border-b border-r">{{ $estate->longitude}}</td>
+                                            <td class="py-2 px-4 border-b border-r">{{ $estate->unit_no}}</td>
+                                            <td class="py-2 px-4 border-b border-r">
                                                 <a href="{{ route('estate.status',$estate) }}" class="py-1 px-2 
-                                                    {{ $estate->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
-                                                    text-white rounded hover:{{ $estate->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
-                                                    {{ $estate->status == 1 ? 'Active' : 'Inactive' }}
+                                                    {{ $estate->sponsored == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                    text-white rounded hover:{{ $estate->sponsored == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                    {{ $estate->sponsored == 1 ? 'Yes' : 'No' }}
                                                 </a>
                                             </td>
-                                            <td class="py-2 px-4 border-b border-r">
-                                            <a href="{{ route('estate.index') }}" class="py-1 px-2 bg-green-300 text-white rounded hover:bg-green-500">
-                                                {{__('Show')}}
-                                            </td>
-                                        @endcan
-                                        @can('edit estate')
-                                            <td class="py-2 px-4 border-b border-r">
-                                                <a href="#" onclick="openEstateModal({{ json_encode($estate) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
-                                                    {{__('Edit') }}
-                                                </a>
-                                            </td>
-                                            @include('estates.edit-estate')
-                                        @endcan
-                                    </tr>
+                                            @can('update estate')
+                                                <td class="py-2 px-3 border-b border-r">
+                                                    <a href="{{ route('estate.status',$estate) }}" class="py-1 px-2 
+                                                        {{ $estate->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                        text-white rounded hover:{{ $estate->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                        {{ $estate->status == 1 ? 'Active' : 'Inactive' }}
+                                                    </a>
+                                                </td>
+                                                <td class="py-2 px-4 border-b border-r">
+                                                <a href="{{ route('estate.index') }}" class="py-1 px-2 bg-green-300 text-white rounded hover:bg-green-500">
+                                                    {{__('Show')}}
+                                                </td>
+                                            @endcan
+                                            @can('edit estate')
+                                                <td class="py-2 px-4 border-b border-r">
+                                                    <a href="#" onclick="openEstateModal({{ json_encode($estate) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
+                                                        {{__('Edit') }}
+                                                    </a>
+                                                </td>
+                                                @include('estates.edit-estate')
+                                            @endcan
+                                        </tr>
+                                    @endif
                                 @empty
                                     <td class="py-2 px-4 border-b border-r">{{__('No Estate Available')}}</td>
                                 @endforelse

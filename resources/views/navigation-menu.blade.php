@@ -27,6 +27,9 @@
                         {{ __('Estates') }}
                     </x-nav-link>
                     @role('Admin')
+                        <x-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
+                            {{ __('Durations') }}
+                        </x-nav-link>
                         <x-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
                             {{ __('Districts') }}
                         </x-nav-link>
@@ -183,6 +186,11 @@
             </x-responsive-nav-link>
         </div>
         @role('Admin')
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
+                    {{ __('Durations') }}
+                </x-responsive-nav-link>
+            </div>
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
                     {{ __('Districts') }}

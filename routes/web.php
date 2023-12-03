@@ -11,6 +11,8 @@ use App\Http\Controllers\SubcountyController;
 use App\Http\Controllers\ParishController;
 use App\Http\Controllers\VillageController;
 use App\Http\Controllers\EstateController;
+use App\Http\Controllers\DurationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,11 @@ Route::middleware([
     Route::post('/update-images', [EstateController::class, 'imageUpload'])->name('estate.images');
     Route::post('/delete-image', [EstateController::class, 'deleteImage'])->name('image.delete');
     Route::post('/estate-location', [EstateController::class, 'estateLocation'])->name('estate.location');
+    Route::post('/estate-description', [EstateController::class, 'estateDescription'])->name('estate.description');
+
+    //Duration
+    Route::resource('duration', DurationController::class); 
+    Route::get('/duration-status/{id}', [DurationController::class, 'changeDurationStatus'])->name('duration.status');
 
     //Location Routes
     Route::resource('country', CountryController::class);

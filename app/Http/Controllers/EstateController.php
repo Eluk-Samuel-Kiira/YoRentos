@@ -265,5 +265,30 @@ class EstateController extends Controller
         return response()->json(['message' => 'Location Updated successfully']);
     }
 
+    public function estateDescription(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'description' => 'required|max:10000',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $description = $request->input('description');
+        $landlord_id = $request->input('landlord_id');
+        $estate_id = $request->input('estate_id');
+        
+        $estate = Estate::where('landlord_id', $landlord_id)->where('uid', $estate_id)->first();
+        if ($estate)
+        {
+            $estate->update([
+                'description' => $description,
+            ]);
+            return redirect()->route('estate.index')->with('success', 'Estate Description Updated successfully');
+        } else {
+            return redirect()->route('estate.index')->with('error', 'Estate Not found');
+        }
+    }
+
 }
 

@@ -15,7 +15,9 @@
                 <div class="max-w-7xl mx-auto p-6">
                     <div class="flex space-x-4">
                         @forelse($estates as $estate)
-                            <button class="bg-blue-500 active:bg-red-700 text-white px-4 py-2 rounded hover:bg-0" onclick="showContent('{{ $estate->uid }}')">{{ $estate->estate }}</button>
+                            @if(auth()->user()->role == 'Admin' || auth()->user()->id == $estate->landlord_id || auth()->user()->id == $estate->broker_id)
+                                <button class="bg-blue-500 active:bg-red-700 text-white px-4 py-2 rounded hover:bg-0" onclick="showContent('{{ $estate->uid }}')">{{ $estate->estate }}</button>
+                            @endif
                         @empty
                             <h2 class="text-xl font-bold mb-2">No Estate Registered</h2>
                         @endforelse
@@ -90,13 +92,13 @@
                                 <div class="flex space-x-4 mb-2">
                                     <div class="w-1/3 bg-gray-200 rounded-lg p-2">
                                         <div class="w-full max-w-sm mx-auto">
-                                            <form action="{{route('estate.video')}}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                                            <form action="{{ route('estate.description') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                                                 @csrf
                                                 <input type="hidden" id="landlord_id" name="landlord_id" value="{{ $estate->landlord_id }}" required>
                                                 <input type="hidden" id="estate_id" name="estate_id" value="{{ $estate->uid }}" required>
                                                 <div class="mb-4">
-                                                    <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Update Video:</label>
-                                                    <input type="text" id="trumbowyg-demo" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                                    <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Update Description:</label>
+                                                    <textarea id="editor" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
                                                 </div>
                                                 <div class="flex items-center justify-between">
                                                     <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded-sm text-sm hover:bg-blue-600 motion-reduce:transform-none">
@@ -104,6 +106,11 @@
                                                     </button>
                                                 </div>
                                             </form>
+                                        </div>
+                                    </div>
+                                    <div class="w-2/3 bg-gray-200 rounded-lg p-2">
+                                        <div class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                                            {!! $estate->description !!}
                                         </div>
                                     </div>
                                 </div>
@@ -258,7 +265,6 @@
         });
     });
     
-    $('#trumbowyg-demo').trumbowyg();
 </script>
 
 
