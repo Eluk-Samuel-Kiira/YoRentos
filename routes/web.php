@@ -12,6 +12,8 @@ use App\Http\Controllers\ParishController;
 use App\Http\Controllers\VillageController;
 use App\Http\Controllers\EstateController;
 use App\Http\Controllers\DurationController;
+use App\Http\Controllers\UnitController;
+use App\Http\Controllers\ResourceController;
 
 
 /*
@@ -51,7 +53,7 @@ Route::middleware([
     Route::get('/users',[UserController::class, 'userDetails'])->name('users.details');
 
     Route::get('/users-permissions',[UserController::class, 'userPermissions'])->name('user.permissions');
-    Route::post('/role', [UserController::class, 'createColesAndPermissions'])->name('create.role');
+    Route::post('/role', [UserController::class, 'createRolesAndPermissions'])->name('create.role');
     Route::post('/role-permission', [UserController::class, 'editRolePermission'])->name('edit.role');
     Route::post('/role-change', [UserController::class, 'changeRole'])->name('change.role');
     Route::get('/change-status/{id}', [UserController::class, 'changeStatus']); 
@@ -64,7 +66,7 @@ Route::middleware([
 
     // Rental Routes
     Route::resource('rental', RentalController::class); 
-    Route::get('/rental-status/{id}', [RentalController::class, 'rentalStatus']);    
+    Route::get('/rental-status/{id}', [RentalController::class, 'rentalStatus'])->name('rental.status');    
     Route::get('/delete-rental/{rental_id}', [RentalController::class, 'deleteRental']);
     Route::get('/unit-rental', [RentalController::class, 'unitDetails'])->name('unit.detail');
 
@@ -77,9 +79,19 @@ Route::middleware([
     Route::post('/estate-location', [EstateController::class, 'estateLocation'])->name('estate.location');
     Route::post('/estate-description', [EstateController::class, 'estateDescription'])->name('estate.description');
 
+    
+    //Unit routes
+    Route::resource('unit', UnitController::class); 
+
+
     //Duration
     Route::resource('duration', DurationController::class); 
     Route::get('/duration-status/{id}', [DurationController::class, 'changeDurationStatus'])->name('duration.status');
+
+    //Resources routes
+    Route::resource('resource', ResourceController::class);
+    Route::get('/resource-status/{id}', [ResourceController::class, 'changeResourceStatus'])->name('resource.status');
+
 
     //Location Routes
     Route::resource('country', CountryController::class);

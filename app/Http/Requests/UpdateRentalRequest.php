@@ -11,7 +11,7 @@ class UpdateRentalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class UpdateRentalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:50',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'The rental name is required.',
+            'name.string' => 'The rental name must be a string.',
+            'name.max' => 'The rental name may not be greater than 50 characters.',
         ];
     }
 }

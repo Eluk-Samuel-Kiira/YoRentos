@@ -77,7 +77,10 @@ class RentalController extends Controller
      */
     public function update(UpdateRentalRequest $request, Rental $rental)
     {
-        //
+        $rental->update($request->validated());
+        $rental->name = $request->input('name');
+        $rental->slug = Str::slug($request->input('name'));
+        return redirect()->route('rental.index')->with('success', 'The Rental Has Been Updated Successfully');
     }
 
     /**
@@ -88,15 +91,15 @@ class RentalController extends Controller
         //
     }
 
-    public function rentalStatus($id)
+    public function rentalStatus($rental_slug)
     {
-        $rental = Rental::where('id', $id)->first();
+        $rental = Rental::where('slug', $rental_slug)->first();
 
         if ($rental) {
             if ($rental->status == 1) {
-                $rental->where('id', $id)->update(['status' => 0]);
+                $rental->where('slug', $rental_slug)->update(['status' => 0]);
             } else {
-                $rental->where('id', $id)->update(['status' => 1]);
+                $rental->where('slug', $rental_slug)->update(['status' => 1]);
             }
             
             return redirect()->route('rental.index')->with('success', 'Rental Status Changed successfully');
@@ -105,16 +108,5 @@ class RentalController extends Controller
         }
     }
 
-    public function deleteRental($rental_id)
-    {
-        $rental = Rental::where('id', $rental_id)->first();
-        if ($rental) {
-            $rental->delete();
-            
-            return redirect()->route('rental.index')->with('success', 'Rental DELETED successfully');
-        } else {
-            return redirect()->route('rental.index')->with('error', 'Rental Not found');
-        }
-    }
 
 }

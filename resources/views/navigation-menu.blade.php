@@ -26,6 +26,9 @@
                     <x-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
                         {{ __('Estates') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
+                        {{ __('Units') }}
+                    </x-nav-link>
                     @role('Admin')
                         <x-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
                             {{ __('Durations') }}
@@ -183,6 +186,11 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
                 {{ __('Estates') }}
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
+                {{ __('Units') }}
             </x-responsive-nav-link>
         </div>
         @role('Admin')

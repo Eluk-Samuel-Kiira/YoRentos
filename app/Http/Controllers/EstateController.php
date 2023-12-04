@@ -19,8 +19,8 @@ class EstateController extends Controller
      */
     public function index()
     {
-        $estates = Estate::on('mysql_estates')->get();
-        $users = User::on('mysql')->get();
+        $estates = Estate::on('mysql_estates')->where('status', 1)->get();
+        $users = User::on('mysql')->where('status', 1)->get();
         return view('estates.index', compact(
             'estates',
             'users',

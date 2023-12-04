@@ -6,6 +6,7 @@ use App\Models\Duration;
 use App\Http\Requests\StoreDurationRequest;
 use App\Http\Requests\UpdateDurationRequest;
 use Illuminate\Support\Str;
+use App\Models\Resource;
 
 class DurationController extends Controller
 {
@@ -15,8 +16,10 @@ class DurationController extends Controller
     public function index()
     {
         $durations = Duration::on('mysql_estates')->get();
+        $resources = Resource::on('mysql_estates')->get();
         return view('durations.index', compact(
             'durations',
+            'resources',
         ));
     }
 

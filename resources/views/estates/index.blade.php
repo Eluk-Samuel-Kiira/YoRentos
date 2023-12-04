@@ -44,6 +44,7 @@
                                         @if ($estate->landlord_id == $user->id)
                                             <p class="text-lg font-semibold">Landlord: {{ $user->name }}</p>
                                             <p class="text-sm text-gray-500">Email: {{ $user->email }}</p>
+                                            <p class="text-sm text-gray-500">Phone: {{ $user->phone_number }}</p>
                                         @endif
                                     @endforeach
                                 </div>
@@ -52,6 +53,7 @@
                                         @if ($estate->broker_id == $user->id)
                                             <p class="text-lg font-semibold">Broker: {{ $user->name }}</p>
                                             <p class="text-sm text-gray-500">Email: {{ $user->email }}</p>
+                                            <p class="text-sm text-gray-500">Phone: {{ $user->phone_number }}</p>
                                         @endif
                                     @endforeach
                                 </div>

@@ -75,7 +75,7 @@ class UserController extends Controller
         return redirect()->route('user')->with('success', 'Role edited successfully');
     }
 
-    public function createColesAndPermissions(Request $request)
+    public function createRolesAndPermissions(Request $request)
     {
         try {
             $roleName = $request->role;
