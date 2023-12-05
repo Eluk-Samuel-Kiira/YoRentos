@@ -82,6 +82,8 @@ Route::middleware([
     
     //Unit routes
     Route::resource('unit', UnitController::class); 
+    Route::post('/update-tenant', [UnitController::class, 'updateTenant'])->name('update.tenant');
+    Route::get('/unit-status/{slug}', [UnitController::class, 'changeUnitStatus'])->name('unit.status');
 
 
     //Duration

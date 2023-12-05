@@ -14,7 +14,7 @@
             
             <div class="mt-6">
                 <x-label for="duration" value="{{ __('Rental Name') }}" class="font-semibold text-xl"/>
-                <x-input id="rentalName" class="block mt-1 w-full rounded text-gray-700" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-input id="rentalName" class="block mt-1 w-full rounded text-gray-700" type="text" name="name" :value="old('name')" required />
             </div>
 
             <x-button class="mt-8">

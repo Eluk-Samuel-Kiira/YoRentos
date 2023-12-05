@@ -23,7 +23,7 @@
             </div>
             
             <div class="mt-6">
-                <x-label for="estate" value="{{ __('Estae Name') }}" class="font-semibold text-xl"/>
+                <x-label for="estate" value="{{ __('Estate Name') }}" class="font-semibold text-xl"/>
                 <x-input id="estate" class="block mt-1 w-full rounded text-gray-700" type="text" name="estate" :value="old('estate')" required autofocus autocomplete="estate" />
             </div>
 

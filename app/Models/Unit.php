@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Duration;
+use App\Models\User;
 
 class Unit extends Model
 {
@@ -32,5 +34,15 @@ class Unit extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function durationName()
+    {
+        return $this->belongsTo(Duration::class, 'duration_id');
+    }
+
+    public function tenantName()
+    {
+        return $this->belongsTo(User::class, 'tenant_id');
     }
 }

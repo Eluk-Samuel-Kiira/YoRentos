@@ -22,7 +22,7 @@ return new class extends Migration
             $table->id();
             $table->string('resource')->unique();
             $table->string('slug')->nullable();
-            $table->unsignedBigInteger('status')->default(1);
+            $table->unsignedBigInteger('status')->default(0);
             $table->unsignedBigInteger('deleted')->default(0);
             $table->timestamps();
         });

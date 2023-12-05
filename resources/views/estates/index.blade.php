@@ -188,26 +188,7 @@
                                     @endif
                                 </div>
                             </div>
-
-                            <!-- Unit Information -->
-                            <div>
-                                <h3 class="text-lg font-semibold mb-2">Units</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    <!-- Single Unit -->
-                                    <div class="bg-gray-100 rounded-lg p-4">
-                                        <h4 class="text-lg font-semibold mb-2">Unit 101</h4>
-                                        <p>Unit details...</p>
-                                        <!-- Edit button -->
-                                        <button class="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Edit</button>
-                                        <!-- Longitude and Latitude -->
-                                        <div class="mt-2 text-gray-500">
-                                            <p>Longitude: 123.456</p>
-                                            <p>Latitude: 78.910</p>
-                                        </div>
-                                    </div>
-                                    <!-- Add more units as needed -->
-                                </div>
-                            </div>
+                            
                         </div>
                     @empty
                         <h2 class="text-xl font-bold mb-2">No Estate Registered</h2>

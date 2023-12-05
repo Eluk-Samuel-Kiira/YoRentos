@@ -11,6 +11,7 @@ use App\Models\Resource;
 use App\Http\Requests\StoreUnitRequest;
 use App\Http\Requests\UpdateUnitRequest;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class UnitController extends Controller
 {
@@ -20,7 +21,7 @@ class UnitController extends Controller
     public function index()
     {
         $estates = Estate::on('mysql_estates')->where('status', 1)->get();        
-        $units = Unit::on('mysql_estates')->get();        
+        $units = Unit::on('mysql_estates')->latest()->get();        
         $durations = Duration::on('mysql_estates')->where('status', 1)->get();
         $rentals = Rental::on('mysql_estates')->where('status', 1)->get();
         $resources = Resource::on('mysql_estates')->where('status', 1)->get();
@@ -62,21 +63,21 @@ class UnitController extends Controller
         } while ($existingId !== null);
         
 
-        $estate = new Unit();
-        $estate->setConnection('mysql_estates');
-        $estate->unit = $request->unit;
-        $estate->slug = Str::slug($request->unit);
-        $estate->estate_id = $request->estate_id;
-        $estate->estate_uid = $request->estate_uid;
-        $estate->rental_id = $request->rental_id;
-        $estate->duration_id = $request->duration_id;
-        $estate->price = $request->price;
-        $estate->square_footage = $request->square_footage;
-        $estate->room_no = $request->room_no;
-        $estate->description = $request->description;
-        $estate->resources = implode(',', $request->resources);
-        $estate->uid = $randomId;
-        $estate->save();
+        $unit = new Unit();
+        $unit->setConnection('mysql_estates');
+        $unit->unit = $request->unit;
+        $unit->slug = Str::slug($request->unit . '-' . $randomId);
+        $unit->estate_id = $request->estate_id;
+        $unit->estate_uid = $request->estate_uid;
+        $unit->rental_id = $request->rental_id;
+        $unit->duration_id = $request->duration_id;
+        $unit->price = $request->price;
+        $unit->square_footage = $request->square_footage;
+        $unit->room_no = $request->room_no;
+        $unit->description = $request->description;
+        $unit->resources = implode(',', $request->resources);
+        $unit->uid = $randomId;
+        $unit->save();
         return redirect()->route('unit.index')->with('success', 'New Unit Created Successfully');
     }
 
@@ -101,7 +102,18 @@ class UnitController extends Controller
      */
     public function update(UpdateUnitRequest $request, Unit $unit)
     {
-        //
+        $unit->update($request->validated());
+        $unit->unit = $request->input('unit');
+        $unit->duration_id = $request->input('duration_id');
+        $unit->rental_id = $request->input('rental_id');
+        $unit->rental_id = $request->input('rental_id');
+        $unit->slug = Str::slug($request->input('unit') . '-' . $request->input('uid'));
+        $unit->price = $request->input('price');
+        $unit->square_footage = $request->input('square_footage');
+        $unit->room_no = $request->input('room_no');
+        $unit->description = $request->input('description');
+        $unit->resources = implode(',', $request->input('resources'));
+        return redirect()->route('unit.index')->with('success', 'The Rental Unit Has Been Updated Successfully');
     }
 
     /**
@@ -110,5 +122,45 @@ class UnitController extends Controller
     public function destroy(Unit $unit)
     {
         //
+    }
+
+    public function updateTenant(Request $request)
+    {
+        $unit_id = $request->input('unit_id');
+        $unit_uid = $request->input('unit_uid');
+        $lease_start = $request->input('lease_start');
+        $lease_stop = $request->input('lease_stop');
+        $tenant_id = $request->input('tenant_id');
+
+        $unit = Unit::where('id', $unit_id)->where('uid', $unit_uid)->first();
+        if ($unit)
+        {
+            $unit->update([
+                'tenant_id' => $tenant_id,
+                'lease_start' => $lease_start,
+                'lease_stop' => $lease_stop,
+                'status' => 1,
+            ]);
+            return redirect()->route('unit.index')->with('success', 'Tenant Info Updated Successfully');
+        } else {
+            return redirect()->route('unit.index')->with('error', 'Unit Not Found or Registered');
+        }
+    }
+
+    public function changeUnitStatus($slug)
+    {
+        $this_unit = Unit::where('slug', $slug)->first();
+
+        if ($this_unit) {
+            if ($this_unit->status == 1) {
+                $this_unit->where('slug', $slug)->update(['status' => 0]);
+            } else {
+                $this_unit->where('slug', $slug)->update(['status' => 1]);
+            }
+            
+            return redirect()->route('unit.index')->with('success', 'Unit Status Changed successfully');
+        } else {
+            return redirect()->route('unit.index')->with('error', 'Unit Not found');
+        }
     }
 }
