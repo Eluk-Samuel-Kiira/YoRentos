@@ -8,175 +8,168 @@
                     <div class="detail-box">
                         <div class="heading_container">
                             <h2>
-                                {{__('Houses Available For Renting Near You!')}}
+                                {{__('Let\'s Search Your Dream Rental Now!')}}
                             </h2>
                         </div>
-                        <p>
-                            {{__('There are many units available under the various categories Eg Appartments, Offices, Ware Houses etc...')}}
-                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <!-- find section -->
+    <livewire:search-component />
+    <!-- end find section -->
 
-    <!-- newest sponsored -->
-    <div class="slider-container">
-        <div class="slider">
-            <div class="slided">
-                <img src="{{asset('frontend/images/d-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
+    <!-- newly sponsored houses section -->
+    <section class="sale_section layout_padding">
+        <div class="container-fluid">
+            <div class="heading_container">
+                <h2>
+                    {{__('Top Houses Available')}}
+                </h2>
+                <p>
+                    {{__('There are many houses that are just classified and ranked first')}}
+                </p>
             </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/d-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
+            <div class="sale_container">
+                @php $imageCount = 0; @endphp
+                @forelse($estates as $estate)
+                    <div class="box">
+                        <div class="img-box">
+                            <div class="carousel">
+                                @if($estate->images)
+                                    @foreach(explode(',', $estate->images) as $imageName)
+                                        <div class="slide">
+                                            <img src="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName) }}" alt="" >
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div><img src="{{asset('frontend/images/s-2.jpg')}}" alt=""></div>
+                                @endif
+                            </div>
+                            <button class="prev" onclick="prevSlide({{ $imageCount }})"><span class="arrow">&#9664;</span> </button>
+                            <button class="next" onclick="nextSlide({{ $imageCount }})"> <span class="arrow">&#9654;</span></button>
+                            @php $imageCount++ @endphp
+                        </div>
+                        <div class="detail-box">
+                            <h6>
+                                <a href="{{ route('unit.detail') }}">{{ $estate->estate }} </a>                           
+                                <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
+                                @php
+                                    $minPrice = $estate->unitEstate->min('price');
+                                    $maxPrice = $estate->unitEstate->max('price');
+                                @endphp
+                                @if ($minPrice !== null && $maxPrice !== null)
+                                    {{ $minPrice }} - {{ $maxPrice }}
+                                @else
+                                    N/A
+                                @endif
+                                </span>
+                            </h6>
+                            <p>
+                                <span class="btn btn-primary btn-small">
+                                    @php
+                                        $availableUnits = $estate->unitEstate->where('status', 0)->count();
+                                        $allUnits = $estate->unitEstate->count();
+                                    @endphp
+                                        {{__('Units Available: ')}}
+                                    @if ($availableUnits !== 0) 
+                                        {{ $availableUnits }}/{{ $allUnits }}
+                                    @else
+                                        {{__('NONE')}}
+                                    @endif
+                                </span>
+                                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                                    <img src="{{asset('frontend/images/location.png')}}" width="10px" style="display: inline-block; vertical-align: middle; margin-right: 5px;" alt="">
+                                    <span style="display: inline-block; vertical-align: middle;">
+                                        {{ $estate->villageEstate->village }}
+                                    </span>
+                                </span>
+                                <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
+                                    {{ $estate->unit_no }}{{__(' Reviews')}}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                @empty
+                @endforelse
             </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
+            <div class="btn-box">
+                <a href="{{ route('register') }}">
+                Find More
+                </a>
             </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/d-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <div class="slided">
-                <img src="{{asset('frontend/images/s-1.jpg')}}" alt="">
-                <div class="detail-box">
-                    <h6>
-                        {{__('Name')}}
-                    </h6>
-                </div>
-                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                    <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                </span>
-            </div>
-            <!-- Add more images as needed -->
         </div>
-            <button class="previous" onclick="moveSlide(-1)"><</button>
-            <button class="nexts" onclick="moveSlide(1)">></button>
+    </section>
+    <!-- end newly sponsored houses section -->
+
+    <!-- within area -->
+    <div class="center-container">
+        <div class="rentals-container">
+            <h6>
+                {{__('Rentals Available In Your Area (Sub-County/Division)')}}
+            </h6>
         </div>
     </div>
-    <!-- end newest sponsored -->
+    <div class="slider-container">
+        <div class="slider">
+            @forelse($estates as $estate)
+                <div class="slided">
+                    @php
+                        $firstImage = 0;
+                    @endphp
+                    @if($estate->images)
+                        @foreach(explode(',', $estate->images) as $imageName)
+                            <div class="slide">
+                                <img src="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName) }}" alt="">
+                            </div>
+                            @php
+                                $firstImage++;
+                                if ($firstImage >= 1) {
+                                    break; // Stops the loop 
+                                }
+                            @endphp
+                        @endforeach
+                    @else
+                        <div><img src="{{asset('frontend/images/s-2.jpg')}}" alt=""></div>
+                    @endif
+                    <div class="detail-box">
+                        <h6>
+                            <a href="{{ route('unit.detail') }}">{{ $estate->estate }} </a>     
+                        </h6>
+                    </div>
+                    <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                        <span style="display: inline-block; vertical-align: middle;">
+                            {{ $estate->villageEstate->village }}
+                        </span>
+                    </span>
+                </div>
+            @empty
+                <div class="detail-box">
+                    <h6>
+                        {{__('No Estates Available')}}
+                    </h6>
+                </div>
+            @endforelse
+            <div>
+                <p class="btn btn-primary">
+                    <a href="{{ route('register') }}" style="text-align: center;">
+                        Find More
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- within area -->
 
     <!-- old sponsored section -->
     <section class="sale_section layout_padding">
         <div class="container-fluid">
+            <div class="heading_container">
+                <h2>
+                    {{__('Best Homes In Your District')}}
+                </h2>
+            </div>
             <div class="sale_container">
                 <div class="box">
                     <div class="img-box">

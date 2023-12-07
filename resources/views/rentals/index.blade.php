@@ -102,7 +102,7 @@
                                         <th class="py-2 px-4 border border-blue-500">Village</th>
                                         <th class="py-2 px-4 border border-blue-500">Latitude</th>
                                         <th class="py-2 px-4 border border-blue-500">Longitude</th>
-                                        <th class="py-2 px-4 border border-blue-500">Unit No</th>
+                                        <th class="py-2 px-4 border border-blue-500">Views</th>
                                         <th class="py-2 px-4 border border-blue-500">Sponsored</th>
                                         @can('update estate')
                                             <th class="py-2 px-4 border border-blue-500">Status</th>

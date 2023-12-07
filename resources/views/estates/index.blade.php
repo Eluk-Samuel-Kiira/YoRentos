@@ -181,7 +181,7 @@
                                                     data-estate-uid="{{ $estate->uid }}"
                                                     data-estate-landlord-id="{{ $estate->landlord_id }}"
                                                     data-image="{{ $imageName }}">
-                                                    &times
+                                                        &times
                                                 </button>
                                             </div>
                                         @endforeach

@@ -14,6 +14,7 @@ use App\Http\Controllers\EstateController;
 use App\Http\Controllers\DurationController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\LandingPageController;
 
 
 /*
@@ -27,9 +28,11 @@ use App\Http\Controllers\ResourceController;
 |
 */
 
-Route::get('/', function () {
-    return view('landing_page.home');
-});
+// Route::get('/', function () {
+//     return view('landing_page.home');
+// });
+Route::get('/',[LandingPageController::class, 'index'])->name('landing.page');
+
    
 // Route::get('/all-role',[UserController::class, 'userRoles'])->name('user.roles');
 

@@ -55,7 +55,7 @@ class EstateController extends Controller
         $estate = new Estate();
         $estate->setConnection('mysql_estates');
         $estate->estate = $request->estate;
-        $estate->slug = Str::slug($request->estate);
+        $estate->slug = Str::slug($request->estate . '-' . $randomId);
         $estate->landlord_id = $request->landlord_id;
         $estate->rental_id = $request->rental_id;
         $estate->broker_id = $request->broker_id;

@@ -7,32 +7,53 @@ function getYear() {
 getYear();
 
 
-$(document).ready(function() {
-    const carousel = $('.carousel');
-    const slides = $('.slide');
-    let slideIndex = 0;
 
-    function showSlide() {
-        carousel.css('transform', `translateX(-${slideIndex * 100}%)`);
-    }
+// Image slide show and next and prev elements
+// $(document).ready(function() {
+//     $('.carousel').each(function() {
+//         const carousel = $(this);
+//         const slides = carousel.find('.slide');
+//         let slideIndex = 0;
 
-    function nextSlide() {
-        slideIndex = (slideIndex + 1) % slides.length;
-        showSlide();
-    }
+//         function showSlide() {
+//             carousel.css('transform', `translateX(-${slideIndex * 100}%)`);
+//         }
 
-    function prevSlide() {
-        slideIndex = (slideIndex - 1 + slides.length) % slides.length;
-        showSlide();
-    }
+//         function nextSlide() {
+//             slideIndex = (slideIndex + 1) % slides.length;
+//             showSlide();
+//         }
 
-    $('.next').click(nextSlide);
+//         function prevSlide() {
+//             slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+//             showSlide();
+//         }
+        
 
-    $('.prev').click(prevSlide);
+//         setInterval(nextSlide, 5000); // Automatic slideshow for each carousel
+//     });
+// });
 
-    // Function to automatically change slide every 4 seconds
-    setInterval(nextSlide, 5000);
-});
+function nextSlide(imageCount) {
+    const carousel = $('.carousel').eq(imageCount);
+    const slides = carousel.find('.slide');
+    let slideIndex = carousel.data('slideIndex') || 0;
+
+    slideIndex = (slideIndex + 1) % slides.length;
+    slides.hide().eq(slideIndex).show();
+    carousel.data('slideIndex', slideIndex);
+}
+
+function prevSlide(imageCount) {
+    const carousel = $('.carousel').eq(imageCount);
+    const slides = carousel.find('.slide');
+    let slideIndex = carousel.data('slideIndex') || 0;
+
+    slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+    slides.hide().eq(slideIndex).show();
+    carousel.data('slideIndex', slideIndex);
+}
+
 
 
 function toggleNav() {

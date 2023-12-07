@@ -15,6 +15,7 @@
   <script type="text/javascript" src="{{asset('frontend/js/bootstrap.js')}}"></script>
   <script type="text/javascript" src="{{asset('frontend/js/custom.js')}}"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   
 
   @livewireScripts
