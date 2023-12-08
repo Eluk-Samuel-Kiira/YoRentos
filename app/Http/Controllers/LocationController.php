@@ -17,4 +17,19 @@ class LocationController extends Controller
         ));
     }
 
+    public function showEstate($estate_uri)
+    {
+        $this_estate = Estate::on('mysql_estates')->with('unitEstate')->where('status', 0)->where('slug', $estate_uri)->first();
+        if($this_estate)
+        {
+            return view('tenant.estate-unit', compact(
+                'this_estate',
+            ));
+        } else {
+            return redirect()->route('tenant.dashboard')->with('error', 'This Estate Not Found');
+        }
+   
+    }
+
+    
 }

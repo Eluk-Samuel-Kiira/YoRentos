@@ -1,21 +1,21 @@
 @include('layouts.header')
 <title>Dashboard | YoRentos</title>
 @include('layouts.menu')
-    <section class="deal_section layout_padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="detail-box">
-                        <div class="heading_container">
-                            <h2>
-                                {{__('Let\'s Search Your Dream Rental Now!')}}
-                            </h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    
+    <h4>  
+        <x-validation-errors class="mb-4" />  
+        @if(session('error'))
+            <span class="bg-red-500 text-white rounded">
+                {{ session('error') }}
+            </span>
+        @endif
+        @if(session('success'))
+            <span class="bg-green-500 text-white rounded">
+                {{ session('success') }}
+            </span>
+        @endif
+    </h4>
+                    
     <!-- find section -->
     <livewire:search-component />
     <!-- end find section -->
@@ -53,7 +53,7 @@
                         </div>
                         <div class="detail-box">
                             <h6>
-                                <a href="{{ route('unit.detail') }}">{{ $estate->estate }} </a>                           
+                                <a href="{{ route('unit.detail', $estate) }}">{{ $estate->estate }} </a>                           
                                 <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
                                 @php
                                     $minPrice = $estate->unitEstate->min('price');
@@ -135,7 +135,7 @@
                     @endif
                     <div class="detail-box">
                         <h6>
-                            <a href="{{ route('unit.detail') }}">{{ $estate->estate }} </a>     
+                            <a href="{{ route('unit.detail', $estate) }}">{{ $estate->estate }} </a>     
                         </h6>
                     </div>
                     <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
@@ -161,119 +161,7 @@
         </div>
     </div>
     <!-- within area -->
-
-    <!-- old sponsored section -->
-    <section class="sale_section layout_padding">
-        <div class="container-fluid">
-            <div class="heading_container">
-                <h2>
-                    {{__('Best Homes In Your District')}}
-                </h2>
-            </div>
-            <div class="sale_container">
-                <div class="box">
-                    <div class="img-box">
-                        <div class="carousel">
-                            <div class="slide"><img src="{{asset('frontend/images/s-1.jpg')}}" alt=""></div>
-                            <div class="slide"><img src="{{asset('frontend/images/s-2.jpg')}}" alt=""></div>
-                            <div class="slide"><img src="{{asset('frontend/images/s-3.jpg')}}" alt=""></div>
-                        </div>
-                        <button class="prev"><span class="arrow">&#9664;</span> </button>
-                        <button class="next"> <span class="arrow">&#9654;</span></button>
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                            <a href="{{ route('unit.detail') }}">Nalika Heights </a>                           
-                            <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
-                                {{__('Ugx:')}} 150k - 305k
-                            </span>
-                        </h6>
-                        <p>
-                            <span class="btn btn-primary btn-small">{{__('Units Available:')}} 12/25</span>
-                            <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                                <img src="{{asset('frontend/images/location.png')}}" width="10px" style="display: inline-block; vertical-align: middle; margin-right: 5px;" alt="">
-                                <span style="display: inline-block; vertical-align: middle;">Kiwanga</span>
-                            </span>
-                            <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
-                                {{__('per month')}}
-                            </span>
-                        </p>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="{{asset('frontend/images/s-2.jpg')}}" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                        apertments house
-                        </h6>
-                        <p>
-                        There are many variations of passages of Lorem Ipsum available, but
-                        </p>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="{{asset('frontend/images/s-3.jpg')}}" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                        apertments house
-                        </h6>
-                        <p>
-                        There are many variations of passages of Lorem Ipsum available, but
-                        </p>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="{{asset('frontend/images/s-4.jpg')}}" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                        apertments house
-                        </h6>
-                        <p>
-                        There are many variations of passages of Lorem Ipsum available, but
-                        </p>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="{{asset('frontend/images/s-5.jpg')}}" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                        apertments house
-                        </h6>
-                        <p>
-                        There are many variations of passages of Lorem Ipsum available, but
-                        </p>
-                    </div>
-                </div>
-                <div class="box">
-                    <div class="img-box">
-                        <img src="{{asset('frontend/images/s-6.jpg')}}" alt="">
-                    </div>
-                    <div class="detail-box">
-                        <h6>
-                        apertments house
-                        </h6>
-                        <p>
-                        There are many variations of passages of Lorem Ipsum available, but
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="btn-box">
-                <a href="">
-                Find More
-                </a>
-            </div>
-        </div>
-    </section>
-    <!-- end old sponsored section -->
+    
 
 @include('layouts.footer')
 

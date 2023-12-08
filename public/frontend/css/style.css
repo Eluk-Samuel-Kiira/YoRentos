@@ -9,6 +9,12 @@ body {
   padding-bottom: 90px;
 }
 
+.layout_padding_sale {
+  padding-top: 400;
+  padding-bottom: 90px;
+}
+
+
 .layout_padding2 {
   padding: 45px 0;
 }
@@ -34,6 +40,7 @@ body {
   text-align: center;
   max-width: 100%; /* Adjust the maximum width as needed */
   margin: 0 20px;
+  padding-bottom: 15px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -44,8 +51,30 @@ body {
 
 }
 
-
 .heading_container h2 {
+  position: relative;
+  border-left: 7px solid #0f2480;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.heading_search {
+  text-align: center;
+  max-width: 100%; /* Adjust the maximum width as needed */
+  margin: 0 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+          padding-top: -1095px;
+
+}
+
+
+.heading_search h2 {
   padding-left: 5px;
   position: relative;
   border-left: 7px solid #0f2480;
@@ -77,10 +106,14 @@ body {
 
 /* Media query for mobile devices */
 @media (max-width: 768px) {
+  .heading_container h2{
+    font-size: 15px;
+    font-weight: bolder;
+  }
   .center-container {
     margin-bottom: 10px; 
   }
-
+  
   .rentals-container {
     max-width: 90%; /* Adjusted maximum width for mobile */
     padding: 10px; /* Add padding to the container */
@@ -379,31 +412,32 @@ a:focus {
 }
 
 .find_section {
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
+  padding-top: 40px; /* Adjust the top padding as needed */
+  padding-bottom: 40px; /* Adjust the bottom padding as needed */
+  position: relative; /* Added to properly position elements inside */
 }
 
 .find_section form {
-  padding: 10px 45px;
-  -webkit-box-shadow: 0px 0px 20px 11px rgba(0, 0, 0, 0.09);
-  box-shadow: 0px 0px 20px 11px rgba(0, 0, 0, 0.09);
-  background-color: #ffffff;
+  padding: 20px; /* Adjust the padding inside the form */
+  border-radius: 8px;
+  background-color: #f8f8f8; /* Changed the background color */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Simplified box shadow */
 }
 
 .find_section form .form-control {
   outline: none;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  border-radius: 0;
-  height: 45px;
+  border: 1px solid #ccc; /* Added a border for better visibility */
+  border-radius: 5px; /* Adjust as needed */
+  height: 40px; /* Reduced height */
   margin: 10px 0;
+  padding: 8px; /* Adjust padding inside the input */
 }
 
 .find_section .description {
-  padding: 10px 45px;
-  -webkit-box-shadow: 0px 0px 20px 11px rgba(0, 0, 0, 0.09);
-  box-shadow: 0px 0px 20px 11px rgba(0, 0, 0, 0.09);
-  background-color: #ffffff;
+  padding: 20px; /* Adjust padding as needed */
+  border-radius: 8px;
+  background-color: #f8f8f8; /* Changed the background color */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Simplified box shadow */
 }
 
 .find_section form button {
@@ -411,10 +445,40 @@ a:focus {
   color: #ffffff;
   text-transform: uppercase;
   border: none;
-  height: 45px;
+  height: 40px; /* Reduced height */
   width: 100%;
   margin: 10px 0;
+  border-radius: 5px; /* Adjust as needed */
+  cursor: pointer;
 }
+
+/* Additional styles to ensure the button is positioned correctly */
+.find_section form button[type="submit"] {
+  position: relative;
+}
+
+/* Clear default button styles */
+.find_section form button[type="submit"]:focus {
+  outline: none;
+}
+
+
+/* for mobile devices */
+@media only screen and (max-width: 768px) {
+  .find_section {
+    padding-top: 50px; /* Adjust this value for mobile */
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+  }
+  .find_section form .form-control {
+    font-size: 13px;
+    border-radius: 7px;
+    padding-bottom: 1px;
+    height: 60%;
+  }
+}
+
+
 
 .about_section {
   position: relative;
@@ -470,11 +534,10 @@ a:focus {
   border-left: 7px solid #0f2480;
 }
 
-.sale_section .heading_container {
+.sale_section {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 35px;
 }
 
 .sale_section .sale_container {

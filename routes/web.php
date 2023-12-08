@@ -71,7 +71,6 @@ Route::middleware([
     Route::resource('rental', RentalController::class); 
     Route::get('/rental-status/{id}', [RentalController::class, 'rentalStatus'])->name('rental.status');    
     Route::get('/delete-rental/{rental_id}', [RentalController::class, 'deleteRental']);
-    Route::get('/unit-rental', [RentalController::class, 'unitDetails'])->name('unit.detail');
 
     //Estates
     Route::resource('estate', EstateController::class); 
@@ -118,8 +117,8 @@ Route::middleware([
     Route::get('/village-status/{slug}', [VillageController::class, 'changevillageStatus'])->name('village.status');
 
 
-
     // Tenant Dashboard
     Route::get('/tenant/dashboard',[LocationController::class, 'tenantIndex'])->name('tenant.dashboard');
+    Route::get('/unit-rental/{slug}', [LocationController::class, 'showEstate'])->name('unit.detail');
     
 });
