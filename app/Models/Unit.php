@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Duration;
 use App\Models\User;
+use App\Models\Rental;
 
 class Unit extends Model
 {
@@ -45,4 +46,10 @@ class Unit extends Model
     {
         return $this->belongsTo(User::class, 'tenant_id');
     }
+
+    public function rentalName()
+    {
+        return $this->belongsTo(Rental::class, 'rental_id');
+    }
+
 }

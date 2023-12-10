@@ -27,7 +27,7 @@
             <div id="myNav" class="overlay">
               <div class="overlay-content">
                 @foreach($rental as $item)
-                  <a href="{{$item->slug}}">{{ $item->name }}</a>
+                  <a href="{{ route('rental.type', $item->slug) }}">{{ $item->name }}</a>
                 @endforeach
                 <a href="contact.html">{{__('Contact Us')}}</a>
                 <!-- Authentication -->

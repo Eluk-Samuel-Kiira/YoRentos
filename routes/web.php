@@ -120,5 +120,6 @@ Route::middleware([
     // Tenant Dashboard
     Route::get('/tenant/dashboard',[LocationController::class, 'tenantIndex'])->name('tenant.dashboard');
     Route::get('/unit-rental/{slug}', [LocationController::class, 'showEstate'])->name('unit.detail');
+    Route::get('/rental-type/{slug}', [LocationController::class, 'showRental'])->name('rental.type');
     
 });

@@ -69,4 +69,9 @@ class Estate extends Model
     {
         return $this->hasMany(Unit::class, 'estate_id');
     }
+
+    public function rentalName()
+    {
+        return $this->belongsTo(Rental::class, 'rental_id');
+    }
 }

@@ -125,11 +125,9 @@
                                 </div>
                                 <!-- Videos -->
                                 <div class="flex space-x-4 mb-2">
-                                    <!-- Video thumbnails -->
                                     <div class="w-1/3 bg-gray-200 rounded-lg p-2">
                                         <video controls class="w-96 h-40 rounded-lg">
                                             <source src="{{ asset('storage/estate_videos')}}/{{$estate->video }}" type="video/mp4">
-                                            <!-- Add other video sources if needed (webm, ogg, etc.) -->
                                             Your browser does not support the video tag.
                                         </video>
                                     </div>

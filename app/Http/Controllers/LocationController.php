@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estate;
-// use App\Models\Rental;
+use App\Models\Rental;
 
 class LocationController extends Controller
 {
@@ -17,13 +17,15 @@ class LocationController extends Controller
         ));
     }
 
-    public function showEstate($estate_uri)
+    public function showEstate($slug)
     {
-        $this_estate = Estate::on('mysql_estates')->with('unitEstate')->where('status', 0)->where('slug', $estate_uri)->first();
-        if($this_estate)
+        $estate = Estate::on('mysql_estates')->with('unitEstate','rentalName')
+                            ->where('status', 1)->where('slug', $slug)->first();
+
+        if($estate)
         {
             return view('tenant.estate-unit', compact(
-                'this_estate',
+                'estate',
             ));
         } else {
             return redirect()->route('tenant.dashboard')->with('error', 'This Estate Not Found');
@@ -31,5 +33,20 @@ class LocationController extends Controller
    
     }
 
+    public function showRental($slug)
+    {
+        $rental_id = Rental::on('mysql_estates')->where('status', 1)->where('slug', $slug)->first();
+        $rental_id = $rental_id->id;
+        if ($rental_id)
+        {
+            // dd($rental_id);
+            $rental_type = Estate::on('mysql_estates')->where('status', 1)->where('rental_id', $rental_id)->get();
+            return view('tenant.rental-type', compact(
+                'rental_type'
+            ));
+        } else {
+            return redirect()->route('tenant.dashboard')->with('error', 'Not Accessible at the Moment');
+        }
+    }
     
 }
