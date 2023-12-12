@@ -42,6 +42,13 @@
                             <h6>
                                 {{ $estate->description }}
                             </h6>
+                        <span class="btn btn-small">
+                            <div class="button_hover">
+                                <a href="{{ route('rental.map', $estate) }}">
+                                    Navigate To Us
+                                </a>
+                            </div>
+                        </span>
                         </p>
                     </div>
                 </div>
@@ -53,7 +60,7 @@
         <div class="container">
             <div class="description">
                 <div class="form-row">
-                    <div class="img-box">
+                    <div class="img-box col-md-6">
                         @if($estate->video)
                             <div class="heading_container">
                                 <h2>
@@ -66,7 +73,7 @@
                             </video>
                         @endif
                     </div>
-                    <p>                        
+                    <p class="col-md-6">                        
                         <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
                             @php
                                 $minPrice = $estate->unitEstate->min('price');
@@ -146,10 +153,10 @@
                                         </h2>
                                         <ul>
                                             <li>
-                                                {{ $unit->durationName->duration }}
+                                                {{ $unit->rentalName->name }}
                                             </li>
                                             <li>
-                                                {{ $unit->rentalName->name }}
+                                                {{ $unit->durationName->duration }}
                                             </li>
                                             <li>
                                                 {{ $unit->square_footage }}

@@ -48,5 +48,19 @@ class LocationController extends Controller
             return redirect()->route('tenant.dashboard')->with('error', 'Not Accessible at the Moment');
         }
     }
+
+    public function locationRental($slug)
+    {
+        $rental_location = Estate::on('mysql_estates')->where('slug', $slug)->where('status', 1)
+                            ->whereNotNull('latitude')->whereNotNull('latitude')->first();
+        if ($rental_location)
+        {
+            return view('tenant.location', compact(
+                'rental_location',
+            ));
+        } else {
+            return redirect()->route('tenant.dashboard')->with('error', 'Location Details Unavailable!');
+        }
+    }
     
 }

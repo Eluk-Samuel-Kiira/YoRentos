@@ -1244,3 +1244,39 @@ button {
   right: 10px;
 }
 
+.button_hover a {
+  display: inline-block;
+  text-decoration: none;
+  color: #1409b4;
+  background-color: white;
+  border: 1px solid #007bff; /* Blue border color */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.button_hover a:hover {
+  background-color: #007bff; /* Blue background color on hover */
+}
+
+
+/* Leaflet map container */
+#map {
+  height: 500px; /* Set the height of your map container */
+  width: 100%; /* Set the width of your map container */
+  position: relative;
+  border: 1px solid #ccc; /* Example border for the map */
+}
+
+/* Styling for Leaflet controls */
+.leaflet-control-zoom,
+.leaflet-control-attribution {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.leaflet-control-zoom a,
+.leaflet-control-attribution a {
+  color: #333;
+}
+
+/* Custom styling for other Leaflet controls can be added similarly */

@@ -38,4 +38,5 @@
   <!-- Styles -->
   @livewireStyles
 
+  @yield('styles')
 
