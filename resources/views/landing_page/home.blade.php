@@ -2,29 +2,32 @@
 <title>Welcome | YoRentos</title>
 @include('layouts.navigation')
         <!-- Introduction section -->
+        <h6>
+            <div id="error-container"></div>
+        </h6>
         <section class="slider_section ">
             <div class="container-fluid">
                 <div class="row">
-                <div class="col-md-4 offset-md-1">
-                    <div class="detail-box">
-                    <h1>
-                        <span> Uganda's</span> <br>
-                        Apartments &<br>
-                        Rental Houses
-                    </h1>
-                    <p>
-                        <b>"Our mission is to facilitate connections between tenants and landlords in Uganda, fostering a seamless and 
-                            secure rental experience. We aim to bridge the gap between those seeking rental accommodations and property owners,
-                            ensuring satisfaction and trust among all parties."
-                        <b>
-                    </p>
-                    <div class="btn-box">
-                        <a href="{{route('register')}}" class="">
-                            Start Searching
-                        </a>
+                    <div class="col-md-4 offset-md-1">
+                        <div class="detail-box">
+                        <h1>
+                            <span> Uganda's</span> <br>
+                            Apartments &<br>
+                            Rental Houses
+                        </h1>
+                        <p>
+                            <b>"Our mission is to facilitate connections between tenants and landlords in Uganda, fostering a seamless and 
+                                secure rental experience. We aim to bridge the gap between those seeking rental accommodations and property owners,
+                                ensuring satisfaction and trust among all parties."
+                            <b>
+                        </p>
+                        <div class="btn-box">
+                            <a href="{{route('register')}}" class="">
+                                Start Searching
+                            </a>
+                        </div>
+                        </div>
                     </div>
-                    </div>
-                </div>
                 </div>
             </div>
         </section>
@@ -114,64 +117,48 @@
     </section>
     <!-- end newly sponsored houses section -->
 
+    District: <input wire:model="district" id="districtName" type="text">
     <!-- within area -->
-    <section>
-        <div class="center-container">
-            <div class="rentals-container">
-                <h6>
-                    {{__('Rentals Available In Your Area (Sub-County/Division)')}}
-                </h6>
+    <livewire:district-estate />
+    <!-- within area -->
+
+    <section class="contact_section layout_padding-top">
+        <div class="container">
+            <div class="heading_container">
+                <h2>
+                Get In Touch
+                </h2>
             </div>
         </div>
-        <div class="slider-container">
-            <div class="slider">
-                @forelse($estates as $estate)
-                    <div class="slided">
-                        @php
-                            $firstImage = 0;
-                        @endphp
-                        @if($estate->images)
-                            @foreach(explode(',', $estate->images) as $imageName)
-                                <div class="slide">
-                                    <img src="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName) }}" alt="">
-                                </div>
-                                @php
-                                    $firstImage++;
-                                    if ($firstImage >= 1) {
-                                        break; // Stops the loop 
-                                    }
-                                @endphp
-                            @endforeach
-                        @else
-                            <div><img src="{{asset('frontend/images/s-2.jpg')}}" alt=""></div>
-                        @endif
-                        <div class="detail-box">
-                            <h6>
-                                <a href="{{ route('unit.detail', $estate) }}">{{ $estate->estate }} </a>     
-                            </h6>
-                        </div>
-                        <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                            <span style="display: inline-block; vertical-align: middle;">
-                                {{ $estate->villageEstate->village }}
-                            </span>
-                        </span>
-                    </div>
-                @empty
-                    <div class="detail-box">
-                        <h6>
-                            {{__('No Estates Available')}}
-                        </h6>
-                    </div>
-                @endforelse
-                <div>
-                    <p class="btn btn-primary">
-                        <a href="{{ route('register') }}" style="text-align: center;">
-                            Find More
-                        </a>
-                    </p>
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 px-0">
+                <div class="contact_container">
+                    <p>Call: 0776263482</p>
+                    <p>WhatsApp: 0754428612</p>
+                    <p>Email: yorentos23@gmail.com</p>
                 </div>
             </div>
+            <div class="col-lg-4 col-md-5 ">
+                <div class="form_container">
+                    <div>
+                        {{__('Give us a Feedback or A question')}}
+                    </div>
+                    <form method="POST" action="{{ route('store.feedback') }}">
+                        @csrf
+                        <div>
+                            <input type="text" class="form-control" name="contact" placeholder="Name and Contact" required/>
+                        </div>
+                        <div>
+                            <textarea class="form-control" name="message" placeholder="Message" required></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-warning" />
+                    </form>
+                </div>
+            </div>
+
+        </div>
         </div>
     </section>
-    <!-- within area -->
 @include('layouts.footer')
+@include('dashboard.user_location')

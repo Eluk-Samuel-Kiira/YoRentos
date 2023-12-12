@@ -32,9 +32,8 @@ use App\Http\Controllers\LandingPageController;
 //     return view('landing_page.home');
 // });
 Route::get('/',[LandingPageController::class, 'index'])->name('landing.page');
+Route::post('/feedback-inquiry', [LandingPageController::class, 'storeFeedback'])->name('store.feedback');
 
-   
-// Route::get('/all-role',[UserController::class, 'userRoles'])->name('user.roles');
 
 
 
@@ -122,5 +121,11 @@ Route::middleware([
     Route::get('/unit-rental/{slug}', [LocationController::class, 'showEstate'])->name('unit.detail');
     Route::get('/rental-type/{slug}', [LocationController::class, 'showRental'])->name('rental.type');
     Route::get('/rental-map-location/{slug}', [LocationController::class, 'locationRental'])->name('rental.map');
-    
+
+
+    // Feedback
+    Route::get('/feedback-from-users',[LandingPageController::class, 'indexFeedback'])->name('feedback.index');
+    Route::get('/feedback-delete/{id}',[LandingPageController::class, 'deleteFeedback'])->name('destroy.feedback');
+
+
 });

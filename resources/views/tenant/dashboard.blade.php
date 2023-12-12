@@ -164,6 +164,7 @@
     
 
 @include('layouts.footer')
+@include('dashboard.user_location')
 
 <script>
     let slideIndex = 0;

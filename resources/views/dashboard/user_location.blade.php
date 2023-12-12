@@ -41,7 +41,21 @@
                 }
             });
         } else {
-            console.log("User is not authenticated.");
+            // This is for the user that is not logged in
+            console.log("You Not is not authenticated.");
+
+            // Making a GET request to Nominatim API to get the district name
+            fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+                .then(response => response.json())
+                .then(data => {
+                    // Extracting district name from the API response
+                    var district = data.address.state; 
+                    document.getElementById('districtName').value = district;
+                })
+                .catch(error => {
+                    console.error("Error fetching district:", error);
+                });
+
         }
 
     }, function(error) {

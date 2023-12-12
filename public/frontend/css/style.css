@@ -1279,4 +1279,24 @@ button {
   color: #333;
 }
 
-/* Custom styling for other Leaflet controls can be added similarly */
+
+.contact_container {
+  color: #ffffff; /* White text color */
+  padding-left: 280px;
+  padding-top: 100px;
+  border-radius: 5px; /* Rounded corners for the container */
+}
+
+.contact_container p {
+  margin: 5px 0; /* Adding a bit of space between the lines */
+}
+
+@media screen and (max-width: 768px) {
+  .contact_container {
+    color: #ffffff; /* White text color */
+    padding-left: 60px;
+    padding-top: 10px;
+    border-radius: 5px; /* Rounded corners for the container */
+  }
+
+}

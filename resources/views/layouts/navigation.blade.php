@@ -8,6 +8,19 @@
                     <a class="navbar-brand" href="/">
                         <img src="{{asset('frontend/images/logo.png')}}" alt="" style="height: 60px; width: 160px;"/>
                     </a>
+                    <h4>  
+                        <x-validation-errors class="mb-4" />  
+                        @if(session('error'))
+                            <span class="bg-red-500 text-white rounded">
+                                {{ session('error') }}
+                            </span>
+                        @endif
+                        @if(session('success'))
+                            <span class="bg-green-500 text-white rounded">
+                                {{ session('success') }}
+                            </span>
+                        @endif
+                    </h4>
                     <div class="navbar-collapse" id="">
                         <div class="custom_menu-btn">
                             <button onclick="toggleNav()">
@@ -23,9 +36,6 @@
                             <div class="overlay-content">
                                 <a href="index.html">Home</a>
                                 <a href="about.html">About</a>
-                                <a href="house.html">House</a>
-                                <a href="price.html">Price</a>
-                                <a href="contact.html">Contact Us</a>
                                 <a href="{{route('login')}}">Login</a>
                                 <a href="{{route('register')}}">Register</a>
                             </div>

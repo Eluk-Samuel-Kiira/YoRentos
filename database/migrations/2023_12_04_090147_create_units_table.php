@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('square_footage')->nullable();
             $table->string('resources')->nullable();
             $table->text('description')->nullable();
-            $table->unsignedBigInteger('status')->default(1);
+            $table->unsignedBigInteger('status')->default(0);
             $table->unsignedBigInteger('deleted')->default(0);
             $table->unsignedBigInteger('sponsored')->default(0);
             $table->string('tenant_id')->nullable();
