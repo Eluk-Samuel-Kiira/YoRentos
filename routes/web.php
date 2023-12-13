@@ -33,9 +33,7 @@ use App\Http\Controllers\LandingPageController;
 // });
 Route::get('/',[LandingPageController::class, 'index'])->name('landing.page');
 Route::post('/feedback-inquiry', [LandingPageController::class, 'storeFeedback'])->name('store.feedback');
-
-
-
+Route::post('/user-district', [LandingPageController::class, 'userDistrict'])->name('user.district');
 
 
 

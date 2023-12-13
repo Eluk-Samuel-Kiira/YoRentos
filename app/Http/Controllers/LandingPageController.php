@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Estate;
+use App\Models\District;
+use App\Models\Village;
 use App\Models\Unit;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Validator;
@@ -64,5 +66,25 @@ class LandingPageController extends Controller
             return redirect()->route('feedback.index')->with('success', 'Feedback Not Found');   
         }
 
+    }
+
+    public function userDistrict(Request $request)
+    {
+        $district_name = $request->input('district');
+        // $district_name = $request->input('district');
+
+        $district = District::where('district', $district_name)->first();
+        if ($district)
+        {
+            // Fetch villages within the district
+            $villagesInDistrict = Village::whereHas('parishName.subcountyName.countyName.districtName', function ($query) use ($district) {
+                $query->where('id', $district->id);
+            })->pluck('id');
+            $estatesInDistrict = Estate::with('villageEstate')->whereIn('village_id', $villagesInDistrict)->get();
+
+            return response()->json(['data' => $estatesInDistrict]);
+        } else {
+            return response()->json(['success' => false, 'message' => 'District Not Found']);
+        }
     }
 }

@@ -117,9 +117,31 @@
     </section>
     <!-- end newly sponsored houses section -->
 
-    District: <input wire:model="district" id="districtName" type="text">
     <!-- within area -->
-    <livewire:district-estate />
+    <section>
+        <div class="center-container">
+            <div class="rentals-container">
+                <h6>
+                    {{__('Rentals Available In The District/State of')}}
+                    <input id="districtName" type="text" style="border: none;">
+                </h6>
+            </div>
+        </div>
+        <div class="slider-container">
+            <div class="slider">
+                    <div class="slided">
+                    </div>
+                <div>
+                    <p class="">
+                        {{__('Your District is Not Supported Yet or kindly  ')}}
+                        <a href="/" class="btn btn-primary" style="text-align: center;">
+                            REFRESH
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- within area -->
 
     <section class="contact_section layout_padding-top">
