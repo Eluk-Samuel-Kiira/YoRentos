@@ -6,7 +6,7 @@
             <div class="container-fluid">
                 <nav class="navbar navbar-expand-lg custom_nav-container">
                     <a class="navbar-brand" href="/">
-                        <img src="{{asset('frontend/images/logo.png')}}" alt="" style="height: 60px; width: 160px;"/>
+                        <img src="{{asset('frontend/images/logo.png')}}" alt=""/>
                     </a>
                     <h4>  
                         <x-validation-errors class="mb-4" />  
@@ -34,7 +34,7 @@
                         </div>
                         <div id="myNav" class="overlay">
                             <div class="overlay-content">
-                                <a href="index.html">Home</a>
+                                <a href="/">Home</a>
                                 <a href="about.html">About</a>
                                 <a href="{{route('login')}}">Login</a>
                                 <a href="{{route('register')}}">Register</a>

@@ -5,7 +5,7 @@ body {
 }
 
 .layout_padding {
-  padding-top: 90px;
+  padding-top: 40px;
   padding-bottom: 90px;
 }
 
@@ -29,7 +29,7 @@ body {
 }
 
 .layout_padding-top {
-  padding-top: 90px;
+  padding-top: 20px;
 }
 
 .layout_padding-bottom {
@@ -222,7 +222,9 @@ a:focus {
 }
 
 .navbar-brand img {
-  width: 90px;
+  width: 160px;
+  height: 60px;
+  position: fixed;
 }
 
 .custom_nav-container {
@@ -272,9 +274,9 @@ a:focus {
 
 .custom_menu-btn {
   z-index: 9;
-  position: absolute;
-  right: 50px;
-  top: 37px;
+  position: fixed;
+  right: 80px;
+  top: 20px;
 }
 
 .custom_menu-btn button {
@@ -413,9 +415,9 @@ a:focus {
 }
 
 .find_section {
-  padding-top: 40px; /* Adjust the top padding as needed */
-  padding-bottom: 40px; /* Adjust the bottom padding as needed */
-  position: relative; /* Added to properly position elements inside */
+  padding-top: 40px; 
+  padding-bottom: 40px; 
+  position: relative; 
 }
 
 .find_section form {
@@ -586,6 +588,37 @@ a:focus {
   text-transform: uppercase;
   font-weight: bold;
   font-size: 18px;
+}
+
+.sale_section .sale_container .box .detail-box h6 span {
+  font-weight: bold;
+  font-size: 12px;
+  background-color: #f9bc16;
+}
+
+.sale_section .sale_container .box .detail-box p span {
+  color: #f1f1f1;
+  font-weight: bold;
+  font-size: 12px;
+  background-color: #3554d1;
+}
+
+.sale_section .sale_container .box .detail-box h6 a {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: transparent;
+  color: #3554d1;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  font-size: 15px;
+}
+
+.sale_section .sale_container .box .detail-box h6 a:hover {
+  background-color: #3554d1;
+  border-color: transparent;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 15px;
 }
 
 .sale_section .btn-box {
@@ -967,7 +1000,7 @@ a:focus {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 
 .contact_section .container-fluid {
@@ -1189,7 +1222,32 @@ button {
 .slider {
   display: flex;
   transition: transform 0.3s ease-in-out;
-  overflow-x: scroll; 
+}
+
+/* Scroll-Bar */
+.scroll-container {
+  width: 100%; /* Adjust the width as needed */
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 20px 0; /* Padding for better visibility */
+  background-color: #f5f5f5; /* Background color for the container */
+}
+
+.scroll-content {
+  display: inline-block;
+}
+
+.item {
+  display: inline-block;
+  width: 200px; /* Adjust item width as needed */
+  height: 150px; /* Adjust item height as needed */
+  margin-right: 20px; /* Adjust the spacing between items */
+  background-color: #ddd; /* Item background color */
+  border-radius: 8px;
+  text-align: center;
+  line-height: 150px; /* Center item content vertically */
+  font-family: Arial, sans-serif;
+  font-size: 18px;
 }
 
 .slided {
@@ -1197,6 +1255,48 @@ button {
   border-right: 2px solid #ccc; /* Border between slides */
   padding-right: 10px; /* Adjust spacing */
   box-sizing: border-box;
+}
+
+.btn-small {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: transparent;
+  color: #3554d1;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  font-size: 15px;
+}
+
+.btn-small:hover{
+  background-color: #3554d1;
+  border-color: transparent;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 15px;
+}
+
+.slided span {
+  background-color: #3554d1;
+  color: #ffffff;
+}
+
+
+.slided h6 a {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: transparent;
+  color: #3554d1;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  font-size: 15px;
+}
+
+.slided h6 a:hover {
+  background-color: #3554d1;
+  border-color: transparent;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 15px;
 }
 
 .slided img {

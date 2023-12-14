@@ -23,12 +23,69 @@
   .hero_area {
     background: none;
     background-color: #e9eefc;
-    height: auto;
+    height: 530px;
   }
 
+  /* logo */
+  .navbar-brand img {
+    padding-top: 16px;
+    width: 85px;
+    height: 45px;
+    position: fixed;
+  }
+
+  /* Introduction */
+  
+  .slider_section .detail-box h1 span {
+    padding-top: 5px;
+    color: #0f2480;
+    font-size: 2rem;
+  }
+
+  .slider_section .detail-box h1 div {
+    font-size: 2rem;
+  }
+
+  .slider_section .detail-box p {
+    margin-top: 25px;
+    font-size: 15px;
+    font-style: inherit;
+  }
+
+  .slider_section .detail-box .btn-box {
+    margin-top: 25px;
+  }
+
+  .slider_section .detail-box .btn-box a {
+    padding: 3px 20px;
+    border-radius: 25px;
+    margin-bottom: 65px;
+    font-size: 15px;
+  }
+
+  
+  /* sale container */
+  .sale_section .sale_container .box .detail-box h6 a {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: transparent;
+    color: #3554d1;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    font-size: 15px;
+  }
+  
+  .sale_section .sale_container .box .detail-box h6 a:hover {
+    background-color: #3554d1;
+    border-color: transparent;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 15px;
+  }
 
   .custom_menu-btn button span {
     background-color: #0f2480;
+    height: 3px;
   }
 
   .sub_page .custom_menu-btn button span {

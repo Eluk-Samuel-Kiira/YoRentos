@@ -7,13 +7,14 @@
         </h6>
         <section class="slider_section ">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4 offset-md-1">
-                        <div class="detail-box">
+                <div class="col-md-4 offset-md-1">
+                    <div class="detail-box">
                         <h1>
                             <span> Uganda's</span> <br>
-                            Apartments &<br>
-                            Rental Houses
+                            <div>
+                                Apartments &<br>
+                                Rental Houses
+                            </div>
                         </h1>
                         <p>
                             <b>"Our mission is to facilitate connections between tenants and landlords in Uganda, fostering a seamless and 
@@ -23,9 +24,8 @@
                         </p>
                         <div class="btn-box">
                             <a href="{{route('register')}}" class="">
-                                Start Searching
+                                Get Stared
                             </a>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
         <div class="container-fluid">
             <div class="heading_container">
                 <h2>
-                    {{__('Top Houses Available In The Country')}}
+                    {{__('Top Quality Houses Available In The Country')}}
                 </h2>
             </div>
             <div class="sale_container">
@@ -67,7 +67,7 @@
                         <div class="detail-box">
                             <h6>
                                 <a href="{{ route('unit.detail', $estate) }}">{{ $estate->estate }} </a>                           
-                                <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
+                                <span class="btn btn-small">
                                 @php
                                     $minPrice = $estate->unitEstate->min('price');
                                     $maxPrice = $estate->unitEstate->max('price');
@@ -80,7 +80,7 @@
                                 </span>
                             </h6>
                             <p>
-                                <span class="btn btn-primary btn-small">
+                                <span class="btn btn-small">
                                     @php
                                         $availableUnits = $estate->unitEstate->where('status', 0)->count();
                                         $allUnits = $estate->unitEstate->count();
@@ -92,13 +92,11 @@
                                         {{__('NONE')}}
                                     @endif
                                 </span>
-                                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                                <span class="btn btn-small">
                                     <img src="{{asset('frontend/images/location.png')}}" width="10px" style="display: inline-block; vertical-align: middle; margin-right: 5px;" alt="">
-                                    <span style="display: inline-block; vertical-align: middle;">
-                                        {{ $estate->villageEstate->village }}
-                                    </span>
+                                    {{ $estate->villageEstate->village }}
                                 </span>
-                                <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
+                                <span class="btn btn-small">
                                     {{ $estate->unit_no }}{{__(' Reviews')}}
                                 </span>
                             </p>
@@ -110,11 +108,6 @@
                     </p>
                 @endforelse
             </div>
-            <div class="btn-box">
-                <a href="{{ route('register') }}">
-                Find More
-                </a>
-            </div>
         </div>
     </section>
     <!-- end newly sponsored houses section -->
@@ -125,21 +118,22 @@
             <div class="rentals-container">
                 <h6>
                     {{__('Rentals Available In The District/State of')}}
-                    <input id="districtName" type="text" style="border: none;">
+                    <input id="districtName" type="text" style="border: none;" disabled>
                 </h6>
             </div>
         </div>
         <div class="slider-container">
-            <div class="slider">
-                    <div class="slided">
+            <div class="slider scroll-container">
+                <div class="scroll-content">
+                    <div class="slided item">
+
                     </div>
-                <div>
-                    <p class="">
+                    <div>
                         {{__('Your District is Not Supported Yet or kindly  ')}}
-                        <a href="/" class="btn btn-primary" style="text-align: center;">
-                            REFRESH
-                        </a>
-                    </p>
+                        <div>
+                            <a href="/" class="btn-small">Refresh</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,16 +145,10 @@
         <div class="container-fluid">
             <div class="heading_container">
                 <h2>
-                    {{__('Top Houses Available')}}
+                    {{__('Other Quality Houses')}}
                 </h2>
-                <p>
-                    {{__('There are many houses that are just classified and ranked first')}}
-                </p>
             </div>
             <div class="sale_container">
-                @php 
-                    $imageCount = 0;
-                @endphp
                 @forelse($early_estates as $estate)
                     <div class="box">
                         <div class="img-box">
@@ -182,7 +170,7 @@
                         <div class="detail-box">
                             <h6>
                                 <a href="{{ route('unit.detail', $estate) }}">{{ $estate->estate }} </a>                           
-                                <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
+                                <span class="btn btn-small">
                                 @php
                                     $minPrice = $estate->unitEstate->min('price');
                                     $maxPrice = $estate->unitEstate->max('price');
@@ -195,7 +183,7 @@
                                 </span>
                             </h6>
                             <p>
-                                <span class="btn btn-primary btn-small">
+                                <span class="btn btn-small">
                                     @php
                                         $availableUnits = $estate->unitEstate->where('status', 0)->count();
                                         $allUnits = $estate->unitEstate->count();
@@ -207,13 +195,11 @@
                                         {{__('NONE')}}
                                     @endif
                                 </span>
-                                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                                <span class="btn btn-small">
                                     <img src="{{asset('frontend/images/location.png')}}" width="10px" style="display: inline-block; vertical-align: middle; margin-right: 5px;" alt="">
-                                    <span style="display: inline-block; vertical-align: middle;">
-                                        {{ $estate->villageEstate->village }}
-                                    </span>
+                                    {{ $estate->villageEstate->village }}
                                 </span>
-                                <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
+                                <span class="btn btn-small">
                                     {{ $estate->unit_no }}{{__(' Reviews')}}
                                 </span>
                             </p>

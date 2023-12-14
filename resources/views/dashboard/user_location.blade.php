@@ -89,12 +89,10 @@
                                                 htmlContent += `
                                                     <div class="slided">
                                                         ${imagesHTML}
-                                                        <div class="detail-box">
-                                                            <h6>
-                                                                <a href="${estate.slug}">${estate.estate}</a>
-                                                            </h6>
-                                                        </div>
-                                                        <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                                                        <h6>
+                                                            <a href="${estate.slug}">${estate.estate}</a>
+                                                        </h6>
+                                                        <span class="btn btn-small" style="display: inline-block; white-space: nowrap;">
                                                             <span style="display: inline-block; vertical-align: middle;">
                                                                 ${estate.village_estate.village}
                                                             </span>
