@@ -15,11 +15,13 @@ class LandingPageController extends Controller
 {
     public function index()
     {        
-        $estates = Estate::on('mysql_estates')->with('unitEstate')->where('status', 1)->latest()->get();
+        $newly_estates = Estate::on('mysql_estates')->with('unitEstate')->where('status', 1)->latest()->take(6)->get();
+        $early_estates = Estate::on('mysql_estates')->with('unitEstate')->where('status', 1)->latest()->skip(6)->take(6)->get();
         // $units = Unit::on('mysql_estates')->where('status', 0)->latest()->get();
 
         return view('landing_page.home', compact(
-            'estates',
+            'newly_estates',
+            'early_estates',
         ));
     }
 

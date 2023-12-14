@@ -11,7 +11,7 @@
     let attempts = 0;
 
     function getGeoLocation() {
-        if (attempts < 3) {
+        if (attempts < 4) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 // Get latitude and longitude values from position object
                 lat = position.coords.latitude;
@@ -70,7 +70,7 @@
                                     },
                                     success: function(response) {
                                         var estatesInDistrict = response.data;
-                                        console.log(estatesInDistrict);
+                                        // console.log(estatesInDistrict);
                                         if (estatesInDistrict.length > 0) {
                                             var htmlContent = '';
 
@@ -128,7 +128,7 @@
                 showError(errorMessage);
             });
             attempts++;
-            setTimeout(getGeoLocation, 4000);
+            setTimeout(getGeoLocation, 5000);
         }
     }
     getGeoLocation();
