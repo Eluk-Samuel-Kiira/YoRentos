@@ -2,8 +2,8 @@
     <section class="find_section ">
         <div class="container">
             <form action="">
-                <div class="heading_container">
-                    <h2>
+                <div class="container-header">
+                    <h2 class="rental_heading">
                         {{__('Let\'s Search Your Dream Rental Now!')}}
                     </h2>
                 </div>
@@ -72,27 +72,22 @@
                         </select>
                     </div>
                 </div>
-                <div class="search_section">
-                    <div class="container-fluid">
-                        <div class="heading_container">
-                            <h2>
-                                @if($selected_rental)
-                                    {{ $selected_rental->name }}
-                                @else
-                                    {{ ('No Rental Type Selected') }}
-                                @endif
-                            </h2>
-                        </div>
-                    </div>
-                </div>
             </form>
         </div>
     </section>
     <section class="sale_section">
+        <div class="container-header">
+            <h2 class="rental_heading">
+                @if($selected_rental)
+                    {{ $selected_rental->name }}
+                @else
+                    {{ ('No Rental Type Selected') }}
+                @endif
+            </h2>
+        </div>
         <div class="container-fluid">
             <div class="sale_container">
                 @if($selected_rental && $select_estates)
-                    @php $imageCount = 0; @endphp
                     @forelse($select_estates as $estate)
                         <div class="box">
                             <div class="img-box">
@@ -107,9 +102,6 @@
                                         <div><img src="{{asset('frontend/images/s-2.jpg')}}" alt=""></div>
                                     @endif
                                 </div>
-                                <button class="prev" onclick="prevSlide({{ $imageCount }})"><span class="arrow">&#9664;</span> </button>
-                                <button class="next" onclick="nextSlide({{ $imageCount }})"> <span class="arrow">&#9654;</span></button>
-                                @php $imageCount++ @endphp
                             </div>
                             <div class="detail-box">
                                 <h6>
@@ -127,7 +119,7 @@
                                     </span>
                                 </h6>
                                 <p>
-                                    <span class="btn btn-primary btn-small">
+                                    <span class="btn btn-small">
                                         @php
                                             $availableUnits = $estate->unitEstate->where('status', 0)->count();
                                             $allUnits = $estate->unitEstate->count();
@@ -145,18 +137,12 @@
                                             {{ $estate->villageEstate->village }}
                                         </span>
                                     </span>
-                                    <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
-                                        {{ $estate->unit_no }}{{__(' Reviews')}}
-                                    </span>
                                 </p>
                             </div>
                         </div>
                     @empty
                     @endforelse
                 @else
-                    <div class="btn btn-primary">
-                        No Estate Selected Yet or Unavailable in Your Area!!
-                    </div>
                 @endif
             </div>
         </div>

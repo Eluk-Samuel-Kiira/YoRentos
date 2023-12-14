@@ -37,8 +37,8 @@
     <!-- newly sponsored houses section -->
     <section class="sale_section layout_padding">
         <div class="container-fluid">
-            <div class="heading_container">
-                <h2>
+            <div class="container-header">
+                <h2 class="rental_heading">
                     {{__('Top Quality Houses Available In The Country')}}
                 </h2>
             </div>
@@ -114,15 +114,13 @@
 
     <!-- within area -->
     <section>
-        <div class="center-container">
-            <div class="rentals-container">
-                <h6>
+        <div class="slider-container">
+            <div class="container-header">
+                <h2 class="rental_heading">
                     {{__('Rentals Available In The District/State of')}}
                     <input id="districtName" type="text" style="border: none;" disabled>
-                </h6>
+                </h2>
             </div>
-        </div>
-        <div class="slider-container">
             <div class="slider scroll-container">
                 <div class="scroll-content">
                     <div class="slided item">
@@ -140,11 +138,11 @@
     </section>
     <!-- within area -->
 
-    <!-- newly sponsored houses section -->
+    <!--  sponsored houses section -->
     <section class="sale_section layout_padding">
         <div class="container-fluid">
-            <div class="heading_container">
-                <h2>
+            <div class="container-header">
+                <h2 class="rental_heading">
                     {{__('Other Quality Houses')}}
                 </h2>
             </div>
@@ -218,16 +216,14 @@
             </div>
         </div>
     </section>
-    <!-- end newly sponsored houses section -->
+    <!-- end  sponsored houses section -->
 
     <section class="contact_section layout_padding-top">
-        <div class="container">
-            <div class="heading_container">
-                <h2>
-                Get In Touch
+            <div class="container-header">
+                <h2 class="rental_heading">
+                    {{__('Get In Touch')}}
                 </h2>
             </div>
-        </div>
         <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 px-0">

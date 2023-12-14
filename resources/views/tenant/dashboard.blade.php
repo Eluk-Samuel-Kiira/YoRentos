@@ -23,17 +23,16 @@
     <!-- newly sponsored houses section -->
     <section class="sale_section layout_padding">
         <div class="container-fluid">
-            <div class="heading_container">
-                <h2>
-                    {{__('Top Houses Available')}}
+            <div class="container-header">
+                <h2 class="rental_heading">
+                    {{__('Top Quality Houses Available In The Country')}}
                 </h2>
-                <p>
-                    {{__('There are many houses that are just classified and ranked first')}}
-                </p>
             </div>
             <div class="sale_container">
-                @php $imageCount = 0; @endphp
-                @forelse($estates as $estate)
+                @php 
+                    $imageCount = 0;
+                @endphp
+                @forelse($newly_estates as $estate)
                     <div class="box">
                         <div class="img-box">
                             <div class="carousel">
@@ -54,7 +53,7 @@
                         <div class="detail-box">
                             <h6>
                                 <a href="{{ route('unit.detail', $estate) }}">{{ $estate->estate }} </a>                           
-                                <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
+                                <span class="btn btn-small">
                                 @php
                                     $minPrice = $estate->unitEstate->min('price');
                                     $maxPrice = $estate->unitEstate->max('price');
@@ -67,7 +66,7 @@
                                 </span>
                             </h6>
                             <p>
-                                <span class="btn btn-primary btn-small">
+                                <span class="btn btn-small">
                                     @php
                                         $availableUnits = $estate->unitEstate->where('status', 0)->count();
                                         $allUnits = $estate->unitEstate->count();
@@ -79,40 +78,34 @@
                                         {{__('NONE')}}
                                     @endif
                                 </span>
-                                <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
+                                <span class="btn btn-small">
                                     <img src="{{asset('frontend/images/location.png')}}" width="10px" style="display: inline-block; vertical-align: middle; margin-right: 5px;" alt="">
-                                    <span style="display: inline-block; vertical-align: middle;">
-                                        {{ $estate->villageEstate->village }}
-                                    </span>
+                                    {{ $estate->villageEstate->village }}
                                 </span>
-                                <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
+                                <span class="btn btn-small">
                                     {{ $estate->unit_no }}{{__(' Reviews')}}
                                 </span>
                             </p>
                         </div>
                     </div>
                 @empty
+                    <p>
+                        {{__('There are no Sponsored Estates')}}
+                    </p>
                 @endforelse
-            </div>
-            <div class="btn-box">
-                <a href="{{ route('register') }}">
-                Find More
-                </a>
             </div>
         </div>
     </section>
     <!-- end newly sponsored houses section -->
 
     <!-- within area -->
-    <div class="center-container">
-        <div class="rentals-container">
-            <h6>
-                {{__('Rentals Available In Your Area (Sub-County/Division)')}}
-            </h6>
-        </div>
-    </div>
     <div class="slider-container">
-        <div class="slider">
+        <div class="container-header">
+            <h2 class="rental_heading">
+                {{__('Most Search Rentals In Your Location')}}
+            </h2>
+        </div>
+        <div class="slider scroll-container">
             @forelse($estates as $estate)
                 <div class="slided">
                     @php
@@ -151,18 +144,85 @@
                     </h6>
                 </div>
             @endforelse
-            <div>
-                <p class="btn btn-primary">
-                    <a href="{{ route('register') }}" style="text-align: center;">
-                        Find More
-                    </a>
-                </p>
-            </div>
         </div>
     </div>
     <!-- within area -->
     
-
+    <!--  sponsored houses section -->
+    <section class="sale_section layout_padding">
+        <div class="container-fluid">
+            <div class="container-header">
+                <h2 class="rental_heading">
+                    {{__('Other Quality Houses')}}
+                </h2>
+            </div>
+            <div class="sale_container">
+                @forelse($early_estates as $estate)
+                    <div class="box">
+                        <div class="img-box">
+                            <div class="carousel">
+                                @if($estate->images)
+                                    @foreach(explode(',', $estate->images) as $imageName)
+                                        <div class="slide">
+                                            <img src="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName) }}" alt="" >
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div><img src="{{asset('frontend/images/s-2.jpg')}}" alt=""></div>
+                                @endif
+                            </div>
+                            <button class="prev" onclick="prevSlide({{ $imageCount }})"><span class="arrow">&#9664;</span> </button>
+                            <button class="next" onclick="nextSlide({{ $imageCount }})"> <span class="arrow">&#9654;</span></button>
+                            @php $imageCount++ @endphp
+                        </div>
+                        <div class="detail-box">
+                            <h6>
+                                <a href="{{ route('unit.detail', $estate) }}">{{ $estate->estate }} </a>                           
+                                <span class="btn btn-small">
+                                @php
+                                    $minPrice = $estate->unitEstate->min('price');
+                                    $maxPrice = $estate->unitEstate->max('price');
+                                @endphp
+                                @if ($minPrice !== null && $maxPrice !== null)
+                                    {{ $minPrice }} - {{ $maxPrice }}
+                                @else
+                                    N/A
+                                @endif
+                                </span>
+                            </h6>
+                            <p>
+                                <span class="btn btn-small">
+                                    @php
+                                        $availableUnits = $estate->unitEstate->where('status', 0)->count();
+                                        $allUnits = $estate->unitEstate->count();
+                                    @endphp
+                                        {{__('Units Available: ')}}
+                                    @if ($availableUnits !== 0) 
+                                        {{ $availableUnits }}/{{ $allUnits }}
+                                    @else
+                                        {{__('NONE')}}
+                                    @endif
+                                </span>
+                                <span class="btn btn-small">
+                                    <img src="{{asset('frontend/images/location.png')}}" width="10px" style="display: inline-block; vertical-align: middle; margin-right: 5px;" alt="">
+                                    {{ $estate->villageEstate->village }}
+                                </span>
+                                <span class="btn btn-small">
+                                    {{ $estate->unit_no }}{{__(' Reviews')}}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                @empty
+                    <p>
+                        {{__('There are no Sponsored Estates')}}
+                    </p>
+                @endforelse
+            </div>
+        </div>
+    </section>
+    <!-- end  sponsored houses section -->
+    
 @include('layouts.footer')
 @include('dashboard.user_location')
 

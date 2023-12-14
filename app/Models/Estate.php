@@ -34,6 +34,7 @@ class Estate extends Model
         'landlord_id',
         'broker_id',
         'village_id',
+        'rental_id',
         'images',
         'latitude',
         'longitude',

@@ -5,15 +5,35 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Estate;
 use App\Models\Rental;
+use App\Models\User;
 
 class LocationController extends Controller
 {
     public function tenantIndex()
-    {
-        $estates = Estate::on('mysql_estates')->with('unitEstate')->where('status', 1)->latest()->get();
+    {       
+        $user = User::where('id', auth()->user()->id)->first();
+        $user_lat = $user->latitude;
+        $user_lng = $user->longitude;
+
+        $estates = Estate::on('mysql_estates')->with('unitEstate')->where('status', 1)->select('*')
+        ->selectRaw(
+            '( 6371 * acos( cos( radians(?) ) *
+            cos( radians( latitude ) ) *
+            cos( radians( longitude ) - radians(?) ) +
+            sin( radians(?) ) *
+            sin( radians( latitude ) ) ) ) AS distance',
+            [$user_lat, $user_lng, $user_lat]
+        )
+        ->having('distance', '<=', 20) // 20km range
+        ->orderBy('distance', 'asc')->latest()->get();
+
+        $newly_estates = Estate::on('mysql_estates')->with('unitEstate')->where('status', 1)->latest()->take(6)->get();
+        $early_estates = Estate::on('mysql_estates')->with('unitEstate')->where('status', 1)->latest()->skip(6)->take(6)->get();
 
         return view('tenant.dashboard', compact(
             'estates',
+            'newly_estates',
+            'early_estates',
         ));
     }
 

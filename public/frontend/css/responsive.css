@@ -19,7 +19,30 @@
   }
 }
 
+
+
 @media (max-width: 768px) {
+  .container-header {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .rental_heading {
+    position: relative;
+    border-left: 7px solid #0f2480;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+  }
+  .center-container {
+    margin-bottom: 10px; 
+  }
+  
+  .rentals-container {
+    max-width: 90%; /* Adjusted maximum width for mobile */
+    padding: 10px; /* Add padding to the container */
+  }
   .hero_area {
     background: none;
     background-color: #e9eefc;
@@ -31,7 +54,7 @@
     padding-top: 16px;
     width: 85px;
     height: 45px;
-    position: fixed;
+    position: absolute;
   }
 
   /* Introduction */
