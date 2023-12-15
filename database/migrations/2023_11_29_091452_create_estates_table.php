@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('latitude')->nullable();
             $table->string('video')->nullable();
             $table->longText('description')->nullable();
-            $table->string('unit_no')->nullable();
+            $table->string('unit_no')->default(0);
             $table->unsignedBigInteger('status')->default(1);
             $table->unsignedBigInteger('deleted')->default(0);
             $table->unsignedBigInteger('sponsored')->default(0);

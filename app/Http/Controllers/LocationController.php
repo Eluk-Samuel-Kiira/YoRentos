@@ -41,11 +41,18 @@ class LocationController extends Controller
     {
         $estate = Estate::on('mysql_estates')->with('unitEstate','rentalName')
                             ->where('status', 1)->where('slug', $slug)->first();
+        $users = User::where('status', 1)->get();
+
+        
+        Estate::updateOrInsert(['slug' => $slug],[
+            'unit_no' => $estate->unit_no+1,
+        ]);
 
         if($estate)
         {
             return view('tenant.estate-unit', compact(
                 'estate',
+                'users',
             ));
         } else {
             return redirect()->route('tenant.dashboard')->with('error', 'This Estate Not Found');
@@ -71,12 +78,14 @@ class LocationController extends Controller
 
     public function locationRental($slug)
     {
+        $users = User::where('status', 1)->get();
         $rental_location = Estate::on('mysql_estates')->where('slug', $slug)->where('status', 1)
                             ->whereNotNull('latitude')->whereNotNull('latitude')->first();
         if ($rental_location)
         {
             return view('tenant.location', compact(
                 'rental_location',
+                'users',
             ));
         } else {
             return redirect()->route('tenant.dashboard')->with('error', 'Location Details Unavailable!');

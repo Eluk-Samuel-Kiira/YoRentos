@@ -34,21 +34,19 @@
                             </div>
                         </div>
                         <p>
-                            <div class="heading_container">
-                                <h2>
+                            <div class="container-header">
+                                <h2 class="rental_heading">
                                     About Our {{ $estate->rentalName->name }}
                                 </h2>
                             </div>
-                            <h6>
+                            <h6 style="font-family: Arial, sans-serif;">
                                 {{ $estate->description }}
                             </h6>
-                        <span class="btn btn-small">
-                            <div class="button_hover">
+                            <div class="btn-box">
                                 <a href="{{ route('rental.map', $estate) }}">
                                     Navigate To Us
                                 </a>
                             </div>
-                        </span>
                         </p>
                     </div>
                 </div>
@@ -56,57 +54,88 @@
         </div>
     </section>
 
-    <section class="find_section ">
+    <section class="about_section layout_padding">
         <div class="container">
-            <div class="description">
-                <div class="form-row">
-                    <div class="img-box col-md-6">
-                        @if($estate->video)
-                            <div class="heading_container">
-                                <h2>
-                                    Take A Tour Around Our Apartment
-                                </h2>
-                            </div>
-                            <video controls style="width: 100%; height: 240px;">
-                                <source src="{{ asset('storage/estate_videos')}}/{{$estate->video }}" type="video/mp4" id="displayedImage">
-                                Your browser does not support the video tag.
-                            </video>
-                        @endif
+            <div class="row">
+                <div class="col-md-4">
+                    @if($estate->video)
+                        <div class="container-header">
+                            <h2 class="rental_heading">
+                                About Our {{ $estate->rentalName->name }}
+                            </h2>
+                        </div>
+                        <video controls style="width: 100%; height: 240px;">
+                            <source src="{{ asset('storage/estate_videos')}}/{{$estate->video }}" type="video/mp4" id="displayedImage">
+                            Your browser does not support the video tag.
+                        </video>
+                    @endif
+                </div>
+                <div class="col-md-8"><br>
+                    <div class="container-header">
+                        <h2 class="rental_heading">
+                            Other Important Details
+                        </h2>
                     </div>
-                    <p class="col-md-6">                        
-                        <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
-                            @php
-                                $minPrice = $estate->unitEstate->min('price');
-                                $maxPrice = $estate->unitEstate->max('price');
-                            @endphp
-                            @if ($minPrice !== null && $maxPrice !== null)
-                                {{ $minPrice }} - {{ $maxPrice }}
-                            @else
-                                N/A
-                            @endif
-                        </span>
-                        <span class="btn btn-primary btn-small"> 
-                            @php
-                                $availableUnits = $estate->unitEstate->where('status', 0)->count();
-                                $allUnits = $estate->unitEstate->count();
-                            @endphp
+                    <div class="about-details custom-styling">
+                        <h6><br>
+                            <span class="btn btn-small price-range">
+                                @php
+                                    $minPrice = $estate->unitEstate->min('price');
+                                    $maxPrice = $estate->unitEstate->max('price');
+                                @endphp
+                                {{__('Price Range: ')}}
+                                @if ($minPrice !== null && $maxPrice !== null)
+                                    {{ $minPrice }} - {{ $maxPrice }}
+                                @else
+                                    N/A
+                                @endif
+                            </span>
+                            <span class="btn btn-small available-units">
+                                @php
+                                    $availableUnits = $estate->unitEstate->where('status', 0)->count();
+                                    $allUnits = $estate->unitEstate->count();
+                                @endphp
                                 {{__('Units Available: ')}}
-                            @if ($availableUnits !== 0) 
-                                {{ $availableUnits }}/{{ $allUnits }}
-                            @else
-                                {{__('NONE')}}
-                            @endif
-                        </span>
-                        <span class="btn btn-primary btn-small" style="display: inline-block; white-space: nowrap;">
-                            <img src="{{asset('frontend/images/location.png')}}" width="10px" style="display: inline-block; vertical-align: middle; margin-right: 5px;" alt="">
-                            <span style="display: inline-block; vertical-align: middle;">
+                                @if ($availableUnits !== 0) 
+                                    {{ $availableUnits }}/{{ $allUnits }}
+                                @else
+                                    {{__('NONE')}}
+                                @endif
+                            </span>
+                            <span class="btn btn-small village">
+                                {{__('Village:  ')}}
+                                <img src="{{asset('frontend/images/location.png')}}" width="10px" style="display: inline-block; vertical-align: middle; margin-right: 5px;" alt="">
                                 {{ $estate->villageEstate->village }}
                             </span>
-                        </span>
-                        <span class="btn btn-small" style="background-color: yellow; color: &#9654;">
-                            {{ $estate->unit_no }}{{__(' Reviews')}}
-                        </span>
-                    </p>
+                            <span class="btn btn-small reviews">
+                                {{ $estate->unit_no }}{{__(' Reviews')}}
+                            </span>
+                            <span class="btn btn-small">
+                                @foreach($users as $user)
+                                    @if ($estate->landlord_id == $user->id)
+                                        {{__('Officials: ')}}{{ $user->name }} <br>
+                                        {{__('Telephone: ')}}{{ $user->phone_number }}
+                                    @endif
+                                @endforeach
+                            </span>
+                            @foreach($users as $user)
+                                @if ($estate->broker_id == $user->id) 
+                                    <div style="height: 160px; width: 160px;">
+                                        <img src="{{ $user->profile_photo_url }}" alt="">
+                                    </div>
+                                @endif
+                            @endforeach
+
+                            <span class="btn btn-small">
+                                @foreach($users as $user)
+                                    @if ($estate->broker_id == $user->id)
+                                        {{__('Trusted Broker: ')}}{{ $user->name }} <br>
+                                        {{__('Telephone: ')}}{{ $user->phone_number }}
+                                    @endif
+                                @endforeach
+                            </span>
+                        </h6>
+                    </div>
                 </div>
             </div>
         </div>
@@ -166,7 +195,11 @@
                                                     {{ $unit->description }}
                                                 </li>
                                                 <li>
-                                                    {{ $unit->resources }}
+                                                    @php
+                                                        $resourcesArray = json_decode($unit->resources);
+                                                    @endphp
+
+                                                    {{ is_array($resourcesArray) ? implode(', ', $resourcesArray) : $unit->resources }}
                                                 </li>
                                                 <li>
                                                     {{__('Unoccupied')}}

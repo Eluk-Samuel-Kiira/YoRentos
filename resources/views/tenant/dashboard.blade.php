@@ -223,6 +223,43 @@
     </section>
     <!-- end  sponsored houses section -->
     
+    <section class="contact_section layout_padding-top">
+        <div class="container-header">
+            <h2 class="rental_heading">
+                {{__('Get In Touch')}}
+            </h2>
+        </div>
+        <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 px-0">
+                <div class="contact_container">
+                    <p>Call: 0776263482</p>
+                    <p>WhatsApp: 0754428612</p>
+                    <p>Email: yorentos23@gmail.com</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-5 ">
+                <div class="form_container">
+                    <div>
+                        {{__('Give us a Feedback or A question')}}
+                    </div>
+                    <form method="POST" action="{{ route('store.feedback') }}">
+                        @csrf
+                        <input type="hidden" class="form-control" name="user_id" value="{{ auth()->user()->id }}" required/>
+                        <div>
+                            <input type="text" class="form-control" name="contact" placeholder="Name and Contact" required/>
+                        </div>
+                        <div>
+                            <textarea class="form-control" name="message" placeholder="Message" required></textarea>
+                        </div>
+                        <input type="submit" class="btn btn-warning" />
+                    </form>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </section>
 @include('layouts.footer')
 @include('dashboard.user_location')
 

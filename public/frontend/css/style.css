@@ -494,6 +494,28 @@ a:focus {
   margin-top: 15px;
 }
 
+.custom-styling .btn.btn-small {
+  background-color: #f9bc16; /* Adjusted background color */
+  color: #3554d1; /* Adjusted text color */
+  border: 2px solid #3554d1; /* Added border for better distinction */
+  padding: 8px 12px; /* Adjust padding for better spacing */
+  border-radius: 4px; /* Rounded corners for buttons */
+  display: inline-block; /* Ensure inline block display */
+  margin-bottom: 10px; /* Add some spacing between elements */
+}
+
+/* Additional styles for .btn.btn-small */
+.custom-styling .btn.btn-small:hover {
+  background-color: #3554d1; /* Change background color on hover */
+  color: #f9bc16; /* Change text color on hover */
+}
+
+/* Additional styles for h6 a */
+.custom-styling h6 a {
+  color: #3554d1; /* Adjusted link color */
+  text-decoration: none; /* Remove default underline */
+}
+
 .about_section .detail-box a {
   display: inline-block;
   padding: 7px 30px;

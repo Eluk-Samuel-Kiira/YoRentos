@@ -7,6 +7,7 @@ use App\Models\Estate;
 use App\Models\District;
 use App\Models\Village;
 use App\Models\Unit;
+use App\Models\User;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Validator;
 
@@ -46,14 +47,16 @@ class LandingPageController extends Controller
         $feedback->message = $request->message;
         $feedback->user_id = $request->user_id;
         $feedback->save();
-        return redirect()->route('landing.page')->with('success', 'Feedback Submitted');
+        return redirect()->back()->with('success', 'Feedback Submitted');
     }
 
     public function indexFeedback()
     {
         $feedbacks = Feedback::get();
+        $users = User::get();
         return view('feedback.index', compact(
             'feedbacks',
+            'users',
         ));
     }
 

@@ -9,6 +9,19 @@
             </h6>
             <div class="description">
                 @if ($rental_location)
+                    <h1 class="btn uppercase font-size">
+                        <b>
+                            {{ $rental_location->estate}}
+                        </b>
+                    </h1>
+                    <span class="btn btn-small">
+                        @foreach($users as $user)
+                            @if ($rental_location->landlord_id == $user->id)
+                                {{__('Incharge: ')}}{{ $user->name }} <br>
+                                {{__('Telephone: ')}}{{ $user->phone_number }}
+                            @endif
+                        @endforeach
+                    </span>
                     <div class="form-row">
                         <div id="map" class="leaflet-map"></div>
                     </div>
@@ -71,8 +84,8 @@
                 ];
                 roadLine = L.polyline(latlngs, { color: 'red', snakingSpeed: 200 }).addTo(map);
             }
-            if (lat == rentalLocations.latitude) {
-                var message = "You Have Already Reached at  "+rentalLocations.estate+ ".";
+            if (lat === rentalLocations.latitude && lng === rentalLocations.longitude) {
+                var message = "You have already reached " + rentalLocations.estate + ".";
                 showMessage(message);
             }
         }, function(error) {
@@ -81,7 +94,7 @@
         });
     }
 
-    setInterval(updateUserLocation, 8000);
+    setInterval(updateUserLocation, 6000);
 
 
     marker_rental.on('click', mapClick);

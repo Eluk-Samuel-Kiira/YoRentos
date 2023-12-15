@@ -39,7 +39,13 @@
                                     @forelse($feedbacks as $feedback)
                                         <tr>
                                             <td class="py-2 px-4 border-b border-r">{{ $feedback->id }}</td>
-                                            <td class="py-2 px-4 border-b border-r">{{ $feedback->user }}</td>
+                                            <td class="py-2 px-4 border-b border-r">
+                                                @foreach($users as $user)
+                                                    @if ($feedback->user_id == $user->id)
+                                                        {{ $user->name }}
+                                                    @endif
+                                                @endforeach
+                                            </td>
                                             <td class="py-2 px-4 border-b border-r">{{ $feedback->contact }}</td>
                                             <td class="py-2 px-4 border-b border-r">{{ $feedback->message }}</td>
                                             <td class="py-2 px-4 border-b border-r">
