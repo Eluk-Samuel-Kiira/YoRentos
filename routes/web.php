@@ -51,6 +51,7 @@ Route::middleware([
     Route::post('/user-location', [UserController::class, 'userLocation'])->name('update.user_location');
     Route::get('/users-index-page',[UserController::class, 'userIndex'])->name('user');    
     Route::get('/users',[UserController::class, 'userDetails'])->name('users.details');
+    Route::get('/account-confirm',[UserController::class, 'userAccount'])->name('account.confirm');
 
     Route::get('/users-permissions',[UserController::class, 'userPermissions'])->name('user.permissions');
     Route::post('/role', [UserController::class, 'createRolesAndPermissions'])->name('create.role');

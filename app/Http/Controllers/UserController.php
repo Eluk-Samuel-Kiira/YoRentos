@@ -178,4 +178,9 @@ class UserController extends Controller
             return redirect()->route('user')->with('error', 'Broker Not found');
         }
     }
+
+    public function userAccount(){
+        return view('dashboard.confirm-account');
+    }
+
 }

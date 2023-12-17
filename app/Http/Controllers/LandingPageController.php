@@ -73,6 +73,7 @@ class LandingPageController extends Controller
 
     }
 
+    // most important algorithms
     public function userDistrict(Request $request)
     {
         $district_name = $request->input('district');
