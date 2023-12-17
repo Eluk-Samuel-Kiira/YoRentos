@@ -198,7 +198,6 @@
                                                     @php
                                                         $resourcesArray = json_decode($unit->resources);
                                                     @endphp
-
                                                     {{ is_array($resourcesArray) ? implode(', ', $resourcesArray) : $unit->resources }}
                                                 </li>
                                                 <li>

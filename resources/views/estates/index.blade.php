@@ -13,7 +13,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg  table-responsive"  style="overflow-x: auto;">
                 <div class="max-w-7xl mx-auto p-6">
-                    <div class="flex space-x-4">
+                    <input type="text" id="estateSearch" class="rounded text-gray-500 mb-4" placeholder="Search Estate">
+                    <div class="flex space-x-4" id="estateContainer">
                         @forelse($estates as $estate)
                             @if(auth()->user()->role == 'Admin' || auth()->user()->id == $estate->landlord_id || auth()->user()->id == $estate->broker_id)
                                 <button class="bg-blue-500 active:bg-red-700 text-white px-4 py-2 rounded hover:bg-0" onclick="showContent('{{ $estate->uid }}')">{{ $estate->estate }}</button>
@@ -56,6 +57,25 @@
                                             <p class="text-sm text-gray-500">Phone: {{ $user->phone_number }}</p>
                                         @endif
                                     @endforeach
+                                </div>
+                            </div>
+
+                            <!-- account details -->
+                            <div>
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold mb-2">Account Details:</h3>
+                                </div>
+                                <div class="flex items-center justify-between border-b border-gray-200 py-3">
+                                    <div> 
+                                        <p class="text-lg font-semibold">Mobile Details</p>
+                                        <p class="text-sm text-gray-500">MTN: </p>
+                                        <p class="text-sm text-gray-500">AIRTEL:</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-lg font-semibold">Bank Details</p>
+                                        <p class="text-sm text-gray-500">Bank Account:</p>
+                                        <p class="text-sm text-gray-500">Bank Name:</p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -246,6 +266,22 @@
         });
     });
     
+    // Function to handle estate filtering based on search query
+    function filterEstates() {
+        const searchText = document.getElementById('estateSearch').value.toLowerCase();
+        const estateButtons = document.querySelectorAll('#estateContainer button');
+        
+        estateButtons.forEach(button => {
+            const estateName = button.textContent.toLowerCase();
+            
+            if (estateName.includes(searchText)) {
+                button.style.display = 'block'; 
+            } else {
+                button.style.display = 'none'; 
+            }
+        });
+    }
+    document.getElementById('estateSearch').addEventListener('input', filterEstates);
 </script>
 
 

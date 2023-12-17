@@ -4,6 +4,19 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }} 
         </h2>
+        <h4>  
+            <x-validation-errors class="mb-4" />  
+            @if(session('error'))
+                <span class="bg-red-500 text-white rounded">
+                    {{ session('error') }}
+                </span>
+            @endif
+            @if(session('success'))
+                <span class="bg-green-500 text-white rounded">
+                    {{ session('success') }}
+                </span>
+            @endif
+        </h4>
         <h6>
             <div id="error-container"></div>
         </h6>

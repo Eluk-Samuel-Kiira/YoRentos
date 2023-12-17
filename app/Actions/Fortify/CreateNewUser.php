@@ -10,6 +10,9 @@ use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ConfirmOTP;
+use App\Models\OTPGen;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -49,6 +52,33 @@ class CreateNewUser implements CreatesNewUsers
         } else {
             //
         }
+
+        // Generate OTP
+        $length = 6;
+        $characters = '0123456789'; 
+
+        $latestUserId = User::max('id');
+        $user = User::find($latestUserId);
+
+        $otp_number = implode('', array_map(function() use ($characters) {
+            return $characters[random_int(0, strlen($characters) - 1)];
+        }, range(1, $length)));
+
+        $otp_body = [
+            'body' => 'OTP Alert',
+            'message' => 'Enter this OTP before it expires '.$otp_number.'.',
+            'url' => url('/'),
+            'thankyou' => 'YoRentos. Thank You'
+        ];
+
+        OTPGen::updateOrCreate(
+            ['user_id' => $user->id], 
+            ['otp_number' => $otp_number] 
+        );
+
+        Notification::sendNow($user, new ConfirmOTP($otp_body));
+
         return $user;
     }
+
 }

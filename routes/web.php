@@ -49,11 +49,12 @@ Route::middleware([
 
     // User Routes
     Route::post('/user-location', [UserController::class, 'userLocation'])->name('update.user_location');
-    Route::get('/users-index-page',[UserController::class, 'userIndex'])->name('user');    
-    Route::get('/users',[UserController::class, 'userDetails'])->name('users.details');
-    Route::get('/account-confirm',[UserController::class, 'userAccount'])->name('account.confirm');
+    Route::get('/users-index-page', [UserController::class, 'userIndex'])->name('user');    
+    Route::get('/users', [UserController::class, 'userDetails'])->name('users.details');
+    Route::get('/account-confirm', [UserController::class, 'userAccount'])->name('account.confirm');
+    Route::get('/account-deactivate', [UserController::class, 'userDeactivated'])->name('account-deactivate');
 
-    Route::get('/users-permissions',[UserController::class, 'userPermissions'])->name('user.permissions');
+    Route::get('/users-permissions', [UserController::class, 'userPermissions'])->name('user.permissions');
     Route::post('/role', [UserController::class, 'createRolesAndPermissions'])->name('create.role');
     Route::post('/role-permission', [UserController::class, 'editRolePermission'])->name('edit.role');
     Route::post('/role-change', [UserController::class, 'changeRole'])->name('change.role');
@@ -63,6 +64,8 @@ Route::middleware([
     Route::post('/create-broker', [UserController::class, 'createBroker'])->name('create.broker');
     Route::get('/broker-status/{id}', [UserController::class, 'changeBrokerStatus'])->name('broker_name.status');
     Route::get('/broker-delete/{id}', [UserController::class, 'deleteBroker'])->name('broker_name.delete');
+    Route::get('/otp-request', [UserController::class, 'otpRequest'])->name('otp.request');
+    Route::post('/otp-confirm', [UserController::class, 'otpConfirm'])->name('confirm-otp');
 
 
     // Rental Routes

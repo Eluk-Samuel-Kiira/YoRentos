@@ -9,6 +9,9 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use App\Models\District;
 use App\Models\Broker;
+use App\Models\OTPGen;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\ConfirmOTP;
 
 class UserController extends Controller
 {
@@ -179,8 +182,60 @@ class UserController extends Controller
         }
     }
 
-    public function userAccount(){
-        return view('dashboard.confirm-account');
+    public function userAccount()
+    {
+        return view('auth.confirm-account');
     }
 
+    public function otpRequest()
+    {
+        // Generate OTP
+        $length = 6;
+        $characters = '0123456789'; 
+        $user = User::where('id', auth()->user()->id)->first();
+
+        $otp_number = implode('', array_map(function() use ($characters) {
+            return $characters[random_int(0, strlen($characters) - 1)];
+        }, range(1, $length)));
+
+        $otp_body = [
+            'body' => 'OTP Alert',
+            'message' => 'Enter this OTP before it expires '.$otp_number.'.',
+            'url' => url('/dashboard'),
+            'thankyou' => 'YoRentos. Thank You'
+        ];
+
+        OTPGen::updateOrCreate(
+            ['user_id' => $user->id], 
+            ['otp_number' => $otp_number] 
+        );
+
+        Notification::sendNow($user, new ConfirmOTP($otp_body));
+    }
+
+    public function otpConfirm(Request $request)
+    {
+        $user_otp = OTPGen::where('otp_number', $request->otp_number)
+                  ->where('user_id', $request->user_id)
+                  ->first();
+
+        if ($user_otp) {
+            $user = User::where('id', $request->user_id)->first();
+
+            if ($user) {
+                $user->where('id', $request->user_id)->update(['deleted' => 1]);
+                $user_otp->delete();
+            } else {
+                return redirect()->back()->with('error', 'User Not Found');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Incorrect OTP Provideed');
+        }
+        return redirect()->route('dashboard')->with('success', 'OTP Confirmed Successfully');
+    }
+
+    public function userDeactivated()
+    {
+        return view('auth.deactivated-user');
+    }
 }

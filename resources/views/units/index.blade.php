@@ -10,7 +10,8 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto p-6">
-                    <div class="flex space-x-4">
+                    <input type="text" id="estateSearch" class="rounded text-gray-500 mb-4" placeholder="Search Estate">
+                    <div class="flex space-x-4" id="estateContainer">
                         @forelse($estates as $estate)
                             @if(auth()->user()->role == 'Admin' || auth()->user()->id == $estate->landlord_id || auth()->user()->id == $estate->broker_id)
                                 <button class="bg-blue-500 active:bg-red-700 text-white px-4 py-2 rounded hover:bg-0" onclick="showContent('{{ $estate->uid }}')">{{ $estate->estate }}</button>
@@ -152,7 +153,12 @@
 
                                             <!-- Essential Resources -->
                                             <div>
-                                                <p class="text-lg font-semibold">Essential Resources: <span class="text-gray-700">{{ $unit->resources }}</span></p>
+                                                <p class="text-lg font-semibold">Essential Resources: <span class="text-gray-700">
+                                                    @php
+                                                        $resourcesArray = json_decode($unit->resources);
+                                                    @endphp
+                                                    {{ is_array($resourcesArray) ? implode(', ', $resourcesArray) : $unit->resources }}
+                                                </span></p>
                                             </div>
                                             
                                             <button onclick="toggleEditForm({{$editCounter}}, {{ json_encode($unit) }})" class="bg-green-500 text-white px-3 py-1 rounded-sm text-sm">
@@ -225,4 +231,21 @@
         }
     });
 
+    
+    // Function to handle estate filtering based on search query
+    function filterEstates() {
+        const searchText = document.getElementById('estateSearch').value.toLowerCase();
+        const estateButtons = document.querySelectorAll('#estateContainer button');
+        
+        estateButtons.forEach(button => {
+            const estateName = button.textContent.toLowerCase();
+            
+            if (estateName.includes(searchText)) {
+                button.style.display = 'block'; 
+            } else {
+                button.style.display = 'none'; 
+            }
+        });
+    }
+    document.getElementById('estateSearch').addEventListener('input', filterEstates);
 </script>

@@ -11,14 +11,12 @@
     let attempts = 0;
 
     function getGeoLocation() {
-        if (attempts < 4) {
+        if (attempts < 3) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 // Get latitude and longitude values from position object
                 lat = position.coords.latitude;
                 lng = position.coords.longitude;
-                // console.log(lat)
-                // console.log(lng)
-                
+
                 var isAuthenticated = @json(auth()->check()); // is user authenticated?
                 if (isAuthenticated) {
                     var userId = @json(auth()->id());
@@ -126,7 +124,7 @@
                 showError(errorMessage);
             });
             attempts++;
-            setTimeout(getGeoLocation, 5000);
+            setTimeout(getGeoLocation, 4000);
         }
     }
     getGeoLocation();
