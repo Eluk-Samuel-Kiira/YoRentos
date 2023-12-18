@@ -65,7 +65,83 @@
                             <!-- account details -->
                             <div class="border-b border-gray-200 py-3">
                                 <div class="flex justify-between items-center">
-                                    <h3 class="text-lg font-semibold mb-2">Account Details:</h3>
+                                    <h3 class="text-lg font-semibold mb-2">Pricing:</h3>
+                                </div> 
+                                    
+                                <div class="md:flex">
+                                    <div class="w-full md:w-1/3 bg-gray-200 rounded-lg p-2">
+                                        <div class="w-full max-w-sm mx-auto">
+                                            <div class="block text-gray-700 text-sm font-bold mb-2">Advertise Estate Monthly</div>
+                                            <form id="paymentForm" method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay" id="my-form" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                                                @csrf
+                                                <input type="hidden" name="tx_ref" value="{{ substr(rand(0,time()),0,11) }}">
+                                                <input type="hidden" name="public_key" value="FLWPUBK-1c35c3c26e1701045fe66ad993f291a5-X" />
+                                                <input type="hidden" name="currency" value="UGX" />
+                                                <!-- <input type="hidden" name="type" value="mobile_money_uganda" /> -->
+                                                <input type="hidden" name="meta[token]" value="54" />
+                                                <input type="hidden" name="customer[name]" value="{{ auth()->user()->name }}" />
+                                                <input type="hidden" name="customer[email]" value="{{ auth()->user()->email }}" />
+                                                <input type="hidden" name="redirect_url" value="https://thesealed.mytreeuganda.org/" />
+
+                                                <input type="hidden" id="landlord_id" name="landlord_id" value="{{ $estate->landlord_id }}" required>
+                                                <input type="hidden" id="estate_id" name="estate_id" value="{{ $estate->uid }}" required>
+                                                <div class="mb-4">
+                                                    <label for="amount" class="block text-gray-700 text-sm font-bold mb-2">Select Package</label>
+                                                    <select id="amount" class="w-full font-medium py-2 rounded text-gray-700" name="amount" required>
+                                                        <option class="block mt-1 w-full" value=""></option>
+                                                        <option class="block mt-1 w-full" value="10000">Ugx: 10000 Only In Your District</option>
+                                                        <option class="block mt-1 w-full" value="20000">Ugx: 30000 Entire Country</option>
+                                                    </select>      
+                                                </div>
+                                                <div class="flex items-center justify-between">
+                                                    <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded-sm text-sm hover:bg-blue-600 motion-reduce:transform-none">
+                                                        Pay
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="w-full md:w-2/3 bg-gray-200 rounded-lg p-2 mt-4 md:mt-0">
+                                        <div class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                                            <div class="flex flex-col space-y-4">
+                                                <div>
+                                                    <p class="text-lg font-semibold">Mobile Details</p>
+                                                    @foreach ($estate->payEstate as $pay)
+                                                        @if($pay->pay_mode == 'Mobile Money')
+                                                            <p class="text-sm text-gray-500 flex items-center">
+                                                                <span>{{ $pay->account_name }}: {{ $pay->account_number }}</span>
+                                                                <button class="delete-pay ml-2 bg-red-500 text-white px-1 py-0 rounded-md"
+                                                                        data-pay="{{ $pay->id }}">
+                                                                    &times;
+                                                                </button>
+                                                            </p>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                                <div>
+                                                    <p class="text-lg font-semibold">Bank Details</p>
+                                                    @foreach ($estate->payEstate as $pay)
+                                                        @if($pay->pay_mode == 'Bank Payment')
+                                                            <p class="text-sm text-gray-500">
+                                                                <span>{{ $pay->account_name }}: {{ $pay->account_number }}</span>
+                                                                <button class="delete-pay ml-2 bg-red-500 text-white px-1 py-0 rounded-md"
+                                                                        data-pay="{{ $pay->id }}">
+                                                                    &times;
+                                                                </button>
+                                                            </p>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                            
+                            <!-- account details -->
+                            <div class="border-b border-gray-200 py-3">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold mb-2">Account Payments:</h3>
                                 </div> 
                                     
                                 <div class="md:flex">
@@ -106,13 +182,13 @@
                                                     <p class="text-lg font-semibold">Mobile Details</p>
                                                     @foreach ($estate->payEstate as $pay)
                                                         @if($pay->pay_mode == 'Mobile Money')
-                                                        <p class="text-sm text-gray-500 flex items-center">
-                                                            <span>{{ $pay->account_name }}: {{ $pay->account_number }}</span>
-                                                            <button class="delete-pay ml-2 bg-red-500 text-white px-2 py-1 rounded-md"
-                                                                    data-pay="{{ $pay->id }}">
-                                                                &times;
-                                                            </button>
-                                                        </p>
+                                                            <p class="text-sm text-gray-500 flex items-center">
+                                                                <span>{{ $pay->account_name }}: {{ $pay->account_number }}</span>
+                                                                <button class="delete-pay ml-2 bg-red-500 text-white px-1 py-0 rounded-md"
+                                                                        data-pay="{{ $pay->id }}">
+                                                                    &times;
+                                                                </button>
+                                                            </p>
                                                         @endif
                                                     @endforeach
                                                 </div>
@@ -122,7 +198,7 @@
                                                         @if($pay->pay_mode == 'Bank Payment')
                                                             <p class="text-sm text-gray-500">
                                                                 <span>{{ $pay->account_name }}: {{ $pay->account_number }}</span>
-                                                                <button class="delete-pay ml-2 bg-red-500 text-white px-2 py-1 rounded-md"
+                                                                <button class="delete-pay ml-2 bg-red-500 text-white px-1 py-0 rounded-md"
                                                                         data-pay="{{ $pay->id }}">
                                                                     &times;
                                                                 </button>
@@ -375,12 +451,39 @@
     }
     document.getElementById('estateSearch').addEventListener('input', filterEstates);
 
-    $(document).ready(function() {
-        // Function to toggle content visibility
-        $("#toggleContent_{{ $estate->uid }}").click(function() {
-            $("#content_{{ $estate->uid }}").slideToggle("slow");
-        });
+
+    document.getElementById('paymentForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // Serialize the form data
+    var formData = $(this).serialize();
+
+    // Send an AJAX request to store the payment data
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
+
+    // Send an AJAX request to your backend endpoint
+    $.ajax({
+        url: '{{ route('payment.advert') }}',
+        method: 'POST',
+        data: formData, // Sending data as URL-encoded string
+        contentType: 'application/x-www-form-urlencoded', // Set content type
+        success: function(response) {
+            console.log('Payment data stored successfully.');
+            // Proceed with form submission
+            $('#paymentForm')[0].submit();
+        },
+        error: function(xhr, status, error) {
+            // Handle error
+            console.error(error);
+        }
+    });
+});
+
+    
 </script>
 
 

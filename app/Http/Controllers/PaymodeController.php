@@ -94,9 +94,23 @@ class PaymodeController extends Controller
             return response()->json(['success' => true]);
         } else {
             return response()->json([
-                'success' => false,
                 'message' => 'Pay Details not found or unable to delete.'
             ]);
         }
+    }
+
+    public function advertPay(Request $request)
+    {
+        // Store payment data in the database using the Payment model
+        $payment = new Advert(); 
+        $payment->tx_ref = $request->input('tx_ref');
+        $payment->estate_id = $request->input('estate_id');
+        $payment->landlord_id = $request->input('landlord_id');
+        $payment->amount = $request->input('amount');
+
+        $payment->save();
+
+        // Return a success response (you can customize as needed)
+        return response()->json(['message' => 'Payment data stored successfully'], 200);
     }
 }

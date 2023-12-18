@@ -20,8 +20,4 @@ class Paymode extends Model
         'estate_id','landlord_id','pay_mode','account_name','account_number','status','deleted'
     ];
 
-    public function getRouteKeyName()
-    {
-        return 'slug';
-    }
 }
