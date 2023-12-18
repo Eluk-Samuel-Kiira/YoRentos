@@ -9,6 +9,7 @@ use App\Models\Rental;
 use App\Models\User;
 use App\Models\Broker;
 use App\Models\Village;
+use App\Models\Paymode;
 
 class Estate extends Model
 {
@@ -74,5 +75,10 @@ class Estate extends Model
     public function rentalName()
     {
         return $this->belongsTo(Rental::class, 'rental_id');
+    }
+
+    public function payEstate()
+    {
+        return $this->hasMany(Paymode::class, 'estate_id', 'uid');
     }
 }

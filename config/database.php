@@ -99,7 +99,27 @@ return [
             'strict' => true,
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
-                PDO::MYSQL_ATTR_SSL_CA => env('SECOND_MYSQL_ATTR_SSL_CA'),
+                PDO::MYSQL_ATTR_SSL_CA => env('ESTATE_MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
+        'mysql_payments' => [
+            'driver' => 'mysql',
+            'url' => env('PAYMENTS_DATABASE_URL'), 
+            'host' => env('PAYMENTS_DB_HOST', '127.0.0.1'), 
+            'port' => env('PAYMENTS_DB_PORT', '3306'), 
+            'database' => env('PAYMENTS_DB_DATABASE', 'forge'), 
+            'username' => env('PAYMENTS_DB_USERNAME', 'forge'), 
+            'password' => env('PAYMENTS_DB_PASSWORD', ''), 
+            'unix_socket' => env('PAYMENTS_DB_SOCKET', ''), 
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('PAYMENTS_MYSQL_ATTR_SSL_CA'),
             ]) : [],
         ],
 

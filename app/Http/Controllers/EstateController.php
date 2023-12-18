@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Estate;
 use App\Models\User;
+use App\Models\Paymode;
 use App\Http\Requests\StoreEstateRequest;
 use App\Http\Requests\UpdateEstateRequest;
 use Illuminate\Support\Str;
@@ -21,9 +22,11 @@ class EstateController extends Controller
     {
         $estates = Estate::on('mysql_estates')->where('status', 1)->get();
         $users = User::on('mysql')->where('status', 1)->get();
+        $payments = Paymode::on('mysql_payments')->get();
         return view('estates.index', compact(
             'estates',
             'users',
+            'payments',
         ));
     }
 

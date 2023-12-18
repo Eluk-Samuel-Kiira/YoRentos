@@ -8,7 +8,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg table-responsive"  style="overflow-x: auto;">
                 <div class="max-w-7xl mx-auto p-6">
                     <input type="text" id="estateSearch" class="rounded text-gray-500 mb-4" placeholder="Search Estate">
                     <div class="flex space-x-4" id="estateContainer">
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                             <div class="grid grid-cols-1  w-1/3 rounded">
-                                <input type="text" class="unit-search" data-estate="{{ $estate->uid }}" placeholder="Search Unit Name">
+                                <input type="text" class="unit-search rounded text-gray-500 mb-4" data-estate="{{ $estate->uid }}" placeholder="Search Unit Name">
                             </div>
                             @forelse($units as $unit)
                                 @if($estate->uid == $unit->estate_uid)
@@ -58,7 +58,7 @@
                                     <h2 class="text-xl font-bold mb-4 flex justify-center">{{ $unit->unit }}</h2>
                                     @include('units.edit-unit')
                                     <div class="space-x-2 mb-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                                        <div class="flex">
+                                        <div class="flex flex-col md:flex-row">
                                             <div class="bg-gray-100 p-4 rounded-lg shadow-md mr-4 table-responsive" style="overflow-x: auto;">
                                                 <h2 class="text-xl font-bold mb-2">Unit Information (Part 1)</h2>
                                         

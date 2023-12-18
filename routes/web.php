@@ -15,6 +15,7 @@ use App\Http\Controllers\DurationController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\PaymodeController;
 
 
 /*
@@ -66,6 +67,11 @@ Route::middleware([
     Route::get('/broker-delete/{id}', [UserController::class, 'deleteBroker'])->name('broker_name.delete');
     Route::get('/otp-request', [UserController::class, 'otpRequest'])->name('otp.request');
     Route::post('/otp-confirm', [UserController::class, 'otpConfirm'])->name('confirm-otp');
+
+
+    // Payment Routes
+    Route::resource('payment', PaymodeController::class); 
+    Route::post('/pay-delete', [PaymodeController::class, 'deletePay'])->name('payment.delete');
 
 
     // Rental Routes
