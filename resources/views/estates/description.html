@@ -1,41 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Rich Text Editor Form</title>
-  <!-- Tailwind CSS (if not already included) -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <!-- Trumbowyg CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/ui/trumbowyg.min.css">
-</head>
-<body>
+<input type="hidden" id="tx_ref" value="{{ substr(rand(0,time()),0,11) }}">
+            <input type="hidden" id="public_key" value="FLWPUBK-1c35c3c26e1701045fe66ad993f291a5-X" />
+            <input type="hidden" id="currency" value="UGX" />
+            <input type="hidden" id="type" value="mobile_money_uganda" />
 
-  <!-- <form action="{{ route('estate.video') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-    @csrf
-    <input type="hidden" id="landlord_id" name="landlord_id" value="{{ $estate->landlord_id }}" required>
-    <input type="hidden" id="estate_id" name="estate_id" value="{{ $estate->uid }}" required>
-    <div class="mb-4">
-      <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Update Video:</label>
-      <textarea id="editor" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
-    </div>
-    <div class="flex items-center justify-between">
-      <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded-sm text-sm hover:bg-blue-600 motion-reduce:transform-none">
-        Update
-      </button>
-    </div>
-  </form> -->
+            <input type="hidden" id="meta[token]" value="54" />
+            <input type="hidden" id="customer[name]" value="{{ auth()->user()->name }}" />
+            <input type="hidden" id="customer[email]" value="{{ auth()->user()->email }}" />
+            <input type="hidden" id="redirect_url" value="https://thesealed.mytreeuganda.org/" />
 
-  <!-- jQuery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!-- Trumbowyg JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.25.1/trumbowyg.min.js"></script>
+            <input type="hidden" id="landlord_id" name="landlord_id" value="{{ $estate->landlord_id }}" required>
+            <input type="hidden" id="estate_id" name="estate_id" value="{{ $estate->uid }}" required>
 
-  <script>
-    // Wait for the document to be ready
-    $(document).ready(function() {
-      // Initialize Trumbowyg on the textarea with id="editor"
-      $('#editor').trumbowyg();
-    });
-  </script>
-</body>
-</html>
+    let txRef = document.getElementById('tx_ref').value;
+    let txRef = document.getElementById('tx_ref').value;
+    let txRef = document.getElementById('tx_ref').value;
+    let amount = parseInt(document.getElementById('amount').value);
+    let customerName = document.getElementById('customer[name]').value;
+    let customerEmail = document.getElementById('customer[email]').value;
+    let customerPhone = document.getElementById('customer[number]').value;

@@ -72,7 +72,8 @@ Route::middleware([
     // Payment Routes
     Route::resource('payment', PaymodeController::class); 
     Route::post('/pay-delete', [PaymodeController::class, 'deletePay'])->name('payment.delete');
-    Route::post('/pay-adver', [PaymodeController::class, 'advertPay'])->name('payment.advert');
+    Route::post('/pay-advert', [PaymodeController::class, 'advertPay'])->name('payment.advert');
+    Route::post('/pay-status', [PaymodeController::class, 'payStatus'])->name('pay.status');
 
 
     // Rental Routes

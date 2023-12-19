@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paymode;
+use App\Models\Estate;
+use App\Models\Adverts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 
 
 class PaymodeController extends Controller
@@ -101,16 +104,56 @@ class PaymodeController extends Controller
 
     public function advertPay(Request $request)
     {
-        // Store payment data in the database using the Payment model
-        $payment = new Advert(); 
-        $payment->tx_ref = $request->input('tx_ref');
-        $payment->estate_id = $request->input('estate_id');
-        $payment->landlord_id = $request->input('landlord_id');
-        $payment->amount = $request->input('amount');
+        $tx_ref = substr(rand(0,time()),0,11);
+        $landlord_id = $request->input('landlord_id');
+        $estate_id = $request->input('estate_id');
+        $estate_uid = $request->input('estate_uid');
+        $amount = $request->input('amount');
+        $user_id = auth()->user()->id;
+        $user_name = auth()->user()->name;
+        $user_email = auth()->user()->email;
+        $user_phone = auth()->user()->phone;
 
-        $payment->save();
+        if ($user_id == $landlord_id)
+        {
+            $estate = Estate::where('uid', $estate_uid)->where('id', $estate_id)->first();
+            if ($estate)
+            {
+                // Store payment data in the database using the Payment model
+                $payment = new Adverts(); 
+                $payment->txn_ref = $tx_ref;
+                $payment->estate_id = $estate_id;
+                $payment->landlord_id = $landlord_id;
+                $payment->price = $amount;
+                $payment->save();
 
-        // Return a success response (you can customize as needed)
-        return response()->json(['message' => 'Payment data stored successfully'], 200);
+                return redirect()->back()->with('success', 'Details stored Proceed to Check Out Button')
+                    ->with('txn_ref', $tx_ref)->with('amount', $amount)->with('estate_id', $estate_id);
+            } else {
+                return redirect()->back()->with('error', 'Estate Does not Extist');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Account Does Not Belong To You');
+        }
+
+    }
+
+    public function payStatus(Request $request)
+    {
+        $txn_ref = $request->input('txRef');
+
+        $estate = Advert::where('txn_ref', $txn_ref)->first();
+        if ($estate)
+        {
+            // user 1 for adverts
+            Estate::where('id', $estate->id)->update(['sponsored' => 1]);
+            return response()->json([
+                'message' => 'Estate sucessfully Advertised.'
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Estate Could Not Be Got.'
+            ]);
+        }
     }
 }
