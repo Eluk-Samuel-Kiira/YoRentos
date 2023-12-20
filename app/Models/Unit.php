@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Duration;
 use App\Models\User;
 use App\Models\Rental;
+use App\Models\Estate;
 
 class Unit extends Model
 {
@@ -51,5 +52,11 @@ class Unit extends Model
     {
         return $this->belongsTo(Rental::class, 'rental_id');
     }
+
+    public function estateName()
+    {
+        return $this->belongsTo(Estate::class, 'estate_id');
+    }
+
 
 }

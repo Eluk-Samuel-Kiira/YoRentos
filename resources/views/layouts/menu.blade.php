@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container">
             <a class="navbar-brand" href="/">
-                <img src="{{asset('frontend/images/logo.png')}}" alt="logo" style="height: 60px; width: 160px;"/>
+                <img src="{{asset('frontend/images/logo.png')}}" alt="" style="height: 60px; width: 160px;"/>
             </a>
           <div class="navbar-collapse" id="">
 
@@ -26,10 +26,11 @@
             </div>
             <div id="myNav" class="overlay">
               <div class="overlay-content">
+                <a href="{{ route('dashboard') }}">{{__('Dashboard')}}</a>
                 @foreach($rental as $item)
                   <a href="{{ route('rental.type', $item->slug) }}">{{ $item->name }}</a>
                 @endforeach
-                <a href="contact.html">{{__('Contact Us')}}</a>
+                <a href="{{ route('my.unit') }}">{{__('My Units')}}</a>
                 <!-- Authentication -->
                   <form method="POST" action="{{ route('logout') }}" x-data>
                       @csrf

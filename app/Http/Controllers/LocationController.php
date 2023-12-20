@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Estate;
 use App\Models\Rental;
+use App\Models\Unit;
 use App\Models\User;
 
 class LocationController extends Controller
@@ -89,6 +90,19 @@ class LocationController extends Controller
             ));
         } else {
             return redirect()->route('tenant.dashboard')->with('error', 'Location Details Unavailable!');
+        }
+    }
+
+    public function myUnit()
+    {
+        $units = Unit::where('tenant_id', auth()->user()->id)->where('status', 1)->get();
+        if ($units)
+        {
+            return view('tenant.units', compact(
+                'units',
+            ));
+        }else {
+            return redirect()->back()->with('error', 'You are Not Assigned any Unit or Room, Contact Landlords Please');
         }
     }
     
