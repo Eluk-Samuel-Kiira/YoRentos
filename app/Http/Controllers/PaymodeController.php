@@ -112,23 +112,33 @@ class PaymodeController extends Controller
         $user_id = auth()->user()->id;
         $user_name = auth()->user()->name;
         $user_email = auth()->user()->email;
-        $user_phone = auth()->user()->phone;
 
         if ($user_id == $landlord_id)
         {
             $estate = Estate::where('uid', $estate_uid)->where('id', $estate_id)->first();
             if ($estate)
             {
-                // Store payment data in the database using the Payment model
-                $payment = new Adverts(); 
-                $payment->txn_ref = $tx_ref;
-                $payment->estate_id = $estate_id;
-                $payment->landlord_id = $landlord_id;
-                $payment->price = $amount;
-                $payment->save();
-
-                return redirect()->back()->with('success', 'Details stored Proceed to Check Out Button')
-                    ->with('txn_ref', $tx_ref)->with('amount', $amount)->with('estate_id', $estate_id);
+                // Check for a failed or a successful Transaction
+                $existing_adverts = Adverts::where('estate_id', $estate_id)->where('status', 0)->first();
+                if ($existing_adverts) 
+                {
+                    return redirect()->back()->with('success', 'This Estate Has An Advert Still Running');
+                } else {
+                    
+                    $payment = Adverts::updateOrCreate(
+                        [
+                            'estate_id' => $estate_id,
+                        ],
+                        [
+                            'txn_ref' => $tx_ref,
+                            'price' => $amount,
+                            'landlord_id' => $landlord_id,
+                        ]
+                    );
+    
+                    return redirect()->back()->with('success', 'Details stored Proceed to Check Out Button')
+                        ->with('txn_ref', $tx_ref)->with('amount', $amount)->with('estate_id', $estate_id);
+                }
             } else {
                 return redirect()->back()->with('error', 'Estate Does not Extist');
             }
@@ -140,16 +150,30 @@ class PaymodeController extends Controller
 
     public function payStatus(Request $request)
     {
+        $date = now();
         $txn_ref = $request->input('txRef');
+        $estate = Adverts::where('txn_ref', $txn_ref)->first();
 
-        $estate = Advert::where('txn_ref', $txn_ref)->first();
         if ($estate)
         {
             // user 1 for adverts
-            Estate::where('id', $estate->id)->update(['sponsored' => 1]);
-            return response()->json([
-                'message' => 'Estate sucessfully Advertised.'
-            ]);
+            $estate_name = Estate::where('id', $estate->estate_id)->first();
+            if ($estate_name)
+            {
+                $estate_name->update(['sponsored' => 1]);
+                Adverts::where('estate_id', $estate->estate_id)->update([
+                    'status' => 0,
+                    'created_at' => $date, //tracking the month of payment
+                ]); // For prove that the transaction is successful
+
+                return response()->json([
+                    'message' => 'Estate '.$estate_name->estate.' sucessfully Advertised.'
+                ]);
+            }else {
+                return response()->json([
+                    'message' => 'Estate Not Found.'
+                ]);
+            }
         } else {
             return response()->json([
                 'message' => 'Estate Could Not Be Got.'

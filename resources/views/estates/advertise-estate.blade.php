@@ -47,17 +47,6 @@
             <div class="flex justify-center px-3 py-2 border-l-4 border-indigo-400 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700">
                 {{ __('Your Payment is succeessful') }}
             </div>
-            <form method="POST" action="{{ route('payment.advert') }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                @csrf
-                <input type="hidden" id="status" name="status" value="{{ request()->query('status') }}" required>
-                <input type="hidden" id="tx_ref" name="tx_ref" value="{{ request()->query('tx_ref') }}" required>
-                
-                <div class="flex items-center justify-between">
-                    <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded-sm text-sm hover:bg-blue-600 motion-reduce:transform-none">
-                        Save Details
-                    </button>
-                </div>
-            </form>
         @elseif(request()->query('status')== 'cancelled')
             <div class="flex justify-center px-3 py-2 border-l-4 border-indigo-400 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700">
                 {{ __('Your Transaction Has Failed or been Cancelled') }}
@@ -69,37 +58,33 @@
     document.addEventListener('DOMContentLoaded', function () {
         var status = "{{ request()->query('status') }}"; // Get the status
         var txRef = {{ request()->query('tx_ref') }};
-        var estate_id = {{ $estate->id }};
-        // console.log(estate_id)
-        if (status === 'successful' && txRef) {
-            sendTxRef(txRef, estate_id); // Call a function to send tx_ref using AJAX
-        } else {
-            console.log('Transaction Failed');
-        }
+        var user_id = {{ auth()->user()->id }}
+        var landlord = {{ $estate->landlord_id }}
+        if ( landlord == user_id) {
+            if (status === 'successful' && txRef) {
+                $.ajaxSetup({
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
-        function sendTxRef(txRef, estate_id) {
-            // AJAX request to post tx_ref to a Laravel route
-            $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            // Send an AJAX request to delete the image
-            $.ajax({
-                url: '{{ route('pay.status') }}', 
-                method: 'POST',
-                data: { txRef: txRef,
-                    estate_id: estate_id,
-                },
-                success: function(response) {
-                    console.log(response);
-                },
-                error: function(xhr, status, error) {
-                    // Handle error
-                    console.error(error);
-                }
-            });
+                // Send an AJAX request to delete the image
+                $.ajax({
+                    url: '{{ route('pay.status') }}', 
+                    method: 'POST',
+                    data: { txRef: txRef,
+                    },
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error
+                        console.error(error);
+                    }
+                }); 
+            } else {
+                console.log('Transaction Failed');
+            }
         }
     });
 </script>
