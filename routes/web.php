@@ -139,4 +139,9 @@ Route::middleware([
     Route::get('/feedback-delete/{id}',[LandingPageController::class, 'deleteFeedback'])->name('destroy.feedback');
 
 
+    // Dashboard Element Chart
+    Route::get('/charts-pie-rentals',[RentalController::class, 'rentalCharts'])->name('pie.rentals');
+    Route::get('/charts-bar-estates',[DistrictController::class, 'districtEstate'])->name('bar.estates');
+    
+
 });

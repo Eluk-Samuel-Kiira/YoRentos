@@ -1,6 +1,14 @@
-<div class="w-full md:w-1/3 bg-gray-200 rounded-lg p-2">
+<script>
+    function toggleAdvert(estateUid) {
+        const element = document.getElementById(`advertise_${estateUid}`);
+        if (element) {
+            element.classList.toggle('hidden');
+        }
+    }
+</script>
+
+<div class="w-full md:w-1/3 bg-gray-200 rounded-lg p-2 hidden" id="advertise_{{ $estate->uid }}">
     <div class="w-full max-w-sm mx-auto">
-        <div class="block text-gray-700 text-sm font-bold mb-2">Advertise Estate Monthly</div>
         @if (session('estate_id') == $estate->id)
             <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 @csrf
@@ -57,9 +65,9 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var status = "{{ request()->query('status') }}"; // Get the status
-        var txRef = {{ request()->query('tx_ref') }};
-        var user_id = {{ auth()->user()->id }}
-        var landlord = {{ $estate->landlord_id }}
+        var txRef = "{{ request()->query('tx_ref') }}";
+        var user_id = "{{ auth()->user()->id }}";
+        var landlord = "{{ $estate->landlord_id }}";
         if ( landlord == user_id) {
             if (status === 'successful' && txRef) {
                 $.ajaxSetup({
@@ -87,4 +95,5 @@
             }
         }
     });
+
 </script>

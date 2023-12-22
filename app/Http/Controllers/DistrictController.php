@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\District;
+use App\Models\Village;
+use App\Models\Estate;
 use App\Http\Requests\StoreDistrictRequest;
 use App\Http\Requests\UpdateDistrictRequest;
 use Illuminate\Support\Str;
@@ -106,4 +108,34 @@ class DistrictController extends Controller
             return redirect()->route('country.index')->with('error', 'District Not found');
         }
     }
+
+
+    public function districtEstate()
+    {
+        try {
+            $districts = District::where('status', 1)->get();
+
+            $districtEstates = [];
+
+            foreach ($districts as $district) {
+                // Fetch villages within the district
+                $villagesInDistrict = Village::whereHas('parishName.subcountyName.countyName.districtName', function ($query) use ($district) {
+                    $query->where('id', $district->id);
+                })->pluck('id');
+
+                // Fetch estates in the villages of this district
+                $estatesInDistrict = Estate::with('rentalName')
+                    ->whereIn('village_id', $villagesInDistrict)
+                    ->get();
+
+                // Store estates of this district in the result array
+                $districtEstates[$district->district] = $estatesInDistrict;
+            }
+
+            return response()->json(['districtEstates' => $districtEstates]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()], 500);
+        }
+    }
+
 }

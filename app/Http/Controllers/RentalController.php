@@ -104,5 +104,12 @@ class RentalController extends Controller
         }
     }
 
-
+    public function rentalCharts()
+    {
+        $rentals = Rental::with('rentalUnits')->get();
+            
+        return response()->json([
+            'rentals' => $rentals,
+        ]);
+    }
 }

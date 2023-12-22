@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Unit;
 
 class Rental extends Model
 {
@@ -31,4 +32,10 @@ class Rental extends Model
     {
         return 'slug';
     }
+
+    public function rentalUnits()
+    {
+        return $this->hasMany(Unit::class, 'rental_id', 'id');
+    }
+
 }
