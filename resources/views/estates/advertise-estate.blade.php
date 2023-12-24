@@ -91,7 +91,7 @@
                     }
                 }); 
             } else {
-                console.log('Transaction Failed');
+                // console.log('Transaction Failed');
             }
         }
     });

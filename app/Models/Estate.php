@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Broker;
 use App\Models\Village;
 use App\Models\Paymode;
+use App\Models\Unitpay;
 
 class Estate extends Model
 {
@@ -42,6 +43,8 @@ class Estate extends Model
         'video',
         'unit_no',
         'description',
+        'terms_conditions',
+        'accept',
         'sponsored',
         'status',
         'deleted',
@@ -80,5 +83,10 @@ class Estate extends Model
     public function payEstate()
     {
         return $this->hasMany(Paymode::class, 'estate_id', 'uid');
+    }
+
+    public function paidUnit()
+    {
+        return $this->hasMany(Unitpay::class, 'estate_id', 'id');
     }
 }

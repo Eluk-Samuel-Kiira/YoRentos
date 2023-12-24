@@ -32,13 +32,13 @@
                 @endforeach
                 <a href="{{ route('my.unit') }}">{{__('My Units')}}</a>
                 <!-- Authentication -->
-                  <form method="POST" action="{{ route('logout') }}" x-data>
-                      @csrf
-                      <a href="{{ route('logout') }}"
-                                @click.prevent="$root.submit();">
-                          {{ __('Log Out') }}
-                      </a>
-                  </form>
+                <form method="POST" action="{{ route('logout') }}" x-data>
+                    @csrf
+                    <a href="{{ route('logout') }}"
+                              @click.prevent="$root.submit();">
+                        {{ __('Log Out') }}
+                    </a>
+                </form>
               </div>
             </div>
           </div>

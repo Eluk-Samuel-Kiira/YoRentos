@@ -31,30 +31,34 @@
                 </div>
             </form>
         @else
-            <form method="POST" action="{{ route('payment.advert') }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <form method="POST" action="{{ route('payment.units') }}" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 @csrf
                 <input type="hidden" id="landlord_id" name="landlord_id" value="{{ $estate->landlord_id }}" required>
                 <input type="hidden" id="estate_uid" name="estate_uid" value="{{ $estate->uid }}" required>
                 <input type="hidden" id="estate_id" name="estate_id" value="{{ $estate->id }}" required>
                 <div class="mt-4">
-                    <x-label for="unit-pay" value="{{ __('Unit Packages') }}" class="block text-gray-700 text-sm font-bold mb-2"/>
+                    <x-label for="unit-pay" value="{{ __('Select Monthly Unit Packages') }}" class="block text-gray-700 text-sm font-bold mb-2"/>
                     <div>
-                        <input type="checkbox" id="unit-mgt" name="unit_pay[]" value="unit-mgt" class="mr-2">
-                        <label for="units" class="rounded">Manage Units</label>
+                        <input type="checkbox" id="unit-mgt" name="unit_pay[]" value="500" class="mr-2" required>
+                        <label for="units" class="rounded">Manage Units at 500/unit</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="unit-mgt" name="unit_pay[]" value="1500" class="mr-2">
+                        <label for="units" class="rounded">Timely Notifications at 1500/unit</label>
                     </div>
                 </div>
                 <div class="flex items-center justify-between">
                     <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded-sm text-sm hover:bg-blue-600 motion-reduce:transform-none">
-                        Save Details
+                        Process Payments
                     </button>
                 </div>
             </form>
         @endif
-        @if(request()->query('status')== 'successful')
+        @if(request()->query('status') == 'successful')
             <div class="flex justify-center px-3 py-2 border-l-4 border-indigo-400 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700">
                 {{ __('Your Payment is succeessful') }}
             </div>
-        @elseif(request()->query('status')== 'cancelled')
+        @elseif(request()->query('status') == 'cancelled')
             <div class="flex justify-center px-3 py-2 border-l-4 border-indigo-400 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700">
                 {{ __('Your Transaction Has Failed or been Cancelled') }}
             </div>
@@ -77,7 +81,7 @@
 
                 // Send an AJAX request to delete the image
                 $.ajax({
-                    url: '{{ route('pay.status') }}', 
+                    url: '{{ route('pay.unit-status') }}', 
                     method: 'POST',
                     data: { txRef: txRef,
                     },
@@ -90,7 +94,7 @@
                     }
                 }); 
             } else {
-                console.log('Transaction Failed');
+                // console.log('Transaction Failed');
             }
         }
     });

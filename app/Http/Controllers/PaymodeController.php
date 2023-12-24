@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Paymode;
 use App\Models\Estate;
 use App\Models\Adverts;
+use App\Models\Unitpay;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
@@ -179,5 +181,95 @@ class PaymodeController extends Controller
                 'message' => 'Estate Could Not Be Got.'
             ]);
         }
+    }
+
+    function payUnit(Request $request)
+    {
+        $tx_ref = substr(rand(0,time()),0,11);
+        $landlord_id = $request->input('landlord_id');
+        $estate_id = $request->input('estate_id');
+        $estate_uid = $request->input('estate_uid');
+        $user_id = auth()->user()->id;
+        $user_email = auth()->user()->email;
+
+        $amount_unit = implode(',', $request->unit_pay);
+        $amount = array_sum(explode(',', $amount_unit));
+        if (count($request->unit_pay) === 1 && $amount <= 600)
+        {
+            $duration = 1;
+        } else {
+            $duration = 2;
+        }
+        $active_units = Unit::where('estate_id', $estate_id)->count();
+        $total_pay = $active_units * $amount;
+
+        if($total_pay == 0){
+            $total_pay = $amount + 4000;
+        }
+
+        if ($user_id == $landlord_id)
+        {
+            $estate = Estate::where('uid', $estate_uid)->where('id', $estate_id)->first();
+            if ($estate)
+            {
+                // Check for a failed or a successful Transaction
+                $existing_pay = Unitpay::where('estate_id', $estate_id)->where('status', 1)->first();
+                if ($existing_pay) 
+                {
+                    return redirect()->back()->with('success', 'This Estate Unit Payments still Running');
+                } else {
+                    $payment = Unitpay::updateOrCreate(
+                        [
+                            'estate_id' => $estate_id,
+                        ],
+                        [
+                            'txn_ref' => $tx_ref,
+                            'amount' => $total_pay,
+                            'landlord_id' => $landlord_id,
+                            'duration' => $duration,
+                        ]
+                    );
+                    return redirect()->back()->with('success', 'Details stored Proceed to Check Out Button')
+                        ->with('txn_ref', $tx_ref)->with('amount', $total_pay)->with('estate_id', $estate_id);
+                }
+            } else {
+                return redirect()->back()->with('error', 'Estate Does not Extist');
+            }
+        } else {
+            return redirect()->back()->with('error', 'Estate Does Not Belong To You');
+        }
+    }
+
+    function unitPayStatus(Request $request)
+    {
+        $date = now();
+        $txn_ref = $request->input('txRef');
+        $estate = Unitpay::where('txn_ref', $txn_ref)->first();
+
+        if ($estate)
+        {
+            // user 1 for adverts
+            $estate_name = Estate::where('id', $estate->estate_id)->first();
+            if ($estate_name)
+            {
+                Unitpay::where('estate_id', $estate->estate_id)->update([
+                    'status' => 1,
+                    'created_at' => $date, //tracking the month of payment
+                ]); 
+                // For prove that the transaction is successful
+                return response()->json([
+                    'message' => 'Units sucessfully Activated.'
+                ]);
+            }else {
+                return response()->json([
+                    'message' => 'Estate Not Found.'
+                ]);
+            }
+        } else {
+            return response()->json([
+                'message' => 'Estate Could Not Be Got.'
+            ]);
+        }
+        
     }
 }

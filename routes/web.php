@@ -74,6 +74,8 @@ Route::middleware([
     Route::post('/pay-delete', [PaymodeController::class, 'deletePay'])->name('payment.delete');
     Route::post('/pay-advert', [PaymodeController::class, 'advertPay'])->name('payment.advert');
     Route::post('/pay-status', [PaymodeController::class, 'payStatus'])->name('pay.status');
+    Route::post('/pay-unit', [PaymodeController::class, 'payUnit'])->name('payment.units');
+    Route::post('/pay-unit-status', [PaymodeController::class, 'unitPayStatus'])->name('pay.unit-status');
 
 
     // Rental Routes
@@ -89,6 +91,7 @@ Route::middleware([
     Route::post('/delete-image', [EstateController::class, 'deleteImage'])->name('image.delete');
     Route::post('/estate-location', [EstateController::class, 'estateLocation'])->name('estate.location');
     Route::post('/estate-description', [EstateController::class, 'estateDescription'])->name('estate.description');
+    Route::post('/estate-terms', [EstateController::class, 'estateTerms'])->name('estate.terms');
 
     
     //Unit routes

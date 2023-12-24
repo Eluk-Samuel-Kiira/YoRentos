@@ -293,5 +293,29 @@ class EstateController extends Controller
         }
     }
 
+    public function estateTerms(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'terms_conditions' => 'required|max:20000',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $terms_conditions = $request->input('terms_conditions');
+        $landlord_id = $request->input('landlord_id');
+        $estate_id = $request->input('estate_id');
+        
+        $estate = Estate::where('landlord_id', $landlord_id)->where('uid', $estate_id)->first();
+        if ($estate)
+        {
+            $estate->update([
+                'terms_conditions' => $terms_conditions,
+            ]);
+            return redirect()->route('estate.index')->with('success', 'Estate Terms and Conditions Updated successfully');
+        } else {
+            return redirect()->route('estate.index')->with('error', 'Estate Not found');
+        }
+    }
 }
 

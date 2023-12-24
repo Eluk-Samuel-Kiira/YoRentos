@@ -19,6 +19,7 @@
         <!-- Styles -->
         <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/ui/trumbowyg.min.css">
+        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
@@ -51,6 +52,6 @@
         <!-- Load Trumbowyg JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.27.3/trumbowyg.min.js"></script>        
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+        
     </body>
 </html>

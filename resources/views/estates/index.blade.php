@@ -62,7 +62,7 @@
                                 </div>
                             </div>
 
-                            <!-- account details -->
+                            <!-- Subscribe details -->
                             <div class="border-b border-gray-200 py-3">
                                 <div class="flex justify-between items-center">
                                     <h3 class="text-lg font-semibold mb-2">Pricing:</h3>
@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="inline-block p-1">
                                         <button onclick="toggleUnits('{{ $estate->uid }}')" class="bg-blue-500 text-white px-2 py-1 rounded-sm text-xs hover:bg-blue-600 motion-reduce:transform-none">
-                                            Access Units
+                                            Subscribe Units
                                         </button>
                                     </div>
                                 </div> 
@@ -97,14 +97,14 @@
                                                     @endif
                                                 </div>
                                                 <div>
-                                                    <p class="text-lg font-semibold">Units Status</p>
-                                                    @if($estate->sponsored == 1)
+                                                    <p class="text-lg font-semibold">Units Access Status</p>
+                                                    @if($estate->paidUnit->contains('status', 1))
                                                         <p class="text-sm text-gray-500 flex items-center">
-                                                            <span class="py-1 px-2 bg-green-300 text-white rounded">Advert is Still Running</span>
+                                                            <span class="py-1 px-2 bg-green-300 text-white rounded">Unit Access Is On</span>
                                                         </p>
                                                     @else
                                                         <p class="text-sm text-gray-500 flex items-center">
-                                                            <span class="py-1 px-2 bg-red-300 text-white rounded">Advert is Off</span>
+                                                            <span class="py-1 px-2 bg-red-300 text-white rounded">Unit Access Is Off</span>
                                                         </p>
                                                     @endif
                                                 </div>
@@ -214,35 +214,73 @@
                                 </div>
                             </div>
 
+                            <!-- Terms and Conditions Field -->
+                            <div class="border-b border-gray-200 py-3">
+                                <div class="flex justify-between items-center">
+                                    <h3 class="text-lg font-semibold mb-2">Estate Terms And Conditions</h3>
+                                    <div class="inline-block p-1">
+                                        <button onclick="toggleTerms('{{ $estate->uid }}')" class="bg-blue-500 text-white px-2 py-1 rounded-sm text-xs hover:bg-blue-600 motion-reduce:transform-none">
+                                            Update Terms
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-lg p-2 hidden" id="terms_{{ $estate->uid }}">
+                                    <div class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8">
+                                        <form action="{{ route('estate.terms') }}" method="POST" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" id="landlord_id" name="landlord_id" value="{{ $estate->landlord_id }}" required>
+                                            <input type="hidden" id="estate_id" name="estate_id" value="{{ $estate->uid }}" required>
+                                            <div class="mb-4">
+                                                <label for="terms_conditions" class="block text-gray-700 text-sm font-bold mb-2">Update Terms and Conditions:</label>
+                                                <textarea name="terms_conditions" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>{!! $estate->terms_conditions !!}</textarea>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded-sm text-sm hover:bg-blue-600 motion-reduce:transform-none">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-lg p-2">
+                                    <div class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8">
+                                        {!! $estate->terms_conditions !!}
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <!-- Description Field -->
                             <div class="border-b border-gray-200 py-3">
                                 <div class="flex justify-between items-center">
                                     <h3 class="text-lg font-semibold mb-2">Estate Description</h3>
+                                    <div class="inline-block p-1">
+                                        <button onclick="toggleDescription('{{ $estate->uid }}')" class="bg-blue-500 text-white px-2 py-1 rounded-sm text-xs hover:bg-blue-600 motion-reduce:transform-none">
+                                            Update Terms
+                                        </button>
+                                    </div>
                                 </div>
                                 <!-- Description -->
-                                <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-                                    <div class="w-full md:w-1/3 bg-gray-200 rounded-lg p-2">
-                                        <div class="w-full max-w-sm mx-auto">
-                                            <form action="{{ route('estate.description') }}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                                                @csrf
-                                                <input type="hidden" id="landlord_id" name="landlord_id" value="{{ $estate->landlord_id }}" required>
-                                                <input type="hidden" id="estate_id" name="estate_id" value="{{ $estate->uid }}" required>
-                                                <div class="mb-4">
-                                                    <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Update Description:</label>
-                                                    <textarea id="editor" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required></textarea>
-                                                </div>
-                                                <div class="flex items-center justify-between">
-                                                    <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded-sm text-sm hover:bg-blue-600 motion-reduce:transform-none">
-                                                        Update
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                <div class="w-full bg-gray-200 rounded-lg p-2 hidden" id="description_{{ $estate->uid }}">
+                                    <div class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8">
+                                        <form action="{{ route('estate.description') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" id="landlord_id" name="landlord_id" value="{{ $estate->landlord_id }}" required>
+                                            <input type="hidden" id="estate_id" name="estate_id" value="{{ $estate->uid }}" required>
+                                            <div class="mb-4">
+                                                <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Update Description:</label>
+                                                <textarea id="editor" name="description" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>{!! $estate->description !!}</textarea>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded-sm text-sm hover:bg-blue-600 motion-reduce:transform-none">
+                                                    Update
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="w-full md:w-2/3 bg-gray-200 rounded-lg p-2">
-                                        <div class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                                            {!! $estate->description !!}
-                                        </div>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-lg p-2">
+                                    <div class="w-full bg-white shadow-md rounded px-8 pt-6 pb-8">
+                                        {!! $estate->description !!}
                                     </div>
                                 </div>
                             </div>
@@ -428,6 +466,20 @@
     }
     document.getElementById('estateSearch').addEventListener('input', filterEstates);
     
+    function toggleTerms(estateUid) {
+        const element = document.getElementById(`terms_${estateUid}`);
+        if (element) {
+            element.classList.toggle('hidden');
+        }
+    }
+
+    function toggleDescription(estateUid) {
+        const element = document.getElementById(`description_${estateUid}`);
+        if (element) {
+            element.classList.toggle('hidden');
+        }
+    }
+
 </script>
 
 

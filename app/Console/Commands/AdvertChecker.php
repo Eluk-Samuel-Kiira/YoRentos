@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Estate;
 use App\Models\Adverts;
 use App\Models\Unit;
+use App\Models\Unitpay;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
@@ -46,7 +47,8 @@ class AdvertChecker extends Command
         $lease_dates = Unit::where('status', 1)->get();
 
         foreach ($lease_dates as $lease_date) {
-            if ($lease_date->status == 1 && $lease_date->estateName->status == 1)
+            $unit_pay = Unitpay::where('status', 1)->where('estate_id', $lease_date->estateName->id)->first();
+            if ($unit_pay && $lease_date->status == 1 && $lease_date->estateName->status == 1)
             {
                 $lease_start = Carbon::parse($lease_date->lease_start);
                 $lease_stop = Carbon::parse($lease_date->lease_stop);
@@ -62,7 +64,7 @@ class AdvertChecker extends Command
                             'body' => 'RENT DEW YoRENTOS',
                             'message' => 'Kindly be reminded that the next rent payment for unit '.$lease_date->unit.' is due in less than 5 days.',
                             'url' => url('/dashboard'),
-                            'thankyou' => 'Thanks, Manangement '.$lease_date->estateName->estate
+                            'thankyou' => 'Thanks, Manangement '.$lease_date->estateName->estate.' Estates'
                         ];
                         Notification::sendNow($user, new TenantLeaseNotification($lease_notify));
 
@@ -86,7 +88,7 @@ class AdvertChecker extends Command
                     // $this->info('User Does Not Exist or Unverified');
                 }
 
-                //Let the landlord be awre too
+                //Let the landlord be aware too
                 $landlord = User::where('status', 1)->where('deleted', 1)->where('id', $lease_date->estateName->landlord_id)->first();
                 if ($landlord)
                 {

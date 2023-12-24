@@ -8,6 +8,7 @@ use App\Models\Duration;
 use App\Models\User;
 use App\Models\Rental;
 use App\Models\Estate;
+use App\Models\Unitpay;
 
 class Unit extends Model
 {
@@ -57,6 +58,5 @@ class Unit extends Model
     {
         return $this->belongsTo(Estate::class, 'estate_id');
     }
-
 
 }
