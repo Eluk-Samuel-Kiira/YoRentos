@@ -19,4 +19,9 @@ class Adverts extends Model
     protected $fillable = [
         'estate_id','landlord_id','duration','price','txn_ref','status','deleted'
     ];
+
+    public function estateAdvert()
+    {
+        return $this->belongsTo(Estate::class, 'estate_id');
+    }
 }

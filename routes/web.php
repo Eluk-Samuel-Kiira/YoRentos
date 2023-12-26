@@ -67,6 +67,7 @@ Route::middleware([
     Route::get('/broker-delete/{id}', [UserController::class, 'deleteBroker'])->name('broker_name.delete');
     Route::get('/otp-request', [UserController::class, 'otpRequest'])->name('otp.request');
     Route::post('/otp-confirm', [UserController::class, 'otpConfirm'])->name('confirm-otp');
+    Route::get('/my-profile', [UserController::class, 'myProfile'])->name('my-profile');
 
 
     // Payment Routes
@@ -77,6 +78,12 @@ Route::middleware([
     Route::post('/pay-unit', [PaymodeController::class, 'payUnit'])->name('payment.units');
     Route::post('/pay-unit-status', [PaymodeController::class, 'unitPayStatus'])->name('pay.unit-status');
 
+    // income routes
+    Route::get('/estate-income', [PaymodeController::class, 'estateIncome'])->name('income.index');    
+    Route::get('/status-income/{id}', [PaymodeController::class, 'advertStatus'])->name('advert.status');    
+    Route::get('/advert-destroy/{id}', [PaymodeController::class, 'advertDestroy'])->name('advert.destroy');    
+    Route::get('/status-unitpay/{id}', [PaymodeController::class, 'unitSubStatus'])->name('unitpay.status');    
+    Route::get('/unitpay-destroy/{id}', [PaymodeController::class, 'unitpayDestroy'])->name('unitpay.destroy');    
 
     // Rental Routes
     Route::resource('rental', RentalController::class); 
@@ -98,6 +105,8 @@ Route::middleware([
     Route::resource('unit', UnitController::class); 
     Route::post('/update-tenant', [UnitController::class, 'updateTenant'])->name('update.tenant');
     Route::get('/unit-status/{slug}', [UnitController::class, 'changeUnitStatus'])->name('unit.status');
+    Route::get('/terms-accept/{slug}', [UnitController::class, 'termsConditions'])->name('unit.accept');
+    Route::get('/terms-conditions/{slug}', [UnitController::class, 'readTerms'])->name('confirm.terms');
 
 
     //Duration
@@ -145,6 +154,5 @@ Route::middleware([
     // Dashboard Element Chart
     Route::get('/charts-pie-rentals',[RentalController::class, 'rentalCharts'])->name('pie.rentals');
     Route::get('/charts-bar-estates',[DistrictController::class, 'districtEstate'])->name('bar.estates');
-    
 
 });

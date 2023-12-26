@@ -140,6 +140,25 @@
                                             <div class="bg-gray-100 p-4 rounded-lg shadow-md">
                                                 <h2 class="text-xl font-bold mb-2">Unit Information (Part 2)</h2>
 
+                                                @php
+                                                    // Calculate the difference in days
+                                                    $nowDate = \Carbon\Carbon::now();
+                                                    $endDate = \Carbon\Carbon::parse($unit->lease_stop);
+                                                    $daysLeft = $nowDate->diffInDays($endDate);
+                                                @endphp
+                                                <div class="mb-4">
+                                                    <p class="text-lg font-semibold">Terms & Conditions: 
+                                                        <span class="text-gray-700">
+                                                        @if ($unit->sponsored == 0)
+                                                            <span class="text-red-500">{{ __('Unaccepted Yet') }}</span>
+                                                        @else
+                                                            <span class="text-green-500">{{ __('Accepted') }}</span>
+                                                        @endif
+                                                        </span>
+                                                    </p>
+                                                    <p class="text-lg font-semibold">Number of Days Left: <span class="text-gray-700">{{ $daysLeft }}</span></p>
+                                                </div>
+
                                                 <!-- Details: Bedrooms, Bathrooms, Square Foot -->
                                                 <div class="mb-4">
                                                     <p class="text-lg font-semibold">Rooms: <span class="text-gray-700">{{ $unit->room_no }}</span></p>

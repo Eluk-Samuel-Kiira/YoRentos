@@ -164,4 +164,40 @@ class UnitController extends Controller
             return redirect()->route('unit.index')->with('error', 'Unit Not found');
         }
     }
+
+    public function termsConditions($slug)
+    {
+        $this_unit = Unit::where('slug', $slug)->first();
+
+        if ($this_unit) {
+            if ($this_unit->sponsored == 1) {
+                $this_unit->where('slug', $slug)->update(['sponsored' => 0]);
+            } else {
+                $this_unit->where('slug', $slug)->update(['sponsored' => 1]);
+            }
+            
+            return redirect()->back()->with('success', 'Terms and Conditions Accepted successfully');
+        } else {
+            return redirect()->back()->with('error', 'Unit Not found');
+        }   
+    }
+
+    public function readTerms($slug)
+    {
+        $unit = Unit::where('slug', $slug)->first();
+
+        if ($unit) {
+            $estate_terms = Estate::where('uid', $unit->estate_uid)
+                ->where('status', 1)
+                ->first();
+
+            return view('tenant.terms', compact(
+                'estate_terms',
+                'unit'
+            ));
+        } else {
+            return redirect()->back()->with('error', 'Unit not found');
+        }
+    }
+
 }

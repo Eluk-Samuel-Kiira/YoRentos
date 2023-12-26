@@ -238,4 +238,12 @@ class UserController extends Controller
     {
         return view('auth.deactivated-user');
     }
+
+    public function myProfile()
+    {
+        $user_profile = User::where('status', 1)->where('id', auth()->user()->id)->first();
+        return view('tenant.profile', compact(
+            'user_profile',
+        ));
+    }
 }

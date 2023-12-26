@@ -3,6 +3,9 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }} 
+            <x-nav-link href="{{ route('my.unit') }}" :active="request()->routeIs('my.unit')">
+                {{ __('My Units') }}
+            </x-nav-link>
         </h2>
         <h4>  
             <x-validation-errors class="mb-4" />  

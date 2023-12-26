@@ -31,6 +31,7 @@
                   <a href="{{ route('rental.type', $item->slug) }}">{{ $item->name }}</a>
                 @endforeach
                 <a href="{{ route('my.unit') }}">{{__('My Units')}}</a>
+                <a href="{{ route('my-profile') }}">{{__('profile')}}</a>
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}" x-data>
                     @csrf

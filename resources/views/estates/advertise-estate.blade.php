@@ -56,6 +56,13 @@
                 {{ __('Your Payment is succeessful') }}
             </div>
         @elseif(request()->query('status')== 'cancelled')
+            <!-- this is just a security measure for typos -->
+            @php
+                $cancelled_txn = \App\Models\Unitpay::where('txn_ref', request()->query('tx_ref'))->first();
+                if ($cancelled_txn) {
+                    $cancelled_txn->delete();
+                }
+            @endphp
             <div class="flex justify-center px-3 py-2 border-l-4 border-indigo-400 text-base font-medium text-indigo-700 bg-indigo-50 focus:outline-none focus:text-indigo-800 focus:bg-indigo-100 focus:border-indigo-700">
                 {{ __('Your Transaction Has Failed or been Cancelled') }}
             </div>

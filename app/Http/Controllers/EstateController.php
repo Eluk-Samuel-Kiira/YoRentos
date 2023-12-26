@@ -317,5 +317,6 @@ class EstateController extends Controller
             return redirect()->route('estate.index')->with('error', 'Estate Not found');
         }
     }
+
 }
 

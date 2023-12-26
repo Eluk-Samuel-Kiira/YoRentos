@@ -12,9 +12,9 @@
             @forelse ($units as $unit)
                 @php
                     // Calculate the difference in days
-                    $startDate = \Carbon\Carbon::parse($unit->lease_start);
+                    $nowDate = \Carbon\Carbon::now();
                     $endDate = \Carbon\Carbon::parse($unit->lease_stop);
-                    $daysLeft = $startDate->diffInDays($endDate);
+                    $daysLeft = $nowDate->diffInDays($endDate);
                 @endphp
                 <div class="box">
                     <div class="detail-box">
@@ -57,6 +57,14 @@
                                         {{ is_array($resourcesArray) ? implode(', ', $resourcesArray) : $unit->resources }}
                                     </li>
                                 </span>
+                                <h2>
+                                    <strong>{{ __('Terms & Conditions: ') }}</strong><br>
+                                    @if ($unit->sponsored == 1)
+                                        <a href="{{ route('confirm.terms', $unit) }}"class="badge bg-success">{{ __('Accepted') }}</a>
+                                    @else
+                                        <a href="{{ route('confirm.terms', $unit) }}" class="badge bg-danger">{{ __('Unaccepted') }}</a>
+                                    @endif
+                                </h2>
                             </ul>
                         </div>
                     </div>

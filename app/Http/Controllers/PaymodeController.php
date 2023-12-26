@@ -166,7 +166,7 @@ class PaymodeController extends Controller
                 Adverts::where('estate_id', $estate->estate_id)->update([
                     'status' => 0,
                     'created_at' => $date, //tracking the month of payment
-                ]); // For prove that the transaction is successful
+                ]); // For prove that the transaction is successful and status changes to 0
 
                 return response()->json([
                     'message' => 'Estate '.$estate_name->estate.' sucessfully Advertised.'
@@ -271,5 +271,91 @@ class PaymodeController extends Controller
             ]);
         }
         
+    }
+
+    public function estateIncome()
+    {
+        $estates = Adverts::get();
+        $total_estate = Adverts::where('status', 0)->sum('price');
+        $units = Unitpay::get();
+        $total_units = Unitpay::where('status', 1)->sum('amount');
+        return view('dashboard.income', compact(
+            'estates',
+            'total_estate',
+            'units',
+            'total_units'
+        ));
+    }
+
+    public function advertStatus($id)
+    {
+        $this_advert = Adverts::where('id', $id)->first();
+
+        if ($this_advert) {
+            $estate_name = Estate::where('id', $this_advert->estate_id)->first();
+            if ($this_advert->status == 1) {
+                if ($estate_name)
+                {
+                    $estate_name->update(['sponsored' => 1]);
+                }
+                $this_advert->where('id', $id)->update(['status' => 0]);
+                return redirect()->route('income.index')->with('success', 'Advert Activated successfully');
+            } else {
+                if ($estate_name)
+                {
+                    $estate_name->update(['sponsored' => 0]);
+                }
+                $this_advert->where('id', $id)->update(['status' => 1]);
+                return redirect()->route('income.index')->with('success', 'Advert Deactivated successfully');
+            }
+        } else {
+            return redirect()->route('income.index')->with('error', 'Advert Not found');
+        }
+    }
+
+    public function advertDestroy($id)
+    {
+        $this_advert = Adverts::where('id', $id)->first();
+
+        if ($this_advert) {
+            $estate_name = Estate::where('id', $this_advert->estate_id)->first();
+            if ($estate_name)
+            {
+                $estate_name->update(['sponsored' => 0]);
+            }
+            $this_advert->delete();
+            return redirect()->route('income.index')->with('success', 'Advert Deleted Successfully');
+        } else {
+            return redirect()->route('income.index')->with('error', 'Advert Not found');
+        }   
+    }
+
+    public function unitSubStatus($id)
+    {
+        $this_unit = Unitpay::where('id', $id)->first();
+
+        if ($this_unit) {
+            if ($this_unit->status == 1) {
+                $this_unit->where('id', $id)->update(['status' => 0]);
+                return redirect()->route('income.index')->with('success', 'Unit Deactivated successfully');
+            } else {
+                $this_unit->where('id', $id)->update(['status' => 1]);
+                return redirect()->route('income.index')->with('success', 'Advert Activated successfully');
+            }
+        } else {
+            return redirect()->route('income.index')->with('error', 'Estate Not found');
+        }
+    }
+
+    public function unitpayDestroy($id)
+    {
+        $this_unit = Unitpay::where('id', $id)->first();
+
+        if ($this_unit) {
+            $this_unit->delete();
+            return redirect()->route('income.index')->with('success', 'Unit Sub Deleted Successfully');
+        } else {
+            return redirect()->route('income.index')->with('error', 'Unit Sub Not found');
+        }   
     }
 }

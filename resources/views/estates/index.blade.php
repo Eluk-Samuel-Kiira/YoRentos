@@ -118,10 +118,15 @@
                             <div class="border-b border-gray-200 py-3">
                                 <div class="flex justify-between items-center">
                                     <h3 class="text-lg font-semibold mb-2">Account Payments:</h3>
+                                    <div class="inline-block p-1">
+                                        <button onclick="togglePayments('{{ $estate->uid }}')" class="bg-blue-500 text-white px-2 py-1 rounded-sm text-xs hover:bg-blue-600 motion-reduce:transform-none">
+                                            Add Payment
+                                        </button>
+                                    </div>
                                 </div> 
                                     
                                 <div class="md:flex">
-                                    <div class="w-full md:w-1/3 bg-gray-200 rounded-lg p-2">
+                                    <div class="w-full md:w-1/3 bg-gray-200 rounded-lg p-2 hidden" id="payments_{{ $estate->uid }}">
                                         <div class="w-full max-w-sm mx-auto">
                                             <form action="{{route('payment.store')}}" method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                                                 @csrf
@@ -475,6 +480,13 @@
 
     function toggleDescription(estateUid) {
         const element = document.getElementById(`description_${estateUid}`);
+        if (element) {
+            element.classList.toggle('hidden');
+        }
+    }
+
+    function togglePayments(estateUid) {
+        const element = document.getElementById(`payments_${estateUid}`);
         if (element) {
             element.classList.toggle('hidden');
         }

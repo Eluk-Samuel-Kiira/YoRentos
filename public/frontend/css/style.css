@@ -1517,3 +1517,65 @@ button {
   color: #ffffff;
 }
 
+
+/* Profiles */
+
+.profile-header {
+  text-align: center;
+  padding: 20px;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+}
+
+.profile-header h1 {
+  margin: 10px 0 5px 0;
+  font-size: 24px;
+}
+
+.profile-details {
+  padding: 20px;
+}
+
+.profile-details p {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .profile-card {
+    max-width: 300px;
+  }
+}
+.profile-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-top: 50px;
+  float: left;
+}
+
+.profile-info label {
+  flex: 1;
+  margin-right: 10px;
+  text-align: right;
+}
+
+.profile-info input,
+.profile-info textarea {
+  flex: 2;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .profile-card {
+    max-width: 300px;
+  }
+}

@@ -18,4 +18,9 @@ class Unitpay extends Model
     protected $fillable = [
         'estate_id','landlord_id','duration','amount','txn_ref','status','deleted'
     ];
+
+    public function estateUnitpay()
+    {
+        return $this->belongsTo(Estate::class, 'estate_id');
+    }
 }
