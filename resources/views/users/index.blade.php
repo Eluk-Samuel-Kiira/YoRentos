@@ -10,15 +10,19 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto p-6">
-                    <button id="openRoleModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Add Role
-                    </button>
-                    <button id="editRoleModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Edit Role
-                    </button>
-                    <button id="createBrokerModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Create Broker
-                    </button>
+                    @role('Admin')
+                        <button id="openRoleModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Add Role
+                        </button>
+                        <button id="editRoleModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Edit Role
+                        </button>
+                    @endrole
+                    @can('edit user')
+                        <button id="createBrokerModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Create Broker
+                        </button>
+                    @endcan
                     <h4>
                         <x-validation-errors class="mb-4" />    
                         @if(session('error'))
@@ -32,27 +36,29 @@
                             </span>
                         @endif
                     </h4>
-                    <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8" id="roleTable">
-                            <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                &times;Hide
-                            </button>
-                            <table class="min-w-full border border-blue-500 text-gray-500">
-                                @include('users.create-role')
-                                @include('users.edit-role')
-                                <thead>
-                                    <tr>
-                                        <th class="py-2 px-4 border border-blue-500">ID</th>
-                                        <th class="py-2 px-4 border border-blue-500">Role</th>
-                                        <th class="py-2 px-4 border border-blue-500">Permissions</th>
-                                        <th class="py-2 px-4 border border-blue-500">Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="role-list">
-                                </tbody>
-                            </table>
+                    @role('Admin')
+                        <div class="table-responsive" style="overflow-x: auto;">
+                            <div class="container mx-auto mt-8" id="roleTable">
+                                <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                    &times;Hide
+                                </button>
+                                <table class="min-w-full border border-blue-500 text-gray-500">
+                                    @include('users.create-role')
+                                    @include('users.edit-role')
+                                    <thead>
+                                        <tr>
+                                            <th class="py-2 px-4 border border-blue-500">ID</th>
+                                            <th class="py-2 px-4 border border-blue-500">Role</th>
+                                            <th class="py-2 px-4 border border-blue-500">Permissions</th>
+                                            <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="role-list">
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
+                    @endrole
 
                     <!-- brokers table -->
                     <div class="table-responsive" style="overflow-x: auto;">
@@ -68,8 +74,10 @@
                                         <th class="py-2 px-4 border border-blue-500">ID</th>
                                         <th class="py-2 px-4 border border-blue-500">Name</th>
                                         <th class="py-2 px-4 border border-blue-500">District</th>
-                                        <th class="py-2 px-4 border border-blue-500">Status</th>
-                                        <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                        @can('manage all')
+                                            <th class="py-2 px-4 border border-blue-500">Status</th>
+                                            <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -78,18 +86,20 @@
                                             <td class="py-2 px-4 border-b border-r">{{ $broker_name->id }}</td>
                                             <td class="py-2 px-4 border-b border-r">{{ $broker_name->brokerName->name }}</td>
                                             <td class="py-2 px-4 border-b border-r">{{ $broker_name->brokerDistrict->district }}</td>
-                                            <td class="py-2 px-3 border-b border-r">
-                                                <a href="{{ route('broker_name.status',$broker_name->id) }}" class="py-1 px-2 
-                                                    {{ $broker_name->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
-                                                    text-white rounded hover:{{ $broker_name->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
-                                                    {{ $broker_name->status == 1 ? 'Active' : 'Inactive' }}
-                                                </a>
-                                            </td>
-                                            <td class="py-2 px-4 border-b border-r">
-                                                <a href="{{ route('broker_name.delete',$broker_name->id) }}" class="py-1 px-2 bg-red-300 text-white rounded hover:bg-red-500">
-                                                    {{__('Delete') }}
-                                                </a>
-                                            </td>
+                                            @can('manage all')
+                                                <td class="py-2 px-3 border-b border-r">
+                                                    <a href="{{ route('broker_name.status',$broker_name->id) }}" class="py-1 px-2 
+                                                        {{ $broker_name->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                        text-white rounded hover:{{ $broker_name->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                        {{ $broker_name->status == 1 ? 'Active' : 'Inactive' }}
+                                                    </a>
+                                                </td>
+                                                <td class="py-2 px-4 border-b border-r">
+                                                    <a href="{{ route('broker_name.delete',$broker_name->id) }}" class="py-1 px-2 bg-red-300 text-white rounded hover:bg-red-500">
+                                                        {{__('Delete') }}
+                                                    </a>
+                                                </td>
+                                            @endcan
                                         </tr>
                                     @empty
                                         <td class="py-2 px-4 border-b border-r">{{__('No Broker Available')}}</td>
@@ -114,8 +124,10 @@
                                         <th class="py-2 px-4 border border-blue-500">Name</th>
                                         <th class="py-2 px-4 border border-blue-500">Phone Number</th>
                                         <th class="py-2 px-4 border border-blue-500">Email</th>
-                                        <th class="py-2 px-4 border border-blue-500">Role</th>
-                                        <th class="py-2 px-4 border border-blue-500">Status</th>
+                                        @can('manage all')
+                                            <th class="py-2 px-4 border border-blue-500">Role</th>
+                                            <th class="py-2 px-4 border border-blue-500">Status</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody id="user-list">
@@ -158,25 +170,27 @@
                                 '<td class="py-2 px-4 border-b border-r">' + user.name + '</td>' +
                                 '<td class="py-2 px-4 border-b border-r">' + user.phone_number + '</td>' +
                                 '<td class="py-2 px-4 border-b border-r">' + user.email + '</td>' +
-                                '<td class="py-2 px-3 border-b border-r">' +
-                                    '<form id="changeRoleForm" method="POST" action="{{ route('change.role') }}">' +
-                                        '<input type="hidden" name="_token" value="' + csrfToken + '">' +
-                                        '<span class="py-1 px-2 bg-green-500 text-white rounded mr-6">' + user.role +'</span> ' + 
-                                        '<input type="hidden" name="user" value="'+user.id+'">'+
-                                        '<select id="newRole" name="newRole" class="rounded" required>' +
-                                            '<option class="block mt-1 w-full" value="">Change</option>'+
-                                            @foreach ($roles as $role)
-                                                '<option class="block mt-1 w-full" value="{{ $role->name }}">{{ $role->name }}</option>'+
-                                            @endforeach
-                                        '</select>' +
-                                        '<input type="submit" value="Change" class="px-1 bg-blue-300 text-white rounded hover:bg-blue-500">' +
-                                    '</form>' +
-                                '</td>' +
-                                '<td class="py-2 px-3 border-b">' +
-                                    '<a href="/change-status/' + user.id + '" class="py-1 px-2 ' + (user.status == 1 ? 'bg-green-300' : 'bg-red-300') + ' text-white rounded hover:' + (user.status == 1 ? 'bg-green-500' : 'bg-red-500') + '">' +
-                                        (user.status == 1 ? 'Active' : 'Inactive') +
-                                    '</a>' +
-                                '</td>'+
+                                @can('manage all')
+                                    '<td class="py-2 px-3 border-b border-r">' +
+                                        '<form id="changeRoleForm" method="POST" action="{{ route('change.role') }}">' +
+                                            '<input type="hidden" name="_token" value="' + csrfToken + '">' +
+                                            '<span class="py-1 px-2 bg-green-500 text-white rounded mr-6">' + user.role +'</span> ' + 
+                                            '<input type="hidden" name="user" value="'+user.id+'">'+
+                                            '<select id="newRole" name="newRole" class="rounded" required>' +
+                                                '<option class="block mt-1 w-full" value="">Change</option>'+
+                                                @foreach ($roles as $role)
+                                                    '<option class="block mt-1 w-full" value="{{ $role->name }}">{{ $role->name }}</option>'+
+                                                @endforeach
+                                            '</select>' +
+                                            '<input type="submit" value="Change" class="px-1 bg-blue-300 text-white rounded hover:bg-blue-500">' +
+                                        '</form>' +
+                                    '</td>' +
+                                    '<td class="py-2 px-3 border-b">' +
+                                        '<a href="/change-status/' + user.id + '" class="py-1 px-2 ' + (user.status == 1 ? 'bg-green-300' : 'bg-red-300') + ' text-white rounded hover:' + (user.status == 1 ? 'bg-green-500' : 'bg-red-500') + '">' +
+                                            (user.status == 1 ? 'Active' : 'Inactive') +
+                                        '</a>' +
+                                    '</td>'+
+                                @endcan
                             '</tr>';
                 userList.append(userRow);
             });

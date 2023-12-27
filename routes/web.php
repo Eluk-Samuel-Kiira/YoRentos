@@ -67,7 +67,7 @@ Route::middleware([
     Route::get('/broker-delete/{id}', [UserController::class, 'deleteBroker'])->name('broker_name.delete');
     Route::get('/otp-request', [UserController::class, 'otpRequest'])->name('otp.request');
     Route::post('/otp-confirm', [UserController::class, 'otpConfirm'])->name('confirm-otp');
-    Route::get('/my-profile', [UserController::class, 'myProfile'])->name('my-profile');
+    // Route::get('/my-profile', [UserController::class, 'myProfile'])->name('my-profile');
 
 
     // Payment Routes

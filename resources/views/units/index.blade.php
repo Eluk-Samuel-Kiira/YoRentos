@@ -42,13 +42,15 @@
                             @if ($estate->paidUnit->contains('status', 1))  
                                 <div class="grid grid-cols-1 border-b border-gray-200 py-3 gap-4">
                                     <h2 class="text-2xl font-bold mb-4">{{ $estate->estate }}</h2>
-                                    <div class="p-4 rounded-lg shadow-md">
-                                        <button onclick="hideTable({{$counter}})" class="bg-green-500 text-white px-3 py-1 rounded-sm text-sm">
-                                            Toggle Unit
-                                        </button>
-                                        @include('units.create-unit')
-                                        @php $counter++; @endphp
-                                    </div>
+                                    @can('create unit')
+                                        <div class="p-4 rounded-lg shadow-md">
+                                            <button onclick="hideTable({{$counter}})" class="bg-green-500 text-white px-3 py-1 rounded-sm text-sm">
+                                                Toggle Unit
+                                            </button>
+                                            @include('units.create-unit')
+                                            @php $counter++; @endphp
+                                        </div>
+                                    @endcan
                                 </div>
                                 <div class="grid grid-cols-1  w-1/3 rounded">
                                     <input type="text" class="unit-search rounded text-gray-500 mb-4" data-estate="{{ $estate->uid }}" placeholder="Search Unit Name">
@@ -87,16 +89,20 @@
                                                         <p class="text-lg font-semibold">Lease Start: <span class="text-gray-700">{{ $unit->lease_start }}</span></p>
                                                         <p class="text-lg font-semibold">Lease End: <span class="text-gray-700">{{ $unit->lease_stop }}</span></p>
                                                         <p class="text-lg font-semibold">Lease Status: <span class="text-gray-700">
-                                                        <a href="{{ route('unit.status', $unit) }}" class="py-1 px-2 
-                                                            {{ $unit->status == 1 ? 'bg-green-300 text-white hover:bg-green-500' : 'bg-red-300 text-white hover:bg-red-500' }} 
-                                                            rounded">
-                                                            {{ $unit->status == 1 ? 'Occupied' : 'Unoccupied' }}
-                                                        </a>
-                                                        </span></p>
+                                                        @can('create unit')
+                                                            <a href="{{ route('unit.status', $unit) }}" class="py-1 px-2 
+                                                                {{ $unit->status == 1 ? 'bg-green-300 text-white hover:bg-green-500' : 'bg-red-300 text-white hover:bg-red-500' }} 
+                                                                rounded">
+                                                                {{ $unit->status == 1 ? 'Occupied' : 'Unoccupied' }}
+                                                            </a>
+                                                            </span></p>
+                                                        @endcan
                                                     </div>
-                                                    <button onclick="toggleFormVisibility({{$formCounter}})" class="bg-green-500 text-white px-3 py-1 rounded-sm text-sm">
-                                                        Update Tenant
-                                                    </button>
+                                                    @can('create unit')
+                                                        <button onclick="toggleFormVisibility({{$formCounter}})" class="bg-green-500 text-white px-3 py-1 rounded-sm text-sm">
+                                                            Update Tenant
+                                                        </button>
+                                                    @endcan
                                                 </div>
 
                                                 <!-- Form on the right-hand side -->

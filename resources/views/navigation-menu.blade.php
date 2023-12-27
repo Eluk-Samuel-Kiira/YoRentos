@@ -15,20 +15,26 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @can('create user')
+                    @can('view user')
                         <x-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
                             {{ __('Users') }}
                         </x-nav-link>
                     @endcan
-                    <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
-                        {{ __('Rentals') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
-                        {{ __('Estates') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
-                        {{ __('Units') }}
-                    </x-nav-link>
+                    @can('view rentals')
+                        <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
+                            {{ __('Rentals') }}
+                        </x-nav-link>
+                    @endcan
+                    @can('view estate')
+                        <x-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
+                            {{ __('Estates') }}
+                        </x-nav-link>
+                    @endcan
+                    @can('view unit')
+                        <x-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
+                            {{ __('Units') }}
+                        </x-nav-link>
+                    @endcan
                     @role('Admin')
                         <x-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
                             {{ __('Durations') }}
@@ -42,13 +48,15 @@
                         <x-nav-link href="{{ route('parish.index') }}" :active="request()->routeIs('parish.index')">
                             {{ __('Parishes') }}
                         </x-nav-link>
+                    @endrole
+                    @can('view amount')
                         <x-nav-link href="{{ route('feedback.index') }}" :active="request()->routeIs('feedback.index')">
                             {{ __('Feedback') }}
                         </x-nav-link>
                         <x-nav-link href="{{ route('income.index') }}" :active="request()->routeIs('income.index')">
                             {{ __('Income') }}
                         </x-nav-link>
-                    @endrole
+                    @endcan
                 </div>
             </div>
 
@@ -177,28 +185,34 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-        @can('create user')
+        @can('view user')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
                     {{ __('Users') }}
                 </x-responsive-nav-link>
             </div>
         @endcan
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
-                {{ __('Rentals') }}
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
-                {{ __('Estates') }}
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
-                {{ __('Units') }}
-            </x-responsive-nav-link>
-        </div>
+        @can('view rentals')
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
+                    {{ __('Rentals') }}
+                </x-responsive-nav-link>
+            </div>
+        @endcan
+        @can('view estate')
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
+                    {{ __('Estates') }}
+                </x-responsive-nav-link>
+            </div>
+        @endcan
+        @can('view unit')
+            <div class="pt-2 pb-3 space-y-1">
+                <x-responsive-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
+                    {{ __('Units') }}
+                </x-responsive-nav-link>
+            </div>
+        @endcan
         @role('Admin')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
@@ -220,6 +234,8 @@
                     {{ __('Parishes') }}
                 </x-responsive-nav-link>
             </div>
+        @endrole
+        @can('view amount')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('feedback.index') }}" :active="request()->routeIs('feedback.index')">
                     {{ __('Feedback') }}
@@ -230,7 +246,7 @@
                     {{ __('Income') }}
                 </x-responsive-nav-link>
             </div>
-        @endrole
+        @endcan
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">

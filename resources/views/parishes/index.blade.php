@@ -6,131 +6,136 @@
             {{ __('Parishes/Wards and Villages') }} 
         </h2>
     </x-slot>
-    
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="max-w-7xl mx-auto p-6">
-                    <button id="openParishModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Add Parish
-                    </button>
-                    <button id="openVillageModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Add Village
-                    </button>
-                    <h4>  
-                        <x-validation-errors class="mb-4" />  
-                        @if(session('error'))
-                            <span class="bg-red-500 text-white rounded">
-                                {{ session('error') }}
-                            </span>
-                        @endif
-                        @if(session('success'))
-                            <span class="bg-green-500 text-white rounded">
-                                {{ session('success') }}
-                            </span>
-                        @endif
-                    </h4>
-                    <!-- Parishes table -->
-                    <div class="table-responsive" style="overflow-x: auto;">
-                        <div class="container mx-auto mt-8" id="parishTable">
-                            <input type="text" class="rounded text-gray-500" id="parishSearch" placeholder="Search SubCounty or parish">
-                            <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
-                                {{$parishes->count()}} {{__('Parishes')}}
+    @role('Admin')
+        <div class="py-12">
+            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
+                    <div class="max-w-7xl mx-auto p-6">
+                        @can('manage all')
+                            <button id="openParishModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Add Parish
                             </button>
-                            <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                &times;Hide
+                            <button id="openVillageModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Add Village
                             </button>
-                            <table class="min-w-full border border-blue-500 text-gray-500">
-                                @include('parishes.create-parish')
-                                <thead>
-                                    <tr>
-                                        <th class="py-2 px-4 border border-blue-500">ID</th>
-                                        <th class="py-2 px-4 border border-blue-500">Parish</th>
-                                        <th class="py-2 px-4 border border-blue-500">Subcounty/Division</th>
-                                        <th class="py-2 px-4 border border-blue-500">Status</th>
-                                        <th class="py-2 px-4 border border-blue-500">Edit</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="parishTableBody">
-                                    @forelse($parishes as $parish)
-                                        <tr>
-                                            <td class="py-2 px-4 border-b border-r">{{ $parish->uid }}</td>
-                                            <td class="py-2 px-4 border-b border-r">{{ $parish->parish }}</td>
-                                            <td class="py-2 px-4 border-b border-r">{{ $parish->subcountyName->subcounty}}</td>
-                                            <td class="py-2 px-3 border-b border-r">
-                                                <a href="{{ route('parish.status',$parish) }}" class="py-1 px-2 
-                                                    {{ $parish->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
-                                                    text-white rounded hover:{{ $parish->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
-                                                    {{ $parish->status == 1 ? 'Active' : 'Inactive' }}
-                                                </a>
-                                            </td>
-                                            <td class="py-2 px-4 border-b border-r">
-                                                <a href="#" onclick="openParishModal({{ json_encode($parish) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
-                                                    {{__('Edit') }}
-                                                </a>
-                                            </td>
-                                            @include('parishes.edit-parish')
-                                        </tr>
-                                    @empty
-                                        <td class="py-2 px-4 border-b border-r">{{__('No Parish Available')}}</td>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                        @endcan
+                        <h4>  
+                            <x-validation-errors class="mb-4" />  
+                            @if(session('error'))
+                                <span class="bg-red-500 text-white rounded">
+                                    {{ session('error') }}
+                                </span>
+                            @endif
+                            @if(session('success'))
+                                <span class="bg-green-500 text-white rounded">
+                                    {{ session('success') }}
+                                </span>
+                            @endif
+                        </h4>
+                        @can('manage all')
+                            <!-- Parishes table -->
+                            <div class="table-responsive" style="overflow-x: auto;">
+                                <div class="container mx-auto mt-8" id="parishTable">
+                                    <input type="text" class="rounded text-gray-500" id="parishSearch" placeholder="Search SubCounty or parish">
+                                    <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                        {{$parishes->count()}} {{__('Parishes')}}
+                                    </button>
+                                    <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                        &times;Hide
+                                    </button>
+                                    <table class="min-w-full border border-blue-500 text-gray-500">
+                                        @include('parishes.create-parish')
+                                        <thead>
+                                            <tr>
+                                                <th class="py-2 px-4 border border-blue-500">ID</th>
+                                                <th class="py-2 px-4 border border-blue-500">Parish</th>
+                                                <th class="py-2 px-4 border border-blue-500">Subcounty/Division</th>
+                                                <th class="py-2 px-4 border border-blue-500">Status</th>
+                                                <th class="py-2 px-4 border border-blue-500">Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="parishTableBody">
+                                            @forelse($parishes as $parish)
+                                                <tr>
+                                                    <td class="py-2 px-4 border-b border-r">{{ $parish->uid }}</td>
+                                                    <td class="py-2 px-4 border-b border-r">{{ $parish->parish }}</td>
+                                                    <td class="py-2 px-4 border-b border-r">{{ $parish->subcountyName->subcounty}}</td>
+                                                    <td class="py-2 px-3 border-b border-r">
+                                                        <a href="{{ route('parish.status',$parish) }}" class="py-1 px-2 
+                                                            {{ $parish->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                            text-white rounded hover:{{ $parish->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                            {{ $parish->status == 1 ? 'Active' : 'Inactive' }}
+                                                        </a>
+                                                    </td>
+                                                    <td class="py-2 px-4 border-b border-r">
+                                                        <a href="#" onclick="openParishModal({{ json_encode($parish) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
+                                                            {{__('Edit') }}
+                                                        </a>
+                                                    </td>
+                                                    @include('parishes.edit-parish')
+                                                </tr>
+                                            @empty
+                                                <td class="py-2 px-4 border-b border-r">{{__('No Parish Available')}}</td>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-                    <!-- villages table -->
-                    <div class="table-responsive" style="overflow-x: auto;" >
-                        <div class="container mx-auto mt-8" id="villageTable">
-                            <input type="text" class="rounded text-gray-500" id="villageSearch" placeholder="Search parish or village">
-                            <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
-                                {{$villages->count()}} {{__('Villages')}}
-                            </button>
-                            <button onclick="hideTable2()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                &times;Hide
-                            </button>
-                            <table class="min-w-full border border-blue-500 text-gray-500">
-                                @include('parishes.create-village')
-                                <thead>
-                                    <tr>
-                                        <th class="py-2 px-4 border border-blue-500">ID</th>
-                                        <th class="py-2 px-4 border border-blue-500">Village</th>
-                                        <th class="py-2 px-4 border border-blue-500">Parish</th>
-                                        <th class="py-2 px-4 border border-blue-500">Status</th>
-                                        <th class="py-2 px-4 border border-blue-500">Edit</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="villageTableBody">
-                                    @forelse($villages as $village)
-                                        <tr>
-                                            <td class="py-2 px-4 border-b border-r">{{ $village->uid }}</td>
-                                            <td class="py-2 px-4 border-b border-r">{{ $village->village }}</td>
-                                            <td class="py-2 px-4 border-b border-r">{{ $village->parishName->parish}}</td>
-                                            <td class="py-2 px-3 border-b border-r">
-                                                <a href="{{ route('village.status',$village) }}" class="py-1 px-2 
-                                                    {{ $village->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
-                                                    text-white rounded hover:{{ $village->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
-                                                    {{ $village->status == 1 ? 'Active' : 'Inactive' }}
-                                                </a>
-                                            </td>
-                                            <td class="py-2 px-4 border-b border-r">
-                                                <a href="#" onclick="openVillageModal({{ json_encode($village) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
-                                                    {{__('Edit') }}
-                                                </a>
-                                            </td>
-                                            @include('parishes.edit-village')
-                                        </tr>
-                                    @empty
-                                        <td class="py-2 px-4 border-b border-r">{{__('No Village Available')}}</td>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
+                            <!-- villages table -->
+                            <div class="table-responsive" style="overflow-x: auto;" >
+                                <div class="container mx-auto mt-8" id="villageTable">
+                                    <input type="text" class="rounded text-gray-500" id="villageSearch" placeholder="Search parish or village">
+                                    <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+                                        {{$villages->count()}} {{__('Villages')}}
+                                    </button>
+                                    <button onclick="hideTable2()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                        &times;Hide
+                                    </button>
+                                    <table class="min-w-full border border-blue-500 text-gray-500">
+                                        @include('parishes.create-village')
+                                        <thead>
+                                            <tr>
+                                                <th class="py-2 px-4 border border-blue-500">ID</th>
+                                                <th class="py-2 px-4 border border-blue-500">Village</th>
+                                                <th class="py-2 px-4 border border-blue-500">Parish</th>
+                                                <th class="py-2 px-4 border border-blue-500">Status</th>
+                                                <th class="py-2 px-4 border border-blue-500">Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="villageTableBody">
+                                            @forelse($villages as $village)
+                                                <tr>
+                                                    <td class="py-2 px-4 border-b border-r">{{ $village->uid }}</td>
+                                                    <td class="py-2 px-4 border-b border-r">{{ $village->village }}</td>
+                                                    <td class="py-2 px-4 border-b border-r">{{ $village->parishName->parish}}</td>
+                                                    <td class="py-2 px-3 border-b border-r">
+                                                        <a href="{{ route('village.status',$village) }}" class="py-1 px-2 
+                                                            {{ $village->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                            text-white rounded hover:{{ $village->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                            {{ $village->status == 1 ? 'Active' : 'Inactive' }}
+                                                        </a>
+                                                    </td>
+                                                    <td class="py-2 px-4 border-b border-r">
+                                                        <a href="#" onclick="openVillageModal({{ json_encode($village) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
+                                                            {{__('Edit') }}
+                                                        </a>
+                                                    </td>
+                                                    @include('parishes.edit-village')
+                                                </tr>
+                                            @empty
+                                                <td class="py-2 px-4 border-b border-r">{{__('No Village Available')}}</td>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        @endcan
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endrole
 </x-app-layout>
 <script>
 

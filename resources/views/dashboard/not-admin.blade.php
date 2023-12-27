@@ -6,8 +6,4 @@
     <script>
         window.location.href = "{{route('account-deactivate')}}";
     </script>
-@elseif (auth()->user()->role != 'Admin')
-    <script>
-        window.location.href = "{{route('dashboard')}}";
-    </script>
 @endif

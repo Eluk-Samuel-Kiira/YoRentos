@@ -45,11 +45,13 @@
                                         <th class="py-2 px-4 border border-blue-500">Landlord</th>
                                         <th class="py-2 px-4 border border-blue-500">Amount</th>
                                         <th class="py-2 px-4 border border-blue-500">Transaction Id</th>
-                                        <th class="py-2 px-4 border border-blue-500">Status</th>
                                         <th class="py-2 px-4 border border-blue-500">Start Date</th>
                                         <th class="py-2 px-4 border border-blue-500">End Date</th>
                                         <th class="py-2 px-4 border border-blue-500">Remaining Days</th>
-                                        <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                        @can('create amount')
+                                            <th class="py-2 px-4 border border-blue-500">Status</th>
+                                            <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody id="advert-list">
@@ -60,13 +62,6 @@
                                                 <td class="py-2 px-4 border-b border-r">{{ $estate->landlord_id }}</td>
                                                 <td class="py-2 px-4 border-b border-r">{{ $estate->price }}</td>
                                                 <td class="py-2 px-4 border-b border-r">{{ $estate->txn_ref }}</td>
-                                                <td class="py-2 px-3 border-b border-r">
-                                                    <a href="{{ route('advert.status',$estate->id) }}" class="py-1 px-2 
-                                                        {{ $estate->status == 0 ? 'bg-green-300' : 'bg-red-300' }} 
-                                                        text-white rounded hover:{{ $estate->status == 0 ? 'bg-green-500' : 'bg-red-500' }}">
-                                                        {{ $estate->status == 0 ? 'Running' : 'Inactive' }}
-                                                    </a>
-                                                </td>
                                                 <td class="py-2 px-4 border-b border-r">{{ $estate->created_at }}</td>
                                                 @php
                                                     // Calculate the difference in days
@@ -77,12 +72,21 @@
                                                 @endphp
                                                 <td class="py-2 px-4 border-b border-r">{{ $oneMonthLater }}</td>
                                                 <td class="py-2 px-4 border-b border-r">{{ $daysLeft }}</td>
-                                                <td class="py-2 px-3 border-b border-r">
-                                                    <a href="{{ route('advert.destroy',$estate->id) }}" class="py-1 px-2 bg-red-300
-                                                        text-white rounded hover:bg-red-500">
-                                                        Delete
-                                                    </a>
-                                                </td>
+                                                @can('create amount')
+                                                    <td class="py-2 px-3 border-b border-r">
+                                                        <a href="{{ route('advert.status',$estate->id) }}" class="py-1 px-2 
+                                                            {{ $estate->status == 0 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                            text-white rounded hover:{{ $estate->status == 0 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                            {{ $estate->status == 0 ? 'Running' : 'Inactive' }}
+                                                        </a>
+                                                    </td>
+                                                    <td class="py-2 px-3 border-b border-r">
+                                                        <a href="{{ route('advert.destroy',$estate->id) }}" class="py-1 px-2 bg-red-300
+                                                            text-white rounded hover:bg-red-500">
+                                                            Delete
+                                                        </a>
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @empty
                                             <td class="py-2 px-4 border-b border-r">{{__('No Advert Available')}}</td>
@@ -111,11 +115,13 @@
                                         <th class="py-2 px-4 border border-blue-500">Landlord</th>
                                         <th class="py-2 px-4 border border-blue-500">Amount</th>
                                         <th class="py-2 px-4 border border-blue-500">Transaction Id</th>
-                                        <th class="py-2 px-4 border border-blue-500">Status</th>
                                         <th class="py-2 px-4 border border-blue-500">Start Date</th>
                                         <th class="py-2 px-4 border border-blue-500">End Date</th>
                                         <th class="py-2 px-4 border border-blue-500">Remaining Days</th>
-                                        <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                        @can('create amount')
+                                            <th class="py-2 px-4 border border-blue-500">Status</th>
+                                            <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody id="unit-list">
@@ -126,13 +132,6 @@
                                                 <td class="py-2 px-4 border-b border-r">{{ $unit->landlord_id }}</td>
                                                 <td class="py-2 px-4 border-b border-r">{{ $unit->amount }}</td>
                                                 <td class="py-2 px-4 border-b border-r">{{ $unit->txn_ref }}</td>
-                                                <td class="py-2 px-3 border-b border-r">
-                                                    <a href="{{ route('unitpay.status',$unit->id) }}" class="py-1 px-2 
-                                                        {{ $unit->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
-                                                        text-white rounded hover:{{ $unit->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
-                                                        {{ $unit->status == 1 ? 'Running' : 'Inactive' }}
-                                                    </a>
-                                                </td>
                                                 <td class="py-2 px-4 border-b border-r">{{ $unit->created_at }}</td>
                                                 @php
                                                     // Calculate the difference in days
@@ -143,12 +142,21 @@
                                                 @endphp
                                                 <td class="py-2 px-4 border-b border-r">{{ $oneMonthLater }}</td>
                                                 <td class="py-2 px-4 border-b border-r">{{ $daysLeft }}</td>
-                                                <td class="py-2 px-3 border-b border-r">
-                                                    <a href="{{ route('unitpay.destroy',$unit->id) }}" class="py-1 px-2 bg-red-300
-                                                        text-white rounded hover:bg-red-500">
-                                                        Delete
-                                                    </a>
-                                                </td>
+                                                @can('create amount')
+                                                    <td class="py-2 px-3 border-b border-r">
+                                                        <a href="{{ route('unitpay.status',$unit->id) }}" class="py-1 px-2 
+                                                            {{ $unit->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                            text-white rounded hover:{{ $unit->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                            {{ $unit->status == 1 ? 'Running' : 'Inactive' }}
+                                                        </a>
+                                                    </td>
+                                                    <td class="py-2 px-3 border-b border-r">
+                                                        <a href="{{ route('unitpay.destroy',$unit->id) }}" class="py-1 px-2 bg-red-300
+                                                            text-white rounded hover:bg-red-500">
+                                                            Delete
+                                                        </a>
+                                                    </td>
+                                                @endcan
                                             </tr>
                                         @empty
                                             <td class="py-2 px-4 border-b border-r">{{__('No Unit Available')}}</td>

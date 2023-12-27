@@ -32,7 +32,9 @@
                                         <th class="py-2 px-4 border border-blue-500">Name</th>
                                         <th class="py-2 px-4 border border-blue-500">Contact</th>
                                         <th class="py-2 px-4 border border-blue-500">Message</th>
-                                        <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                        @role('Admin')
+                                            <th class="py-2 px-4 border border-blue-500">Delete</th>
+                                        @endcan
                                     </tr>
                                 </thead>
                                 <tbody id="">
@@ -48,11 +50,13 @@
                                             </td>
                                             <td class="py-2 px-4 border-b border-r">{{ $feedback->contact }}</td>
                                             <td class="py-2 px-4 border-b border-r">{{ $feedback->message }}</td>
-                                            <td class="py-2 px-4 border-b border-r">
-                                                <a href="{{ route('destroy.feedback', $feedback) }}" class="py-1 px-2 bg-red-300 text-white rounded hover:bg-red-500">
-                                                    Delete
-                                                </a>
-                                            </td>
+                                            @role('Admin')
+                                                <td class="py-2 px-4 border-b border-r">
+                                                    <a href="{{ route('destroy.feedback', $feedback) }}" class="py-1 px-2 bg-red-300 text-white rounded hover:bg-red-500">
+                                                        Delete
+                                                    </a>
+                                                </td>
+                                            @endcan
                                         </tr>
                                     @empty
                                         <td class="py-2 px-4 border-b border-r">{{__('No Feedback Available')}}</td>

@@ -103,7 +103,9 @@
                                         <th class="py-2 px-4 border border-blue-500">Latitude</th>
                                         <th class="py-2 px-4 border border-blue-500">Longitude</th>
                                         <th class="py-2 px-4 border border-blue-500">Views</th>
-                                        <th class="py-2 px-4 border border-blue-500">Sponsored</th>
+                                        @can('manage all')
+                                            <th class="py-2 px-4 border border-blue-500">Sponsored</th>
+                                        @endcan
                                         @can('update estate')
                                             <th class="py-2 px-4 border border-blue-500">Status</th>
                                             <th class="py-2 px-4 border border-blue-500">View</th>
@@ -131,13 +133,15 @@
                                             <td class="py-2 px-4 border-b border-r">{{ $estate->latitude}}</td>
                                             <td class="py-2 px-4 border-b border-r">{{ $estate->longitude}}</td>
                                             <td class="py-2 px-4 border-b border-r">{{ $estate->unit_no}}</td>
-                                            <td class="py-2 px-4 border-b border-r">
-                                                <a href="{{ route('estate.status',$estate) }}" class="py-1 px-2 
-                                                    {{ $estate->sponsored == 1 ? 'bg-green-300' : 'bg-red-300' }} 
-                                                    text-white rounded hover:{{ $estate->sponsored == 1 ? 'bg-green-500' : 'bg-red-500' }}">
-                                                    {{ $estate->sponsored == 1 ? 'Yes' : 'No' }}
-                                                </a>
-                                            </td>
+                                            @can('manage all')
+                                                <td class="py-2 px-4 border-b border-r">
+                                                    <a href="{{ route('estate.status',$estate) }}" class="py-1 px-2 
+                                                        {{ $estate->sponsored == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                                        text-white rounded hover:{{ $estate->sponsored == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                                        {{ $estate->sponsored == 1 ? 'Yes' : 'No' }}
+                                                    </a>
+                                                </td>
+                                            @endcan
                                             @can('update estate')
                                                 <td class="py-2 px-3 border-b border-r">
                                                     <a href="{{ route('estate.status',$estate) }}" class="py-1 px-2 
