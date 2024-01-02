@@ -262,7 +262,7 @@
                                         <h3 class="text-lg font-semibold mb-2">Estate Description</h3>
                                         <div class="inline-block p-1">
                                             <button onclick="toggleDescription('{{ $estate->uid }}')" class="bg-blue-500 text-white px-2 py-1 rounded-sm text-xs hover:bg-blue-600 motion-reduce:transform-none">
-                                                Update Terms
+                                                Update Description
                                             </button>
                                         </div>
                                     </div>

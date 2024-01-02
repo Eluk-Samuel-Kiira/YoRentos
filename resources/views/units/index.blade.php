@@ -39,7 +39,6 @@
                     @php $searchCounter= 0; @endphp
                     @forelse($estates as $estate)
                         <div class="hidden mt-4 border-b border-gray-200 py-3" id="content_{{ $estate->uid }}">
-                            @if ($estate->paidUnit->contains('status', 1))  
                                 <div class="grid grid-cols-1 border-b border-gray-200 py-3 gap-4">
                                     <h2 class="text-2xl font-bold mb-4">{{ $estate->estate }}</h2>
                                     @can('create unit')
@@ -198,9 +197,6 @@
                                 @empty
                                     <h2 class="text-xl font-bold mb-2">No Estate Unit Registered</h2>
                                 @endforelse
-                            @else
-                                <h2 class="text-xl font-bold mb-2">Kindly Subscribe To Manage Rental Units</h2>
-                            @endif
                         </div>
                         @php $searchCounter++; @endphp
                     @empty
@@ -211,6 +207,11 @@
         </div>
     </div>
 </x-app-layout>
+<!-- @if ($estate->paidUnit->contains('status', 1))   -->
+<!-- @else
+    <h2 class="text-xl font-bold mb-2">Kindly Subscribe To Manage Rental Units</h2>
+@endif -->
+
 <script>
     function showContent(sectionId) {
         const sections = document.querySelectorAll('[id^="content_"]');
