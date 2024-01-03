@@ -3,8 +3,8 @@
     <div class="container">
       <p>
         &copy; <span id="displayYear"></span> All Rights Reserved<br>
-        <a href="/" class="btn">
-          <img src="{{asset('frontend/images/dev.png')}}" alt="dev" style="height: 40px; width: 100px;"/>
+        <a href="https://stardena.com/" class="btn">
+          <img src="{{asset('frontend/images/dev.png')}}" alt="developer" style="height: 40px; width: 100px;"/>
         </a>
       </p>
     </div>
