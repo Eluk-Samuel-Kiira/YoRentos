@@ -81,5 +81,16 @@ class AdminUserSeeder extends Seeder
             'password' => bcrypt('Samuel@13Kiira')
         ]);
         $adminUser->assignRole('Admin');
+
+        // Ogire Kenneth
+        $adminUser2 = User::factory()->create([
+            'name' => 'Kenneth Ogire',
+            'phone_number' => '0781315904',
+            'role' => 'Admin',
+            'slug' => 'kenneth-ogire-admin',
+            'email' => 'ogirekenneth@gmail.com',
+            'password' => bcrypt('1234567890')
+        ]);
+        $adminUser2->assignRole('Admin');
     }
 }
