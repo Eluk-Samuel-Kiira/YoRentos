@@ -22,7 +22,7 @@ class UpdateParishRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'parish' => 'required|string|max:50|unique:mysql_locations.parishes',
+            'parish' => 'required|string|max:50',
             'subcounty_id' => 'required|integer',
         ];
     }

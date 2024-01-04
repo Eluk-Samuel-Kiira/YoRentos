@@ -22,7 +22,7 @@ class UpdateSubcountyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'subcounty' => 'required|string|max:50|unique:mysql_locations.subcounties',
+            'subcounty' => 'required|string|max:50',
             'county_id' => 'required|integer',
         ];
     }

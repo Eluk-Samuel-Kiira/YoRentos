@@ -29,7 +29,7 @@ class UpdateCountryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country' => 'required|string|max:50|unique:mysql_locations.countries',
+            'country' => 'required|string|max:50',
         ];
     }
 

@@ -22,7 +22,7 @@ class UpdateVillageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'village' => 'required|string|max:50|unique:mysql_locations.villages',
+            'village' => 'required|string|max:50',
             'parish_id' => 'required|integer',
         ];
     }

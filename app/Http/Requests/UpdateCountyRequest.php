@@ -29,7 +29,7 @@ class UpdateCountyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'county' => 'required|string|max:50|unique:mysql_locations.counties',
+            'county' => 'required|string|max:50',
             'district_id' => 'required|integer',
         ];
     }

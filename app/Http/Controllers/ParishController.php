@@ -16,9 +16,9 @@ class ParishController extends Controller
      */
     public function index()
     {
-        $subcounties = Subcounty::on('mysql_locations')->get();
-        $parishes = Parish::on('mysql_locations')->get();
-        $villages = Village::on('mysql_locations')->get();
+        $subcounties = Subcounty::on('mysql_locations')->latest()->get();
+        $parishes = Parish::on('mysql_locations')->latest()->get();
+        $villages = Village::on('mysql_locations')->latest()->get();
         return view('parishes.index', compact(
             'subcounties',
             'parishes',
