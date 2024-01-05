@@ -119,7 +119,6 @@
                 <h2 class="rental_heading">
                     {{__('Rentals Available In The District/State of')}}
                 </h2>
-                <input id="districtName" type="text" style="width: 400px; font-size: 30px; border: none;" disabled>
             </div>
             <div class="slider scroll-container">
                 <div class="scroll-content">
@@ -229,9 +228,9 @@
             <div class="col-md-6 px-0">
                 <div class="contact_container">
                 <div>
-                    {{__('Become Part Of Our Family By Joining Our WhatsApp Channel')}}
+                    {{__('Become Part Of Our Family By Joining Our WhatsApp Group')}}
                     <span class="btn-warning">
-                        <a href="https://whatsapp.com/channel/0029VaJD5Wt9hXFEvj5Hs80e">Here</a>
+                        <a href="https://chat.whatsapp.com/Ck1LLhZeBb1B9SDNid3jWn">Here</a>
                     </span>
                 </div>
                     <p>Call: 0776263482</p>
