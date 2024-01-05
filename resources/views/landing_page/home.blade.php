@@ -117,7 +117,8 @@
         <div class="slider-container">
             <div class="container-header">
                 <h2 class="rental_heading">
-                    {{__('Rentals Available In The District/State of')}}
+                    {{__('Rentals Available In The District/State of')}}                
+                    <input id="districtName" type="text" disabled>
                 </h2>
             </div>
             <div class="slider scroll-container">
