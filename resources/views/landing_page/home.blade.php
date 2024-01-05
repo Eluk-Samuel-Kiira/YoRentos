@@ -116,8 +116,7 @@
     <section>
         <div class="slider-container">
             <div class="container-header">
-                <h2 class="rental_heading">
-                    {{__('Rentals Available In The District/State of')}}                
+                <h2 class="rental_heading">             
                     <input id="districtName" type="text" style="border: 0px;" disabled>
                 </h2>
             </div>
