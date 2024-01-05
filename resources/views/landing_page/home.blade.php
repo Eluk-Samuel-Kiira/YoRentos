@@ -118,7 +118,7 @@
             <div class="container-header">
                 <h2 class="rental_heading">
                     {{__('Rentals Available In The District/State of')}}                
-                    <input id="districtName" type="text" disabled>
+                    <input id="districtName" type="text" style="border: 0px;" disabled>
                 </h2>
             </div>
             <div class="slider scroll-container">
