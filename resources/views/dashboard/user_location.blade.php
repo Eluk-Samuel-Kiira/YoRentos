@@ -120,7 +120,7 @@
 
             }, function(error) {
                 // Handle any errors that occur while getting the position
-                var errorMessage = "We are UNABLE to get your location: Please REFRESH and kindly allow location for a PERFECT EXPERIENCE";
+                var errorMessage = "Please refresh and enable location for an optimal experience.";
                 showError(errorMessage);
             });
             attempts++;
