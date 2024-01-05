@@ -59,7 +59,7 @@ class ParishController extends Controller
         $parish->slug = Str::slug($request->parish);
         $parish->uid = $randomId;
         $parish->save();
-        return redirect()->route('parish.index')->with('success', 'New Village Created Successfully');
+        return redirect()->route('parish.index')->with('success', 'New Parish/Ward Created Successfully');
     }
 
     /**

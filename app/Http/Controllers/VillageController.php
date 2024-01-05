@@ -50,7 +50,7 @@ class VillageController extends Controller
         $village->slug = Str::slug($request->village);
         $village->uid = $randomId;
         $village->save();
-        return redirect()->route('parish.index')->with('success', 'New Parish/Ward Created Successfully');
+        return redirect()->route('parish.index')->with('success', 'New Village/Cell Created Successfully');
     }
 
     /**

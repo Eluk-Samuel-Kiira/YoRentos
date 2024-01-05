@@ -35,7 +35,7 @@ use App\Http\Controllers\PaymodeController;
 Route::get('/',[LandingPageController::class, 'index'])->name('landing.page');
 Route::post('/feedback-inquiry', [LandingPageController::class, 'storeFeedback'])->name('store.feedback');
 Route::post('/user-district', [LandingPageController::class, 'userDistrict'])->name('user.district');
-
+Route::get('/unit-rental/{slug}', [LocationController::class, 'showEstate'])->name('unit.detail');
 
 
 
@@ -140,7 +140,7 @@ Route::middleware([
 
     // Tenant Dashboard
     Route::get('/tenant/dashboard',[LocationController::class, 'tenantIndex'])->name('tenant.dashboard');
-    Route::get('/unit-rental/{slug}', [LocationController::class, 'showEstate'])->name('unit.detail');
+    // Route::get('/unit-rental/{slug}', [LocationController::class, 'showEstate'])->name('unit.detail');
     Route::get('/rental-type/{slug}', [LocationController::class, 'showRental'])->name('rental.type');
     Route::get('/rental-map-location/{slug}', [LocationController::class, 'locationRental'])->name('rental.map');
     Route::get('/my-room-units', [LocationController::class, 'myUnit'])->name('my.unit');
