@@ -207,10 +207,6 @@
         </div>
     </div>
 </x-app-layout>
-<!-- @if ($estate->paidUnit->contains('status', 1))   -->
-<!-- @else
-    <h2 class="text-xl font-bold mb-2">Kindly Subscribe To Manage Rental Units</h2>
-@endif -->
 
 <script>
     function showContent(sectionId) {
