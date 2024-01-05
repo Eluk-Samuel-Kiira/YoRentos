@@ -18,11 +18,9 @@
                             Edit Role
                         </button>
                     @endrole
-                    @can('edit user')
-                        <button id="createBrokerModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                            Create Broker
-                        </button>
-                    @endcan
+                    <button id="createBrokerModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Create Broker
+                    </button>
                     <h4>
                         <x-validation-errors class="mb-4" />    
                         @if(session('error'))
