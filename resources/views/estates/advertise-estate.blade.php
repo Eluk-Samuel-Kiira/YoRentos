@@ -21,7 +21,7 @@
                 <input type="hidden" name="customer[name]" value="{{ auth()->user()->name }}" />
                 <input type="hidden" name="customer[email]" value="{{ auth()->user()->email }}" />
                 <input type="hidden" name="customer[phone_number]" value="{{ auth()->user()->phone_number }}" />
-                <input type="hidden" name="redirect_url" value="https://thesealed.mytreeuganda.org/" />
+                <input type="hidden" name="redirect_url" value="https://yorentos.stardena.com/estate" />
                 <input type="text" name="amount" value="{{ session('amount') }}" style="border: none" disabled/>
                 <!-- <input type="text" name="amount" value="{{ $estate->id }}" style="border: none" disabled/> -->
                 <div class="flex items-center justify-between">

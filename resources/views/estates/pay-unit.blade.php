@@ -21,7 +21,7 @@
                 <input type="hidden" name="customer[name]" value="{{ auth()->user()->name }}" />
                 <input type="hidden" name="customer[email]" value="{{ auth()->user()->email }}" />
                 <input type="hidden" name="customer[phone_number]" value="{{ auth()->user()->phone_number }}" />
-                <input type="hidden" name="redirect_url" value="https://thesealed.mytreeuganda.org/" />
+                <input type="hidden" name="redirect_url" value="https://yorentos.stardena.com/estate" />
                 <input type="text" name="amount" value="{{ session('amount') }}" style="border: none" disabled/>
                 <!-- <input type="text" name="amount" value="{{ $estate->id }}" style="border: none" disabled/> -->
                 <div class="flex items-center justify-between">
@@ -38,10 +38,10 @@
                 <input type="hidden" id="estate_id" name="estate_id" value="{{ $estate->id }}" required>
                 <div class="mt-4">
                     <x-label for="unit-pay" value="{{ __('Select Monthly Unit Packages') }}" class="block text-gray-700 text-sm font-bold mb-2"/>
-                    <div>
+                    <!-- <div>
                         <input type="checkbox" id="unit-mgt" name="unit_pay[]" value="500" class="mr-2" required>
                         <label for="units" class="rounded">Manage Units at 500/unit</label>
-                    </div>
+                    </div> -->
                     <div>
                         <input type="checkbox" id="unit-mgt" name="unit_pay[]" value="1500" class="mr-2">
                         <label for="units" class="rounded">Timely Notifications at 1500/unit</label>

@@ -28,7 +28,6 @@ class StoreUnitRequest extends FormRequest
             'estate_uid' => 'required|string',
             'duration_id' => 'required|integer',
             'price' => 'required|string',
-            'square_footage' => 'required|string',
             'description' => 'required|string|max:10000',
             'resources' => 'required|array|max:15',
         ];
