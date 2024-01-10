@@ -207,11 +207,11 @@
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="btn-box">
+                                <!-- <div class="btn-box">
                                     <a href="">
                                         Book Now
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
                         @endif
                     @endforeach

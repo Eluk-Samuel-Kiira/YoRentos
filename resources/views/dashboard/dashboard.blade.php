@@ -29,6 +29,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto p-6">
+                    Reports
                     <div class="flex flex-col md:flex-row justify-center items-center">
                         <div class="w-full md:w-1/3 p-4">
                             <h3 class="text-center mb-4">Rental Houses Vs Active Occupants</h3>
@@ -103,7 +104,7 @@
         }); 
     });
 
-    // Districts and their categorical rebtal estates
+    // Districts and their categorical rental estates
     $(document).ready(function() {
         // Make an AJAX request to fetch rentals
         $.ajax({

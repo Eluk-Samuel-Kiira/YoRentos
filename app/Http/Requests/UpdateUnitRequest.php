@@ -26,7 +26,6 @@ class UpdateUnitRequest extends FormRequest
             'room_no' => 'required|string|max:50',
             'duration_id' => 'required|integer',
             'price' => 'required|string',
-            'square_footage' => 'required|string',
             'description' => 'required|string|max:10000',
             'resources' => 'required|array|max:15',
         ];

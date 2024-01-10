@@ -86,7 +86,7 @@ class LandingPageController extends Controller
             $villagesInDistrict = Village::whereHas('parishName.subcountyName.countyName.districtName', function ($query) use ($district) {
                 $query->where('id', $district->id);
             })->pluck('id');
-            $estatesInDistrict = Estate::with('villageEstate')->whereIn('village_id', $villagesInDistrict)->get();
+            $estatesInDistrict = Estate::with('villageEstate')->where('status', 1)->whereIn('village_id', $villagesInDistrict)->get();
 
             return response()->json(['data' => $estatesInDistrict]);
         } else {
