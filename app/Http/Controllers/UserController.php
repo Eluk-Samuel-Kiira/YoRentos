@@ -34,18 +34,7 @@ class UserController extends Controller
 
     public function userIndex()
     {
-        $permissions = Permission::whereNot('name', 'manage all')->get();
-        $roles = Role::whereNot('name', 'Admin')->get();
-        $brokers = User::where('role', 'Broker')->get();
-        $districts = District::get();
-        $broker_names = Broker::get();
-        return view('users.index', compact(
-            'permissions',
-            'roles',
-            'brokers',
-            'districts',
-            'broker_names',
-        ));
+        return view('users.index');
     }
 
     public function userRoles()
@@ -67,12 +56,12 @@ class UserController extends Controller
         ]);
     }
 
+    // Not In use
     public function editRolePermission(Request $request)
     {
         $roleName = $request->role;
         $permissions = $request->permissions;
 
-        // Create a new role and permissions
         $userRole = Role::where('name', $roleName)->first();
         $userRole->syncPermissions($permissions);
         return redirect()->route('user')->with('success', 'Role edited successfully');
@@ -100,20 +89,23 @@ class UserController extends Controller
 
     public function changeRole(Request $request)
     {
-        $roleName = $request->newRole;
-        $user_id = $request->user;
+        $roleName = $request->role;
+        $user_id = $request->user_id;
 
-        User::where('id', $user_id)->whereNot('role', 'Admin')->update(['role' => $roleName]);
+        $user_role = User::where('id', $user_id)->whereNot('role', 'Admin')->update(['role' => $roleName]);
+        if (!$user_role) {
+            return response()->json(['success' => false, 'message' => 'Role Cannot Change']); 
+        }
         $user = User::where('id', $user_id)->first();
 
         $userRole = Role::where('name', $roleName)->first(); 
 
         if ($userRole) {
             $user->syncRoles([$userRole]); 
+            return response()->json(['success' => true, 'message' => 'User Role Updated Successfully']);
         } else {
-            dd('An error ocurred');
+            return response()->json(['success' => false, 'message' => 'An error occurred']);        
         }
-        return redirect()->route('user')->with('success', 'Role changed successfully');
     }
 
     public function changeStatus($id)

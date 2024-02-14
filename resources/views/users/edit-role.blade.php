@@ -30,6 +30,18 @@
                     @endforeach
                 </div>
             </div>
+
+            
+                    <!-- <div class="mt-4">
+                        <x-label for="permissions" value="{{ __('Permissions') }}" class="font-semibold text-xl"/>
+                        <div>
+                            @foreach($all_permissions as $permission)
+                                <input type="checkbox" id="permission{{ $permission->name }}" wire:model="permissions[]" value="{{ $permission->name }}" class="mr-2">
+                                <label for="permission{{ $permission->name }}" class="text-sm">{{ $permission->name }}</label>
+                                <br>
+                            @endforeach
+                        </div>
+                    </div> -->
             <x-button class="mt-8">
                 {{ __('Save') }}
             </x-button>

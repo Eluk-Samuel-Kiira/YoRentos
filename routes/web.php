@@ -59,7 +59,7 @@ Route::middleware([
     Route::post('/role', [UserController::class, 'createRolesAndPermissions'])->name('create.role');
     Route::post('/role-permission', [UserController::class, 'editRolePermission'])->name('edit.role');
     Route::post('/role-change', [UserController::class, 'changeRole'])->name('change.role');
-    Route::get('/change-status/{id}', [UserController::class, 'changeStatus']); 
+    Route::get('/change-status/{id}', [UserController::class, 'changeStatus'])->name('change-status'); 
     Route::get('/delete-role/{role_id}', [UserController::class, 'deleteRole']);
 
     Route::post('/create-broker', [UserController::class, 'createBroker'])->name('create.broker');
