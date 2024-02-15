@@ -94,10 +94,9 @@ class UserController extends Controller
 
         $user_role = User::where('id', $user_id)->whereNot('role', 'Admin')->update(['role' => $roleName]);
         if (!$user_role) {
-            return response()->json(['success' => false, 'message' => 'Role Cannot Change']); 
+            return response()->json(['success' => false, 'message' => 'Admin Role Cannot Change']); 
         }
         $user = User::where('id', $user_id)->first();
-
         $userRole = Role::where('name', $roleName)->first(); 
 
         if ($userRole) {
