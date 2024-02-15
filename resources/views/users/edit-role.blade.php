@@ -37,12 +37,12 @@
                             <x-label for="permissions" value="{{ __('Permissions') }}" class="font-semibold text-xl"/>
                             <div>
                                 <!-- Master Checkbox -->
-                                <input type="checkbox" id="masterPermissionCheckbox" class="mr-2">
-                                <label for="masterPermissionCheckbox" class="text-sm font-medium">Select All</label>
+                                <input type="checkbox" id="masterPermissionCheckbox2" class="mr-2">
+                                <label for="masterPermissionCheckbox2" class="text-sm font-medium">Select All</label>
                                 <br>
                                 
                                 @foreach($permissions as $permission)
-                                    <input type="checkbox" id="permission{{ $permission->name }}" name="permissions[]" value="{{ $permission->name }}" class="mr-2 permission-checkbox">
+                                    <input type="checkbox" id="permission{{ $permission->name }}" name="permissions[]" value="{{ $permission->name }}" class="mr-2 permission-checkbox2">
                                     <label for="permission{{ $permission->name }}" class="text-sm">{{ $permission->name }}</label>
                                     <br>
                                 @endforeach
@@ -134,8 +134,8 @@
     //Check all boxes
     document.addEventListener('DOMContentLoaded', function() {
         // Get master checkbox and individual permission checkboxes
-        var masterCheckbox = document.getElementById('masterPermissionCheckbox');
-        var permissionCheckboxes = document.querySelectorAll('.permission-checkbox');
+        var masterCheckbox = document.getElementById('masterPermissionCheckbox2');
+        var permissionCheckboxes = document.querySelectorAll('.permission-checkbox2');
 
         // Add event listener to master checkbox
         masterCheckbox.addEventListener('change', function() {
