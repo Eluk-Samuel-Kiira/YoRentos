@@ -37,6 +37,16 @@ class UserController extends Controller
         return view('users.index');
     }
 
+    public function rolePermissions()
+    {
+        $permissions = Permission::all();
+        $roles = Role::with('permissions')->get();
+        return view('users.role-permissions', compact(
+            'permissions',
+            'roles',
+        ))->render();
+    }
+
     public function userRoles()
     {
         $roles = DB::table('roles')->whereNot('name', 'Admin')->get();
@@ -56,15 +66,18 @@ class UserController extends Controller
         ]);
     }
 
-    // Not In use
     public function editRolePermission(Request $request)
     {
         $roleName = $request->role;
         $permissions = $request->permissions;
 
-        $userRole = Role::where('name', $roleName)->first();
-        $userRole->syncPermissions($permissions);
-        return redirect()->route('user')->with('success', 'Role edited successfully');
+        $userRole = Role::where('name', $roleName)->whereNot('name','Admin')->first();
+        if ($userRole) {
+            $userRole->syncPermissions($permissions);
+            return response()->json(['success' => true, 'message' => 'User Role Updated Successfully']);
+        }else {
+            return response()->json(['success' => false, 'message' => 'An error occurred']);
+        }
     }
 
     public function createRolesAndPermissions(Request $request)
@@ -77,12 +90,12 @@ class UserController extends Controller
             $userRole = Role::create(['name' => $roleName, 'guard_name' => 'web']);
             $userRole->syncPermissions($permissions);
     
-            return redirect()->route('user')->with('success', 'Role created successfully');
+            return response()->json(['success' => true, 'message' => 'Role Created Successfully']);
         } catch (QueryException $e) {
             // Handle database-related exceptions (e.g., unique constraint violation)
-            return redirect()->back()->with('error', 'Error creating role: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred ' . $e->getMessage()]); 
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+            return response()->json(['success' => false, 'message' => 'An error occurred ' . $e->getMessage()]); 
         }
 
     }
@@ -129,10 +142,9 @@ class UserController extends Controller
         $role = Role::where('id', $role_id)->whereNotIn('name', ['Admin','Landlord','Broker','Tenant'])->first();
         if ($role) {
             $role->delete();
-            
-            return redirect()->route('user')->with('success', 'Role DELETED successfully');
+            return redirect()->back()->with('success', 'Role DELETED successfully');
         } else {
-            return redirect()->route('user')->with('error', 'Role Not found or an undeletable');
+            return redirect()->back()->with('error', 'Role Not found or an undeletable');
         }
     }
 

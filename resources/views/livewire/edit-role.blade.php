@@ -23,7 +23,7 @@
                     </div>
                 <div class="p-4">        
                     <form x-on:submit.prevent="submitForm">
-                        <input type="text" x-model="user_id">
+                        <input type="hidden" x-model="user_id">
                         <div class="mt-4">
                             <x-label for="role" value="{{ __('Role Name') }}" class="font-semibold text-xl"/>
                             <select class="w-full font-medium py-2 rounded text-gray-700" x-ref="role" required>

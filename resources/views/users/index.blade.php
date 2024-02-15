@@ -1,11 +1,6 @@
 @include('dashboard.tenant-dashboard')
 @include('dashboard.not-admin')
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Users List') }} 
-        </h2>
-    </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
@@ -23,7 +18,6 @@
                             </span>
                         @endif
                     </h4>
-                    <!-- <button x-data x-on:click="$dispatch('open-modal',{ rowId: '1' })" class="px-3 py-1 bg-blue-500 text-white round">Open</button> -->
                     <livewire:user-table/>
                     <livewire:edit-role/>
                 </div>

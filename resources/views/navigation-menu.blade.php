@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-400">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -15,11 +15,6 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @can('view user')
-                        <x-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
-                            {{ __('Users') }}
-                        </x-nav-link>
-                    @endcan
                     @can('view rentals')
                         <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
                             {{ __('Rentals') }}
@@ -112,6 +107,31 @@
                         </x-dropdown>
                     </div>
                 @endif
+
+                <!-- Users Dropdown -->
+                <div class="ms-3 relative">
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                Users
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            @can('view user')
+                                <x-dropdown-link href="{{ route('user') }}">
+                                    {{ __('Users List') }}
+                                </x-dropdown-link>
+                            @endcan
+                            <div class="border-t border-gray-200"></div>
+                            @can('view user')
+                                <x-dropdown-link href="{{ route('role-permissions') }}">
+                                    {{ __('Roles & Permissions') }}
+                                </x-dropdown-link>
+                            @endcan
+                        </x-slot>
+                    </x-dropdown>
+                </div>
 
                 <!-- Settings Dropdown -->
                 <div class="ms-3 relative">

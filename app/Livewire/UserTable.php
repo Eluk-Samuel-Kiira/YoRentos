@@ -110,7 +110,6 @@ final class UserTable extends PowerGridComponent
             Filter::inputText('email')->operators(['contains']),
             Filter::inputText('phone_number')->operators(['contains']),
             Filter::inputText('role')->operators(['contains']),
-            // Filter::inputText('status')->operators(['contains']),
             Filter::datetimepicker('created_at'),
         ];
     }
