@@ -76,7 +76,11 @@ class RentalController extends Controller
         $rental->update($request->validated());
         $rental->name = $request->input('name');
         $rental->slug = Str::slug($request->input('name'));
-        return redirect()->route('rental.index')->with('success', 'The Rental Has Been Updated Successfully');
+        if ($rental) {
+            return response()->json(['success' => true, 'message' => 'The Rental Type Has Been Updated Successfully']);
+        }else {
+            return response()->json(['success' => false, 'message' => 'An error occurred']);        
+        }
     }
 
     /**

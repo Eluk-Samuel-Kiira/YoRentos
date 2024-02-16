@@ -22,13 +22,3 @@
         </form>
     </div>
 </div>
-<script>
-    // JavaScript to handle opening and closing the modal
-    document.getElementById('openCreateRental').onclick = function () {
-        document.getElementById('rentalModal').classList.remove('hidden');
-    };
-
-    document.getElementById('closeCreateRental').onclick = function () {
-        document.getElementById('rentalModal').classList.add('hidden');
-    };
-</script>
