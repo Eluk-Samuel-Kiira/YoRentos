@@ -364,8 +364,7 @@
                         <x-dropdown-link href="{{ route('rental.estate') }}">
                             {{ __('Rental Estate') }}
                         </x-dropdown-link>
-                    @endcan
-                    @can('view estate')
+                        <div class="border-t border-gray-200"></div>
                         <x-dropdown-link href="{{ route('estate.index') }}">
                             {{ __('Estate Details') }}
                         </x-dropdown-link>
