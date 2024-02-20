@@ -348,15 +348,22 @@
         <div class="ms-3 relative">
             <x-dropdown align="right" width="48">
                 <x-slot name="trigger">
-                    <button class="pt-2 pb-3 space-y-3 pl-1 text-gray-600 hover:text-gray-700">
+                    <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium 
+                        leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
                         {{__('Rentals')}}
                     </button>
                 </x-slot>
-
+    
                 <x-slot name="content">
                     @can('view rentals')
                         <x-dropdown-link href="{{ route('rental.index') }}">
                             {{ __('Rental Block') }}
+                        </x-dropdown-link>
+                    @endcan
+                    <div class="border-t border-gray-200"></div>
+                    @can('view estate')
+                        <x-dropdown-link href="{{ route('rental.estate') }}">
+                            {{ __('Rental Estate') }}
                         </x-dropdown-link>
                     @endcan
                     <div class="border-t border-gray-200"></div>
