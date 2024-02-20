@@ -64,9 +64,11 @@ class RentalController extends Controller
      */
     public function edit(Rental $rental)
     {
-        //
+        $rental_edit = $rental;
+        return view('rentals.index', compact(
+            'rental_edit'
+        ));   
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -76,7 +78,11 @@ class RentalController extends Controller
         $rental->update($request->validated());
         $rental->name = $request->input('name');
         $rental->slug = Str::slug($request->input('name'));
-        return redirect()->route('rental.index')->with('success', 'The Rental Has Been Updated Successfully');
+        if ($rental) {
+            return redirect()->route('rental.index')->with('success', 'New Rental Type Created Successfully');
+        }else {
+            return redirect()->route('rental.index')->with('error', 'An Error Occured');
+        }
     }
 
     /**
@@ -111,5 +117,12 @@ class RentalController extends Controller
         return response()->json([
             'rentals' => $rentals,
         ]);
+    }
+
+    function estateRental()  {
+        $rentals = Rental::all();
+        return view('rentals.rental-estate', compact(
+            'rentals'
+        ));
     }
 }

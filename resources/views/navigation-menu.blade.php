@@ -15,7 +15,10 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    @can('view rentals')
+                    <x-nav-link href="{{ route('my.unit') }}" :active="request()->routeIs('my.unit')">
+                        {{ __('My Units') }}
+                    </x-nav-link>
+                    {{--@can('view rentals')
                         <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
                             {{ __('Rentals') }}
                         </x-nav-link>
@@ -29,7 +32,7 @@
                         <x-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
                             {{ __('Units') }}
                         </x-nav-link>
-                    @endcan
+                    @endcan --}}
                     @role('Admin')
                         <x-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
                             {{ __('Durations') }}
@@ -51,7 +54,7 @@
                         <x-nav-link href="{{ route('income.index') }}" :active="request()->routeIs('income.index')">
                             {{ __('Income') }}
                         </x-nav-link>
-                    @endcan
+                    @endcan 
                 </div>
             </div>
 
@@ -109,26 +112,68 @@
                 @endif
 
                 <!-- Users Dropdown -->
+                @can('view user')
+                    <div class="ms-3 relative">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium 
+                                    leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                    {{__('Users')}}
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                @can('view user')
+                                    <x-dropdown-link href="{{ route('user') }}">
+                                        {{ __('Users List') }}
+                                    </x-dropdown-link>
+                                @endcan
+                                <div class="border-t border-gray-200"></div>
+                                @can('view user')
+                                    <x-dropdown-link href="{{ route('role-permissions') }}">
+                                        {{ __('Roles & Permissions') }}
+                                    </x-dropdown-link>
+                                @endcan
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                @endcan
+                
+                <!-- Rentals Dropdown -->
                 <div class="ms-3 relative">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                Users
+                            <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium 
+                                leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                {{__('Rentals')}}
                             </button>
                         </x-slot>
 
                         <x-slot name="content">
-                            @can('view user')
-                                <x-dropdown-link href="{{ route('user') }}">
-                                    {{ __('Users List') }}
+                            @can('view rentals')
+                                <x-dropdown-link href="{{ route('rental.index') }}">
+                                    {{ __('Rental Block') }}
                                 </x-dropdown-link>
                             @endcan
                             <div class="border-t border-gray-200"></div>
-                            @can('view user')
-                                <x-dropdown-link href="{{ route('role-permissions') }}">
-                                    {{ __('Roles & Permissions') }}
+                            @can('view estate')
+                                <x-dropdown-link href="{{ route('rental.estate') }}">
+                                    {{ __('Rental Estate') }}
                                 </x-dropdown-link>
                             @endcan
+                            <div class="border-t border-gray-200"></div>
+                            @can('view estate')
+                                <x-dropdown-link href="{{ route('estate.index') }}">
+                                    {{ __('Estate Details') }}
+                                </x-dropdown-link>
+                            @endcan
+                            <div class="border-t border-gray-200"></div>
+                            @can('view unit')
+                                <x-dropdown-link href="{{ route('unit.index') }}">
+                                    {{ __('Estate Unit') }}
+                                </x-dropdown-link>
+                            @endcan
+                            <div class="border-t border-gray-200"></div>
                         </x-slot>
                     </x-dropdown>
                 </div>
@@ -205,7 +250,12 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>
-        @can('view user')
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link href="{{ route('my.unit') }}" :active="request()->routeIs('income.index')">
+                {{ __('My Units') }}
+            </x-responsive-nav-link>
+        </div>
+        {{--@can('view user')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
                     {{ __('Users') }}
@@ -232,7 +282,7 @@
                     {{ __('Units') }}
                 </x-responsive-nav-link>
             </div>
-        @endcan
+        @endcan --}}
         @role('Admin')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
@@ -268,6 +318,63 @@
             </div>
         @endcan
 
+        @can('view user')
+            <div class="ms-3 relative">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button class="pt-2 pb-3 space-y-3 pl-1 text-gray-600 hover:text-gray-700">
+                            {{__('Users')}}
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        @can('view user')
+                            <x-dropdown-link href="{{ route('user') }}">
+                                {{ __('Users List') }}
+                            </x-dropdown-link>
+                        @endcan
+                        <div class="border-t border-gray-200"></div>
+                        @can('view user')
+                            <x-dropdown-link href="{{ route('role-permissions') }}">
+                                {{ __('Roles & Permissions') }}
+                            </x-dropdown-link>
+                        @endcan
+                    </x-slot>
+                </x-dropdown>
+            </div>
+        @endcan
+
+        <!-- Rentals Dropdown -->
+        <div class="ms-3 relative">
+            <x-dropdown align="right" width="48">
+                <x-slot name="trigger">
+                    <button class="pt-2 pb-3 space-y-3 pl-1 text-gray-600 hover:text-gray-700">
+                        {{__('Rentals')}}
+                    </button>
+                </x-slot>
+
+                <x-slot name="content">
+                    @can('view rentals')
+                        <x-dropdown-link href="{{ route('rental.index') }}">
+                            {{ __('Rental Block') }}
+                        </x-dropdown-link>
+                    @endcan
+                    <div class="border-t border-gray-200"></div>
+                    @can('view estate')
+                        <x-dropdown-link href="{{ route('estate.index') }}">
+                            {{ __('Estate Details') }}
+                        </x-dropdown-link>
+                    @endcan
+                    <div class="border-t border-gray-200"></div>
+                    @can('view unit')
+                        <x-dropdown-link href="{{ route('unit.index') }}">
+                            {{ __('Estate Unit') }}
+                        </x-dropdown-link>
+                    @endcan
+                    <div class="border-t border-gray-200"></div>
+                </x-slot>
+            </x-dropdown>
+        </div>
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">

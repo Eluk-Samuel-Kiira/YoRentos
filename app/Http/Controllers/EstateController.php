@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Estate;
+use App\Models\Rental;
 use App\Models\User;
 use App\Models\Paymode;
 use App\Http\Requests\StoreEstateRequest;
@@ -65,7 +66,7 @@ class EstateController extends Controller
         $estate->village_id = $request->village_id;
         $estate->uid = $randomId;
         $estate->save();
-        return redirect()->route('rental.index')->with('success', 'New Estate Created Successfully');
+        return redirect()->route('rental.estate')->with('success', 'New Estate Created Successfully');
     }
     
 
@@ -85,6 +86,17 @@ class EstateController extends Controller
         //
     }
 
+    function editEstate($id)
+    {
+        $estate_edit = Estate::find($id);
+        $rentals = Rental::all();
+        // dd($estate_edit);
+        return view('rentals.rental-estate', compact(
+            'estate_edit',
+            'rentals'
+        )); 
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -96,7 +108,7 @@ class EstateController extends Controller
         $estate->broker_id = $request->input('broker_id');
         $estate->rental_id = $request->input('rental_id');
         $estate->slug = Str::slug($request->input('estate'));
-        return redirect()->route('rental.index')->with('success', 'The Estate Block Has Been Updated Successfully');
+        return redirect()->route('rental.estate')->with('success', 'The Estate Block Has Been Updated Successfully');
     }
 
 

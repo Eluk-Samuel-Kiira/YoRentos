@@ -90,10 +90,12 @@ Route::middleware([
     Route::resource('rental', RentalController::class); 
     Route::get('/rental-status/{id}', [RentalController::class, 'rentalStatus'])->name('rental.status');    
     Route::get('/delete-rental/{rental_id}', [RentalController::class, 'deleteRental']);
+    Route::get('/estate-rental', [RentalController::class, 'estateRental'])->name('rental.estate');
 
     //Estates
     Route::resource('estate', EstateController::class); 
     Route::get('/estate-status/{id}', [EstateController::class, 'changeEstateStatus'])->name('estate.status');
+    Route::get('/estate-edit/{id}', [EstateController::class, 'editEstate'])->name('estate-edit');
     Route::post('/update-video', [EstateController::class, 'videoUpdate'])->name('estate.video');
     Route::post('/update-images', [EstateController::class, 'imageUpload'])->name('estate.images');
     Route::post('/delete-image', [EstateController::class, 'deleteImage'])->name('image.delete');

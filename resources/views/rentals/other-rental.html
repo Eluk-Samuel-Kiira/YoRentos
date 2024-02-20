@@ -1,0 +1,353 @@
+
+<div class="table-responsive" style="overflow-x: auto;" id="rentalTable">
+    <div class="container mx-auto mt-8">
+        @can('create estate')
+            @include('rentals.create')
+        @endcan
+        @can('manage all')
+            <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                &times;Hide
+            </button>
+            <table class="min-w-full border border-blue-500 text-gray-500">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 border border-blue-500">ID</th>
+                        <th class="py-2 px-4 border border-blue-500">Rental Name</th>
+                        @can('manage all')
+                            <th class="py-2 px-4 border border-blue-500">Status</th>
+                            <th class="py-2 px-4 border border-blue-500">Edit</th>
+                        @endcan
+                    </tr>
+                </thead>
+                <tbody id="rental-list">
+                    @forelse($rentals as $rental)
+                            <tr>
+                                <td class="py-2 px-4 border-b border-r">{{ $rental->id }}</td>
+                                <td class="py-2 px-4 border-b border-r">{{ $rental->name }}</td>
+                                <td class="py-2 px-3 border-b border-r">
+                                    <a href="{{ route('rental.status',$rental) }}" class="py-1 px-2 
+                                        {{ $rental->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                        text-white rounded hover:{{ $rental->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                        {{ $rental->status == 1 ? 'Active' : 'Inactive' }}
+                                    </a>
+                                </td>
+                                <td class="py-2 px-4 border-b border-r">
+                                    <a href="#" onclick="openRentalModal({{ json_encode($rental) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
+                                        {{__('Edit') }}
+                                    </a>
+                                </td>
+                                @include('rentals.edit-rental')
+                            </tr>
+                        @empty
+                            <td class="py-2 px-4 border-b border-r">{{__('No Rentals Available')}}</td>
+                        @endforelse
+                </tbody>
+            </table>
+        @endcan
+    </div>
+</div>
+
+<!-- Estates Table -->
+<div class="table-responsive" style="overflow-x: auto;">
+    <div class="container mx-auto mt-8">                            
+        <input type="text" class="rounded text-gray-500" id="estateSearch" placeholder="Search Estate or uid or village">
+        <table class="min-w-full border border-blue-500 text-gray-500">
+            @can('create estate')
+                @include('estates.create')
+            @endcan
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border border-blue-500">ID</th>
+                    <th class="py-2 px-4 border border-blue-500">Rental Name</th>
+                    <th class="py-2 px-4 border border-blue-500">Estate Name</th>
+                    <th class="py-2 px-4 border border-blue-500">Broker</th>
+                    <th class="py-2 px-4 border border-blue-500">Village</th>
+                    <th class="py-2 px-4 border border-blue-500">Latitude</th>
+                    <th class="py-2 px-4 border border-blue-500">Longitude</th>
+                    <th class="py-2 px-4 border border-blue-500">Views</th>
+                    @can('manage all')
+                        <th class="py-2 px-4 border border-blue-500">Sponsored</th>
+                    @endcan
+                    @can('update estate')
+                        <th class="py-2 px-4 border border-blue-500">Status</th>
+                        <th class="py-2 px-4 border border-blue-500">View</th>
+                    @endcan
+                    @can('edit estate')
+                        <th class="py-2 px-4 border border-blue-500">Edit</th>
+                    @endcan
+                </tr>
+            </thead>
+            <tbody id="estateTableBody">
+            @forelse($estates as $estate)
+                @if(auth()->user()->role == 'Admin' || auth()->user()->id == $estate->landlord_id || auth()->user()->id == $estate->broker_id)
+                    <tr>
+                        <td class="py-2 px-4 border-b border-r">{{ $estate->uid }}</td>
+                        <td class="py-2 px-4 border-b border-r">{{ $estate->rentalEstate->name }}</td>
+                        <td class="py-2 px-4 border-b border-r">{{ $estate->estate }}</td>
+                        <td class="py-2 px-4 border-b border-r">
+                        @foreach($users as $user)
+                            @if ($estate->broker_id == $user->id)
+                                {{ $user->name }}
+                            @endif
+                        @endforeach
+                        </td>
+                        <td class="py-2 px-4 border-b border-r">{{ $estate->villageEstate->village}}</td>
+                        <td class="py-2 px-4 border-b border-r">{{ $estate->latitude}}</td>
+                        <td class="py-2 px-4 border-b border-r">{{ $estate->longitude}}</td>
+                        <td class="py-2 px-4 border-b border-r">{{ $estate->unit_no}}</td>
+                        @can('manage all')
+                            <td class="py-2 px-4 border-b border-r">
+                                <a href="{{ route('estate.status',$estate) }}" class="py-1 px-2 
+                                    {{ $estate->sponsored == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                    text-white rounded hover:{{ $estate->sponsored == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                    {{ $estate->sponsored == 1 ? 'Yes' : 'No' }}
+                                </a>
+                            </td>
+                        @endcan
+                        @can('update estate')
+                            <td class="py-2 px-3 border-b border-r">
+                                <a href="{{ route('estate.status',$estate) }}" class="py-1 px-2 
+                                    {{ $estate->status == 1 ? 'bg-green-300' : 'bg-red-300' }} 
+                                    text-white rounded hover:{{ $estate->status == 1 ? 'bg-green-500' : 'bg-red-500' }}">
+                                    {{ $estate->status == 1 ? 'Active' : 'Inactive' }}
+                                </a>
+                            </td>
+                            <td class="py-2 px-4 border-b border-r">
+                            <a href="{{ route('estate.index') }}" class="py-1 px-2 bg-green-300 text-white rounded hover:bg-green-500">
+                                {{__('Show')}}
+                            </td>
+                        @endcan
+                        @can('edit estate')
+                            <td class="py-2 px-4 border-b border-r">
+                                <a href="#" onclick="openEstateModal({{ json_encode($estate) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
+                                    {{__('Edit') }}
+                                </a>
+                            </td>
+                            @include('estates.edit-estate')
+                        @endcan
+                    </tr>
+                @endif
+            @empty
+                <td class="py-2 px-4 border-b border-r">{{__('No Estate Available')}}</td>
+            @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@can('manage all')
+<button id="openCreateRental" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Add Rental
+</button>
+<button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
+    {{$estates->count()}} {{__('Estates')}}
+</button>
+@endcan
+@can('create estate')
+<button id="openCreateEstate" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+    Add Estate
+</button>
+@endcan
+
+
+<script>
+    function hideTable() {
+        const table = document.getElementById('rentalTable');
+        if (table) {
+            table.style.display = 'none';
+        }
+    }
+
+    const searchInputEstate = document.getElementById('estateSearch');
+    const tableBodyEstate = document.getElementById('estateTableBody');
+
+    // Add event listener to the search input
+    searchInputEstate.addEventListener('input', function () {
+        const searchValueParish = this.value.toLowerCase().trim();
+        const rowsParish = tableBodyEstate.getElementsByTagName('tr');
+
+        // Loop through all table rows to check for matches and display/hide accordingly
+        for (let row of rowsParish) {
+            const estateId = row.getElementsByTagName('td')[0];
+            const estateName = row.getElementsByTagName('td')[2];
+            const villageName = row.getElementsByTagName('td')[4];
+
+            if (villageName && estateName && estateId) {
+                const textVillage = villageName.textContent || villageName.innerText;
+                const textEstate = estateName.textContent || estateName.innerText;
+                const textId = estateId.textContent || estateId.innerText;
+
+                if (
+                    textVillage.toLowerCase().includes(searchValueParish) ||
+                    textEstate.toLowerCase().includes(searchValueParish) ||
+                    textId.toLowerCase().includes(searchValueParish)
+                ) {
+                    row.style.display = ''; // Show the row if it contains the search input value
+                } else {
+                    row.style.display = 'none'; // Hide the row if it doesn't match the search input value
+                }
+            }
+        }
+    });
+
+
+    <div id="estateEditModal" class="modal auto hidden inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex">
+    <div class="modal-content bg-white w-2/3 mx-auto my-10 p-4 relative sm:rounded-lg">        
+        <!-- Close button -->
+        <span onclick="closeEstateModal()" class="cursor-pointer absolute top-0 right-0 p-2 bg-red-500 hover:bg-red-700 text-white rounded">
+            &times; close
+        </span>        
+        <!-- Form content -->
+        <h6 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Edit Estate') }} 
+        </h6>
+        <form method="POST" action="" id="editEstateForm">
+            @csrf
+            @method('PUT')
+            
+            @livewire("location-filter") 
+            <div class="mt-6">
+                <x-label for="rental" value="{{ __('Rental Type') }}" class="font-semibold text-xl"/>
+                <select id="rental_id" class="w-full font-medium py-2 rounded text-gray-700" name="rental_id" required>
+                    <option class="block mt-1 w-full" value=""></option>
+                    @foreach ($rentals as $rental)
+                        <option class="block mt-1 w-full" value="{{ $rental->id }}">{{ $rental->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div class="mt-6">
+                <x-label for="estate" value="{{ __('Estae Name') }}" class="font-semibold text-xl"/>
+                <x-input id="estateName" class="block mt-1 w-full rounded text-gray-700" type="text" name="estate" :value="old('estate')" required autofocus autocomplete="estate" />
+            </div>
+
+            <x-button class="mt-8">
+                {{ __('Save') }}
+            </x-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function openEstateModal(estate) {
+        document.getElementById('estateEditModal').classList.remove('hidden');
+
+        document.getElementById('estateName').value = estate.estate;
+        document.getElementById('editEstateForm').action = "{{ route('estate.update', '') }}" + "/" + estate.slug;
+    }
+
+    function closeEstateModal() {
+        document.getElementById('estateEditModal').classList.add('hidden');
+    }
+    
+</script>
+
+
+<div id="estateModal" class="modal auto hidden inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex">
+    <div class="modal-content bg-white w-2/3 mx-auto my-10 p-4 relative sm:rounded-lg">        
+        <!-- Close button -->
+        <span id="closeCreateEstate" class="cursor-pointer absolute top-0 right-0 p-2 bg-red-500 hover:bg-red-700 text-white rounded">
+            &times; close
+        </span>        
+        <!-- Form content -->
+        <h6 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Add Estate Block') }} 
+        </h6>
+        
+    </div>
+</div>
+<script>
+    // JavaScript to handle opening and closing the modal
+    document.getElementById('openCreateEstate').onclick = function () {
+        document.getElementById('estateModal').classList.remove('hidden');
+    };
+
+    document.getElementById('closeCreateEstate').onclick = function () {
+        document.getElementById('estateModal').classList.add('hidden');
+    };
+</script>
+
+
+<form method="POST" action="{{ route('unit.update', $unit) }}">
+        @csrf
+        @method('PUT')
+        <div class="flex flex-col md:flex-row gap-4">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-md flex-1">
+                <x-input id="unit_uid" class="block mt-1 w-full" type="hidden" name="unit_uid" value="{{ $unit->uid}}" required/>
+                
+                <div class="mt-6">
+                    <label for="unit" class="font-semibold text-xl">Unit Name:</label>
+                    <x-input id="unitName" class="block mt-1 w-full" type="text" name="unit" value="{{ $unit->unit}}" required />
+                </div>
+
+                <div class="mt-6">
+                    <label for="duration" class="font-semibold text-xl">Charge Per Duration:</label>
+                    <select id="duration" class="w-full font-medium py-2 rounded text-gray-700" name="duration_id" required>
+                        <option class="block mt-1 w-full" value=""></option>
+                        @foreach ($durations as $duration)
+                            <option class="block mt-1 w-full" value="{{ $duration->id }}">{{ $duration->duration }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mt-6">
+                    <label for="tenant" class="font-semibold text-xl">Rental Type:</label>
+                    <select id="rental_id" class="w-full font-medium py-2 rounded text-gray-700" name="rental_id" required>
+                        <option class="block mt-1 w-full" value=""></option>
+                        @foreach ($rentals as $rental)
+                            <option class="block mt-1 w-full" value="{{ $rental->id }}">{{ $rental->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="mt-4">
+                    <x-label for="resource" value="{{ __('Essential Resources') }}" class="font-semibold text-xl"/>
+                    <div>
+                        @foreach($resources as $resource)
+                            <input type="checkbox" id="resource{{ $resource->id }}" name="resources[]" value="{{ $resource->resource }}" class="mr-2">
+                            <label for="resource{{ $resource->resource }}" class="text-sm">{{ $resource->resource }}</label>
+                            <br>
+                        @endforeach
+                    </div>
+                </div>
+                
+            </div>
+            <!-- other half -->
+            <div class="bg-gray-100 p-4 rounded-lg shadow-md flex-1">
+                <div class="mt-6">
+                    <label for="price" class="font-semibold text-xl">Unit Price:</label>
+                    <x-input id="unitPrice" class="block mt-1 w-full" type="text" name="price" value="{{ $unit->price }}" required placeholder="eg UGX: 200,000 or USD: 2000"/>
+                </div>
+
+                <div class="mt-6">
+                    <label for="square_footage" class="font-semibold text-xl">Room Measurement (Square Foot):</label>
+                    <x-input id="square_footage" class="block mt-1 w-full" type="text" name="square_footage" value="{{ $unit->square_footage }}" placeholder="eg 10 feet or 4 by 5m for offices especially" />
+                </div>
+
+                <div class="mt-6">
+                    <label for="room_no" class="font-semibold text-xl">Number of Rooms:</label>
+                    <x-input id="room_no" class="block mt-1 w-full" type="number" name="room_no"  value="{{ $unit->room_no }}" placeholder="4" required/>
+                </div>
+
+                <div class="mt-6">
+                    <label for="description" class="font-semibold text-xl">Room Description:</label>
+                    <textarea name="description" value="{{ $unit->description }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                        2 rooms
+                    </textarea>
+                </div>
+            </div>
+        </div>
+        <x-button class="mt-8">
+            {{ __('Update') }}
+        </x-button>
+    </form>
+</div>
+<script>
+    function toggleEditForm(counter, unit) {
+        var form = document.getElementById("unitEditForm" + counter);
+        form.classList.toggle("hidden");
+        // Input field
+        document.getElementById("unitName").value = unit.unit;
+    }
+</script>
