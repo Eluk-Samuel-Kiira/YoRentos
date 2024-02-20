@@ -17,7 +17,7 @@
                     <div class="flex space-x-4" id="estateContainer">
                         @forelse($estates as $estate)
                             @if(auth()->user()->role == 'Admin' || auth()->user()->id == $estate->landlord_id || auth()->user()->id == $estate->broker_id)
-                                <button class="bg-blue-500 active:bg-red-700 text-white px-4 py-2 rounded hover:bg-0" onclick="showContent('{{ $estate->uid }}')">{{ $estate->estate }}</button>
+                                <button class="bg-gray-300 rounded py-1 px-3" onclick="showContent('{{ $estate->uid }}')">{{ $estate->estate }}</button>
                             @endif
                         @empty
                             <h2 class="text-xl font-bold mb-2">No Estate Registered</h2>

@@ -14,24 +14,17 @@
                     <div class="flex space-x-4" id="estateContainer">
                         @forelse($estates as $estate)
                             @if(auth()->user()->role == 'Admin' || auth()->user()->id == $estate->landlord_id || auth()->user()->id == $estate->broker_id)
-                                    <button class="bg-blue-500 active:bg-red-700 text-white px-4 py-2 rounded hover:bg-0" onclick="showContent('{{ $estate->uid }}')">{{ $estate->estate }}</button>
+                                    <button class="bg-gray-300 rounded py-1 px-3" onclick="showContent('{{ $estate->uid }}')">{{ $estate->estate }}</button>
                             @endif
                         @empty
                             <h2 class="text-xl font-bold mb-2">No Estate Registered</h2>
                         @endforelse
                     </div>
                     <h4>  
-                        <x-validation-errors class="mb-4" />  
-                        @if(session('error'))
-                            <span class="bg-red-500 text-white rounded">
-                                {{ session('error') }}
-                            </span>
-                        @endif
-                        @if(session('success'))
-                            <span class="bg-green-500 text-white rounded">
-                                {{ session('success') }}
-                            </span>
-                        @endif
+                    <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 transition-opacity duration-500 hidden">
+                            <x-validation-errors class="mb-4" />  
+                            <span id="notificationMessage"></span>
+                        </div>
                     </h4>
                     @php $counter = 0; @endphp
                     @php $formCounter = 0; @endphp
@@ -43,8 +36,8 @@
                                     <h2 class="text-2xl font-bold mb-4">{{ $estate->estate }}</h2>
                                     @can('create unit')
                                         <div class="p-4 rounded-lg shadow-md">
-                                            <button onclick="hideTable({{$counter}})" class="bg-green-500 text-white px-3 py-1 rounded-sm text-sm">
-                                                Toggle Unit
+                                            <button onclick="createUnit({{$counter}})" class="bg-green-500 text-white px-3 py-1 rounded-sm text-sm">
+                                                Add Unit
                                             </button>
                                             @include('units.create-unit')
                                             @php $counter++; @endphp
@@ -186,7 +179,7 @@
                                                     </span></p>
                                                 </div>
                                                 
-                                                <button onclick="toggleEditForm({{$editCounter}}, {{ json_encode($unit) }})" class="bg-green-500 text-white px-3 py-1 rounded-sm text-sm">
+                                                <button onclick="editUnit({{$editCounter}}, {{ json_encode($unit) }})" class="bg-green-500 text-white px-3 py-1 rounded-sm text-sm">
                                                     Edit Unit
                                                 </button>
                                                 @php $editCounter++; @endphp
@@ -207,6 +200,7 @@
         </div>
     </div>
 </x-app-layout>
+@include('dashboard.status')
 
 <script>
     function showContent(sectionId) {
@@ -218,16 +212,6 @@
                 section.classList.add('hidden');
             }
         });
-    }
-
-    
-    function hideTable(index) {
-        var unitForm = document.getElementById("unitForm" + index);
-        if (unitForm.style.display !== "none") {
-            unitForm.style.display = "none";
-        } else {
-            unitForm.style.display = "block";
-        }
     }
 
     function toggleFormVisibility(counter) {

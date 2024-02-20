@@ -4,7 +4,7 @@
         <span id="notificationMessage"></span>
     </div>
     <div
-        x-data="{ show: false, rental_id: '', rental_name: '' }"
+        x-data="{ show: true, rental_id: '', rental_name: '' }"
         x-show = "show"
         x-on:open-edit-rental.window = "show = true; rental_id = $event.detail.rental_id; rental_name = $event.detail.rental_name;"
         x-on:close-modal.window = "show = false"
@@ -23,12 +23,13 @@
                         </button>
                     </div>
                 <div class="p-4">        
-                    <form x-on:submit.prevent="submitRentalForm">
-                        <input type="text" x-model="rental_id">
+                    <form method="POST" action="{{ route('rental.update', $rental_edit->slug) }}">
+                        @csrf
+                        @method('PUT')
                     
                         <div class="mt-6">
                             <x-label for="duration" value="{{ __('Rental Name') }}" class="font-semibold text-xl"/>
-                            <x-input x-model="rental_name" class="block mt-1 w-full rounded text-gray-700" type="text" required />
+                            <x-input class="block mt-1 w-full rounded text-gray-700" type="text" name="name" value="{{ $rental_edit->name }}" required />
                         </div>
 
                         <x-button type="submit" class="mt-8">
@@ -47,60 +48,5 @@
         window.dispatchEvent(event);
     }
 
-    function submitRentalForm() {
-        const rental_id = this.rental_id;
-        const rental_name = this.rental_name;
-        
-        if (rental_name !== null) {
-            $.ajaxSetup({
-                headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
-            $.ajax({
-                url: "rental/update/" + rental_id,
-                type: "PUT",
-                data: {
-                    rental_id: rental_id,
-                    rental_name: rental_name,
-                },
-                success: function(response) {
-                    if (response.success) {
-                        showNotification(response.success, response.message);
-                    } else {
-                        showNotification(response.success, response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.log(error);
-                }
-            });
-        }
-        this.show = false;
-
-        function showNotification(success, message) {
-            var notification = $("#notification");
-            var notificationMessage = $("#notificationMessage");
-
-            if (success) {
-                notificationMessage.text(message);
-                notification.removeClass("bg-red-500").addClass("bg-green-500");
-            } else {
-                notificationMessage.text(message);
-                notification.removeClass("bg-green-500").addClass("bg-red-500");
-            }
-
-           notification.removeClass("hidden");
-            notification.addClass("opacity-100");
-
-            // Automatically hide the notification after 3 seconds
-            setTimeout(function() {
-                notification.removeClass("opacity-100");
-                notification.addClass("hidden");
-            }, 3000); 
-
-        }
-    }
 </script>
 

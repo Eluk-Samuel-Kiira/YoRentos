@@ -1,52 +1,63 @@
-<div id="estateEditModal" class="modal auto hidden inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex">
-    <div class="modal-content bg-white w-2/3 mx-auto my-10 p-4 relative sm:rounded-lg">        
-        <!-- Close button -->
-        <span onclick="closeEstateModal()" class="cursor-pointer absolute top-0 right-0 p-2 bg-red-500 hover:bg-red-700 text-white rounded">
-            &times; close
-        </span>        
-        <!-- Form content -->
-        <h6 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Estate') }} 
-        </h6>
-        <form method="POST" action="" id="editEstateForm">
-            @csrf
-            @method('PUT')
-            
-            @livewire("location-filter") 
-            <div class="mt-6">
-                <x-label for="rental" value="{{ __('Rental Type') }}" class="font-semibold text-xl"/>
-                <select id="rental_id" class="w-full font-medium py-2 rounded text-gray-700" name="rental_id" required>
-                    <option class="block mt-1 w-full" value=""></option>
-                    @foreach ($rentals as $rental)
-                        <option class="block mt-1 w-full" value="{{ $rental->id }}">{{ $rental->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            
-            <div class="mt-6">
-                <x-label for="estate" value="{{ __('Estae Name') }}" class="font-semibold text-xl"/>
-                <x-input id="estateName" class="block mt-1 w-full rounded text-gray-700" type="text" name="estate" :value="old('estate')" required autofocus autocomplete="estate" />
-            </div>
+<div>
+    <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 
+        transition-opacity duration-500 hidden">
+        <span id="notificationMessage"></span>
+    </div>
+    <div
+        x-data="{ show: true, estate: ''}"
+        x-show = "show"
+        x-on:open-edit-estate.window = "show = true; estate = $event.detail.estate;"
+        x-on:close-modal.window = "show = false"
+        style="display:none"
+        class="fixed">
 
-            <x-button class="mt-8">
-                {{ __('Save') }}
-            </x-button>
+        <div class="fixed inset-0 bg-gray-300 opacity-80 backdrop-blur-lg"></div>
+            <div class="bg-white rounded m-auto fixed inset-0 max-w-3xl overflow-y-auto" style="max-height:680px">
+                    <div class="px-4 py-3 flex items-center justify-between border-b border-gray-300">
+                        <div class="text-xl text-gray-800">{{__('Edit Role') }}</div>
+                        <button x-on:click="$dispatch('close-modal')">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                <div class="p-4">        
+                    <form method="POST" action="{{ route('estate.update', $estate_edit->slug) }}">
+                        @csrf
+                        @method('PUT')
+                        
+                        @livewire("location-filter") 
+                        <div class="mt-6">
+                            <x-label for="rental" value="{{ __('Rental Type') }}" class="font-semibold text-xl"/>
+                            <select id="rental_id" class="w-full font-medium py-2 rounded text-gray-700" name="rental_id" required>
+                                <option class="block mt-1 w-full" value=""></option>
+                                @foreach ($rentals as $rental)
+                                    <option class="block mt-1 w-full" value="{{ $rental->id }}">{{ $rental->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <x-label for="estate" value="{{ __('Estate Name') }}" class="font-semibold text-xl"/>
+                            <x-input class="block mt-1 w-full rounded text-gray-700" type="text" name="estate" value="{{ $estate_edit->estate }}" required autofocus autocomplete="estate" />
+                        </div>
+
+                        <x-button class="mt-8">
+                            {{ __('Save') }}
+                        </x-button>
+                        </div>
+                    </form>
+                </div>        
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
 <script>
     function openEstateModal(estate) {
-        document.getElementById('estateEditModal').classList.remove('hidden');
-
-        document.getElementById('estateName').value = estate.estate;
-        document.getElementById('editEstateForm').action = "{{ route('estate.update', '') }}" + "/" + estate.slug;
+        const event = new CustomEvent('open-edit-estate', { detail: { estate } });
+        window.dispatchEvent(event);
     }
-
-    function closeEstateModal() {
-        document.getElementById('estateEditModal').classList.add('hidden');
-    }
-    
 </script>
 

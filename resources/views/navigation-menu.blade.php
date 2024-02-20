@@ -157,14 +157,20 @@
                             @endcan
                             <div class="border-t border-gray-200"></div>
                             @can('view estate')
-                                <x-dropdown-link href="{{ route('estate.index') }}">
+                                <x-dropdown-link href="{{ route('rental.estate') }}">
                                     {{ __('Rental Estate') }}
+                                </x-dropdown-link>
+                            @endcan
+                            <div class="border-t border-gray-200"></div>
+                            @can('view estate')
+                                <x-dropdown-link href="{{ route('estate.index') }}">
+                                    {{ __('Estate Details') }}
                                 </x-dropdown-link>
                             @endcan
                             <div class="border-t border-gray-200"></div>
                             @can('view unit')
                                 <x-dropdown-link href="{{ route('unit.index') }}">
-                                    {{ __('Rental Unit') }}
+                                    {{ __('Estate Unit') }}
                                 </x-dropdown-link>
                             @endcan
                             <div class="border-t border-gray-200"></div>
@@ -356,13 +362,13 @@
                     <div class="border-t border-gray-200"></div>
                     @can('view estate')
                         <x-dropdown-link href="{{ route('estate.index') }}">
-                            {{ __('Rental Estate') }}
+                            {{ __('Estate Details') }}
                         </x-dropdown-link>
                     @endcan
                     <div class="border-t border-gray-200"></div>
                     @can('view unit')
                         <x-dropdown-link href="{{ route('unit.index') }}">
-                            {{ __('Rental Unit') }}
+                            {{ __('Estate Unit') }}
                         </x-dropdown-link>
                     @endcan
                     <div class="border-t border-gray-200"></div>

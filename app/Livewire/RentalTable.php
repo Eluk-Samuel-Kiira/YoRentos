@@ -53,7 +53,7 @@ final class RentalTable extends PowerGridComponent
             ->addColumn('status', function (Rental $model) {
                 $statusText = ($model->status == 1) ? 'Active' : 'Inactive';
                 $statusColor = ($model->status == 1) ? 'blue' : 'red';
-                $statusUrl = route('change-status', $model->id); 
+                $statusUrl = route('rental.status', $model->slug); 
                 return "<a href='$statusUrl' style='color: $statusColor'>$statusText</a>";
             })            
             ->addColumn('created_at_formatted', fn (Rental $model) => Carbon::parse($model->created_at)->format('d/m/Y H:i:s'));
@@ -88,29 +88,33 @@ final class RentalTable extends PowerGridComponent
     #[\Livewire\Attributes\On('edit')]
     public function edit($rowId, $rowName): void
     {
-        $this->js('editRental("'.$rowId.'", "'.$rowName.'")');    
+        redirect()->route('rental.edit', $rowId);
     }
 
     public function actions(\App\Models\Rental $row): array
     {
         return [
             Button::add('edit')
-                ->slot('Edit: '.$row->id)
+                ->slot('Edit')
                 ->id()
-                ->class('pg-btn-white dark:ring-pg-primary-600 dark:border-pg-primary-600 dark:hover:bg-pg-primary-700 dark:ring-offset-pg-primary-800 dark:text-pg-primary-300 dark:bg-pg-primary-700')
+                ->class('bg-green-500 text-white rounded py-1 px-3')
                 ->dispatch('edit', ['rowId' => $row->slug, 'rowName' => $row->name])
         ];
     }
 
-    /*
-    public function actionRules($row): array
+    public function header(): array
     {
-       return [
-            // Hide button edit for ID 1
-            Rule::button('edit')
-                ->when(fn($row) => $row->id === 1)
-                ->hide(),
+        return [
+            Button::add('new_rental')
+                ->slot('New Rental')
+                ->class('bg-gray-300 rounded py-1 px-3')
+                ->dispatch('create', []),
         ];
     }
-    */
+
+    #[\Livewire\Attributes\On('create')]
+    public function create(): void
+    {
+        $this->js('createRental()');
+    }
 }

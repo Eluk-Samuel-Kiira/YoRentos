@@ -20,8 +20,6 @@ use PowerComponents\LivewirePowerGrid\Responsive;
 final class UserTable extends PowerGridComponent
 {
     use WithExport;
-    public bool $multiSort = true;
-    public $showForm = false;
 
     public function setUp(): array
     {
@@ -127,12 +125,11 @@ final class UserTable extends PowerGridComponent
             Button::add('edit')
                 ->slot('Edit Role')
                 ->id()
-                ->class('bg-green-500 rounded text-white hover:bg-green-700 rounded')
+                ->class('bg-green-500 rounded text-white hover:bg-green-700 rounded py-1 px-3')
                 ->dispatch('edit', ['rowId' => $user->id])
         ];
     }
 
-    
     
     // public function header(): array
     // {
