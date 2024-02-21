@@ -373,6 +373,7 @@
     </div>
 </x-app-layout>
 @include('estates.estate-location')
+@include('dashboard.status')
 <script>
     // toggle the entire Estate
     function showContent(sectionId) {

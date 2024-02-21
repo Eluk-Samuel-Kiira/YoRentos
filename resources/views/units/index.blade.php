@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Units') }} 
+            {{ __('Estate Units') }} 
         </h2>
     </x-slot>
 
@@ -21,8 +21,9 @@
                         @endforelse
                     </div>
                     <h4>  
-                    <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 transition-opacity duration-500 hidden">
-                            <x-validation-errors class="mb-4" />  
+                        <x-validation-errors class="mb-4" />    
+                        <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 transition-opacity duration-500 hidden">
+                            <!-- <x-validation-errors class="mb-4" />   -->
                             <span id="notificationMessage"></span>
                         </div>
                     </h4>
@@ -170,7 +171,7 @@
                                                 </div>
 
                                                 <!-- Essential Resources -->
-                                                <div>
+                                                <div class="max-w-full overflow-x-auto">
                                                     <p class="text-lg font-semibold">Essential Resources: <span class="text-gray-700">
                                                         @php
                                                             $resourcesArray = json_decode($unit->resources);
