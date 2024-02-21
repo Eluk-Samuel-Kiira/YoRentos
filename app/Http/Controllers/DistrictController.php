@@ -103,7 +103,7 @@ class DistrictController extends Controller
                 $this_district->where('slug', $district)->update(['status' => 1]);
             }
             
-            return redirect()->route('country.index')->with('success', 'District Activated successfully');
+            return redirect()->route('country.index')->with('success', 'District Status Changed Successfully');
         } else {
             return redirect()->route('country.index')->with('error', 'District Not found');
         }
