@@ -11,8 +11,9 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto p-6">
                     <h4>
+                        <x-validation-errors class="mb-4" />  
                         <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 transition-opacity duration-500 hidden">
-                            <x-validation-errors class="mb-4" />  
+                            <!-- <x-validation-errors class="mb-4" />   -->
                             <span id="notificationMessage"></span>
                         </div>
                     </h4>

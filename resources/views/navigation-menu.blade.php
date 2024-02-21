@@ -33,7 +33,7 @@
                             {{ __('Units') }}
                         </x-nav-link>
                     @endcan --}}
-                    @role('Admin')
+                    {{--@role('Admin')
                         <x-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
                             {{ __('Durations') }}
                         </x-nav-link>
@@ -46,7 +46,7 @@
                         <x-nav-link href="{{ route('parish.index') }}" :active="request()->routeIs('parish.index')">
                             {{ __('Parishes') }}
                         </x-nav-link>
-                    @endrole
+                    @endrole --}}
                     @can('view amount')
                         <x-nav-link href="{{ route('feedback.index') }}" :active="request()->routeIs('feedback.index')">
                             {{ __('Feedback') }}
@@ -177,6 +177,39 @@
                         </x-slot>
                     </x-dropdown>
                 </div>
+                
+                <!-- Locations Dropdown -->
+                @role('Admin')
+                    <div class="ms-3 relative">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium 
+                                    leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                    {{__('Locations')}}
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link href="{{ route('duration.index') }}">
+                                    {{ __('Durations') }}
+                                </x-dropdown-link>
+                                <div class="border-t border-gray-200"></div>
+                                <x-dropdown-link href="{{ route('country.index') }}">
+                                    {{ __('Districts') }}
+                                </x-dropdown-link>
+                                <div class="border-t border-gray-200"></div>
+                                <x-dropdown-link href="{{ route('county.index') }}">
+                                    {{ __('Counties') }}
+                                </x-dropdown-link>
+                                <div class="border-t border-gray-200"></div>
+                                <x-dropdown-link href="{{ route('parish.index') }}">
+                                    {{ __('Parishes') }}
+                                </x-dropdown-link>
+                                <div class="border-t border-gray-200"></div>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                @endrole
 
                 <!-- Settings Dropdown -->
                 <div class="ms-3 relative">
@@ -282,7 +315,7 @@
                     {{ __('Units') }}
                 </x-responsive-nav-link>
             </div>
-        @endcan --}}
+        @endcan 
         @role('Admin')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
@@ -304,7 +337,7 @@
                     {{ __('Parishes') }}
                 </x-responsive-nav-link>
             </div>
-        @endrole
+        @endrole --}}
         @can('view amount')
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('feedback.index') }}" :active="request()->routeIs('feedback.index')">
@@ -349,10 +382,10 @@
             <x-dropdown align="right" width="48">
                 <x-slot name="trigger">
                     <button class="pt-2 pb-3 space-y-3 pl-1 text-gray-600 hover:text-gray-700">
-                            {{__('Rentals')}}
-                        </button>
+                        {{__('Rentals')}}
+                    </button>
                 </x-slot>
-    
+
                 <x-slot name="content">
                     @can('view rentals')
                         <x-dropdown-link href="{{ route('rental.index') }}">
@@ -364,9 +397,7 @@
                         <x-dropdown-link href="{{ route('rental.estate') }}">
                             {{ __('Rental Estate') }}
                         </x-dropdown-link>
-                    @endcan
-                    <div class="border-t border-gray-200"></div>
-                    @can('view estate')
+                        <div class="border-t border-gray-200"></div>
                         <x-dropdown-link href="{{ route('estate.index') }}">
                             {{ __('Estate Details') }}
                         </x-dropdown-link>
@@ -381,6 +412,38 @@
                 </x-slot>
             </x-dropdown>
         </div>
+
+        <!-- Locations Dropdown -->
+        @role('Admin')
+            <div class="ms-3 relative">
+                <x-dropdown align="right" width="48">
+                    <x-slot name="trigger">
+                        <button class="pt-2 pb-3 space-y-3 pl-1 text-gray-600 hover:text-gray-700">
+                            {{__('Locations')}}
+                        </button>
+                    </x-slot>
+
+                    <x-slot name="content">
+                        <x-dropdown-link href="{{ route('duration.index') }}">
+                            {{ __('Durations') }}
+                        </x-dropdown-link>
+                        <div class="border-t border-gray-200"></div>
+                        <x-dropdown-link href="{{ route('country.index') }}">
+                            {{ __('Districts') }}
+                        </x-dropdown-link>
+                        <div class="border-t border-gray-200"></div>
+                        <x-dropdown-link href="{{ route('county.index') }}">
+                            {{ __('Counties') }}
+                        </x-dropdown-link>
+                        <div class="border-t border-gray-200"></div>
+                        <x-dropdown-link href="{{ route('parish.index') }}">
+                            {{ __('Parishes') }}
+                        </x-dropdown-link>
+                        <div class="border-t border-gray-200"></div>
+                    </x-slot>
+                </x-dropdown>
+            </div>
+        @endrole
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">

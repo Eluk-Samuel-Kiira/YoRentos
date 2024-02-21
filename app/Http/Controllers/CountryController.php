@@ -103,8 +103,7 @@ class CountryController extends Controller
             } else {
                 $this_country->where('slug', $country)->update(['status' => 1]);
             }
-            
-            return redirect()->route('country.index')->with('success', 'Country Activated successfully');
+            return redirect()->route('country.index')->with('success', 'Country status changed successfully');
         } else {
             return redirect()->route('country.index')->with('error', 'Country Not found');
         }

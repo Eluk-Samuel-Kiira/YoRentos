@@ -13,36 +13,28 @@
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <div class="max-w-7xl mx-auto p-6">
                         @can('manage all')
-                            <button id="openCountryModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <button onclick="openCountryModal()" class="bg-gray-300 rounded py-1 px-3">
                                 Add Country
                             </button>
-                            <button id="openDistrictModal" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            <button onclick="createDistrict()" class="bg-gray-300 rounded py-1 px-3">
                                 Add District
                             </button>
                         @endcan
                         <h4>  
-                            <x-validation-errors class="mb-4" />  
-                            @if(session('error'))
-                                <span class="bg-red-500 text-white rounded">
-                                    {{ session('error') }}
-                                </span>
-                            @endif
-                            @if(session('success'))
-                                <span class="bg-green-500 text-white rounded">
-                                    {{ session('success') }}
-                                </span>
-                            @endif
+                            <x-validation-errors class="mb-4" /> 
+                            <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 transition-opacity duration-500 hidden">
+                                <!-- <x-validation-errors class="mb-4" />   -->
+                                <span id="notificationMessage"></span>
+                            </div>
                         </h4>
                         @can('manage all')
                         <div class="table-responsive" style="overflow-x: auto;">
-                            <div class="container mx-auto mt-8" id="countryTable">
+                            <div class="container mx-auto mt-8">
                                 <input type="text" class="rounded text-gray-500" id="countrySearch" placeholder="Search Country">
                                 <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
                                     {{$countries->count()}} {{__('Countries')}}
                                 </button>
-                                <button onclick="hideTable()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                    &times;Hide
-                                </button>
+                                <div class="bg-blue-300 rounded py-1 px-3">Countries</div>
                                 <table class="min-w-full border border-blue-500 text-gray-500">
                                     @include('locations.create-country')
                                     <thead>
@@ -66,7 +58,7 @@
                                                     </a>
                                                 </td>
                                                 <td class="py-2 px-4 border-b border-r">
-                                                    <a href="#" onclick="openModal({{ json_encode($country) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
+                                                    <a href="#" onclick="editCountry({{ json_encode($country) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
                                                         {{__('Edit') }}
                                                     </a>
                                                 </td>
@@ -82,14 +74,12 @@
 
                         <!-- district table -->
                         <div class="table-responsive" style="overflow-x: auto;">
-                            <div class="container mx-auto mt-8" id="districtTable">
+                            <div class="container mx-auto mt-8">
                                 <input type="text" class="rounded text-gray-500" id="districtSearch" placeholder="Search District or Country">
                                 <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
                                     {{$districts->count()}} {{__('Districts')}}
                                 </button>
-                                <button onclick="hideTable2()" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-                                    &times;Hide
-                                </button>
+                                <div class="bg-blue-300 rounded py-1 px-3">Districts</div>
                                 <table class="min-w-full border border-blue-500 text-gray-500">
                                     @include('locations.create-district')
                                     <thead>
@@ -115,7 +105,7 @@
                                                     </a>
                                                 </td>
                                                 <td class="py-2 px-4 border-b border-r">
-                                                    <a href="#" onclick="openDistrictModal({{ json_encode($district) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
+                                                    <a href="#" onclick="editDistrict({{ json_encode($district) }})" class="py-1 px-2 bg-blue-300 text-white rounded hover:bg-blue-500">
                                                         {{__('Edit') }}
                                                     </a>
                                                 </td>
@@ -135,6 +125,7 @@
         </div>
     @endrole
 </x-app-layout>
+@include('dashboard.status')
 <script>
     // Get the input element and table body
     const searchInput = document.getElementById('districtSearch');
@@ -192,19 +183,5 @@
             }
         }
     });
-
-    function hideTable() {
-        const table = document.getElementById('countryTable');
-        if (table) {
-            table.style.display = 'none';
-        }
-    }
-
-    function hideTable2() {
-        const table = document.getElementById('districtTable');
-        if (table) {
-            table.style.display = 'none';
-        }
-    }
 
 </script>
