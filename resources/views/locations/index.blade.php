@@ -29,12 +29,12 @@
                         </h4>
                         @can('manage all')
                         <div class="table-responsive" style="overflow-x: auto;">
-                            <div class="container mx-auto mt-8" id="countryTable">
+                            <div class="container mx-auto mt-8">
                                 <input type="text" class="rounded text-gray-500" id="countrySearch" placeholder="Search Country">
                                 <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
                                     {{$countries->count()}} {{__('Countries')}}
                                 </button>
-                                <div class="bg-blue-300 rounded py-1 px-3">Countries Table</div>
+                                <div class="bg-blue-300 rounded py-1 px-3">Countries</div>
                                 <table class="min-w-full border border-blue-500 text-gray-500">
                                     @include('locations.create-country')
                                     <thead>
@@ -74,12 +74,12 @@
 
                         <!-- district table -->
                         <div class="table-responsive" style="overflow-x: auto;">
-                            <div class="container mx-auto mt-8" id="districtTable">
+                            <div class="container mx-auto mt-8">
                                 <input type="text" class="rounded text-gray-500" id="districtSearch" placeholder="Search District or Country">
                                 <button class="bg-green-500 text-white font-bold py-2 px-4 rounded">
                                     {{$districts->count()}} {{__('Districts')}}
                                 </button>
-                                <div class="bg-blue-300 rounded py-1 px-3">Districts Table</div>
+                                <div class="bg-blue-300 rounded py-1 px-3">Districts</div>
                                 <table class="min-w-full border border-blue-500 text-gray-500">
                                     @include('locations.create-district')
                                     <thead>
