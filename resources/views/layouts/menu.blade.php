@@ -7,7 +7,7 @@
       <div class="container-fluid">
         <nav class="navbar navbar-expand-lg custom_nav-container">
             <a class="navbar-brand" href="/">
-                <img src="{{asset('frontend/images/logo.png')}}" alt="" style="height: 60px; width: 160px;"/>
+                <img src="{{asset('frontend/images/logo.png')}}" alt="" style="height: 60px; width: 200px;"/>
             </a>
           <div class="navbar-collapse" id="">
 
