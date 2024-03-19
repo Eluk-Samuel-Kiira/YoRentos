@@ -1,51 +1,125 @@
-<div id="parishEditModal" class="modal auto hidden inset-0 z-50 overflow-auto bg-black bg-opacity-50 flex">
-    <div class="modal-content bg-white w-2/3 mx-auto my-10 p-4 relative sm:rounded-lg">        
-        <!-- Close button -->
-        <span onclick="closeParishModal()" class="cursor-pointer absolute top-0 right-0 p-2 bg-red-500 hover:bg-red-700 text-white rounded">
-            &times; close
-        </span>        
-        <!-- Form content -->
-        <h6 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Parish/Ward') }} 
-        </h6>
-        <form method="POST" action="" id="editParishForm">
-            @csrf
-            @method('PUT')
-            
-            <div class="mt-6">
-                <x-label for="parish" value="{{ __('Parish Name') }}" class="font-semibold text-xl"/>
-                <x-input id="parishName" class="block mt-1 w-full rounded text-gray-700" type="text" name="parish" :value="old('parish')" required autofocus autocomplete="parish" />
-            </div>
+<div>
+    <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 
+        transition-opacity duration-500 hidden">
+        <span id="notificationMessage"></span>
+    </div>
+    <div
+        x-data="{ show: false, index: '', name: ''  }"
+        x-show = "show"
+        x-on:open-edit-parish.window = "show = true; index = $event.detail.index; name = $event.detail.name"
+        x-on:close-modal.window = "show = false"
+        style="display:none"
+        class="fixed">
 
-            <div class="mt-4">
-                <x-label for="subcounty_id" value="{{ __('Select Sub-County') }}" class="font-semibold text-xl"/>
-                <select id="subcounty_id" class="w-full font-medium py-2 rounded text-gray-700" name="subcounty_id" required>
-                    <option class="block mt-1 w-full" value=""></option>
-                    @foreach ($subcounties as $subcounty)
-                        <option class="block mt-1 w-full" value="{{ $subcounty->id }}">{{ $subcounty->subcounty }}</option>
-                    @endforeach
-                </select>
-            </div>
+        <div class="fixed inset-0 bg-gray-300 opacity-80 backdrop-blur-lg"></div>
+            <div class="bg-white rounded m-auto fixed inset-0 max-w-2xl overflow-y-auto" style="max-height:500px">
+                <div class="px-4 py-3 flex items-center justify-between border-b border-gray-300">
+                    <div class="text-xl text-gray-800">{{__('Edit County') }}</div>
+                    <button x-on:click="$dispatch('close-modal')">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-4">  
+                    <form x-on:submit.prevent="parishFormEdit">
+                        @csrf
+                        <x-input x-model="index" class="block mt-1 w-full rounded text-gray-700" type="hidden" />
 
-            <x-button class="mt-8">
-                {{ __('Save') }}
-            </x-button>
+                        <div class="mt-6">
+                            <x-label for="parish" value="{{ __('Parish Name') }}" class="font-semibold text-xl"/>
+                            <x-input x-model="name" class="block mt-1 w-full" type="text" />
+                        </div>
+
+                        <div class="mt-4">
+                            <x-label for="subcounty_id" value="{{ __('Select Sub-County') }}" class="font-semibold text-xl"/>
+                            <select x-ref="subcountySelect" class="w-full font-medium py-2 rounded text-gray-700" required>
+                                <option class="block mt-1 w-full" value=""></option>
+                                @foreach ($subcounties as $subcounty)
+                                    <option class="block mt-1 w-full" value="{{ $subcounty->id }}">{{ $subcounty->subcounty }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <x-button class="mt-8">
+                            {{ __('Save') }}
+                        </x-button>
+                    </form>
+                </div>        
             </div>
-        </form>
+        </div>
     </div>
 </div>
 
 <script>
-    function openParishModal(parish) {
-        document.getElementById('parishEditModal').classList.remove('hidden');
-
-        document.getElementById('parishName').value = parish.parish;
-        document.getElementById('editParishForm').action = "{{ route('parish.update', '') }}" + "/" + parish.slug;
+    function editParishModal(parish) {
+        const index = parish.slug; 
+        const name = parish.parish;
+        const event = new CustomEvent('open-edit-parish', { detail: { index, name } });
+        window.dispatchEvent(event);
     }
 
-    function closeParishModal() {
-        document.getElementById('parishEditModal').classList.add('hidden');
+    function parishFormEdit() {
+        const index = this.index
+        const parish = this.name
+        const subcounty_id = this.$refs.subcountySelect.value;
+        // console.log(country_id);
+        const action = "{{ route('parish.update', '') }}" + "/" + index;
+        // console.log(action)/
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: action,
+            type: "PUT",
+            data: {
+                parish: parish,
+                subcounty_id: subcounty_id,
+            },
+            success: function(response) {
+                if (response.success) {
+                    showNotification(response.success, response.message);
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 4000);
+                } else {
+                    showNotification(response.success, response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                setTimeout(function() {
+                    window.location.reload();
+                }, 1000);
+            }
+        });
+        this.show = false;
+
+        function showNotification(success, message) {
+            var notification = $("#notification");
+            var notificationMessage = $("#notificationMessage");
+
+            if (success) {
+                notificationMessage.text(message);
+                notification.removeClass("bg-red-500").addClass("bg-green-500");
+            } else {
+                notificationMessage.text(message);
+                notification.removeClass("bg-green-500").addClass("bg-red-500");
+            }
+
+           notification.removeClass("hidden");
+            notification.addClass("opacity-100");
+
+            // Automatically hide the notification after 3 seconds
+            setTimeout(function() {
+                notification.removeClass("opacity-100");
+                notification.addClass("hidden");
+            }, 3000); 
+
+        }
     }
     
 </script>
-

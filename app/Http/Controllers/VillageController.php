@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Village;
+use App\Models\Parish;
 use App\Http\Requests\StoreVillageRequest;
 use App\Http\Requests\UpdateVillageRequest;
 use Illuminate\Support\Str;
@@ -14,7 +15,12 @@ class VillageController extends Controller
      */
     public function index()
     {
-        //
+        $parishes = Parish::on('mysql_locations')->latest()->get();
+        $villages = Village::on('mysql_locations')->latest()->get();
+        return view('parishes.index-village', compact(
+            'parishes',
+            'villages',
+        ));
     }
 
     /**
@@ -32,7 +38,7 @@ class VillageController extends Controller
     {
         do {
             $length = 10;
-            $characters = '0123456789abcdefghijklmnopqrstuvwxyz'; // Define the characters allowed in the ID
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; // Define the characters allowed in the ID
             $charactersLength = strlen($characters);
             $randomId = '';
         
@@ -50,7 +56,7 @@ class VillageController extends Controller
         $village->slug = Str::slug($request->village);
         $village->uid = $randomId;
         $village->save();
-        return redirect()->route('parish.index')->with('success', 'New Village/Cell Created Successfully');
+        return redirect()->route('village.index')->with('success', 'New Village/Cell Created Successfully');
     }
 
     /**
@@ -78,7 +84,7 @@ class VillageController extends Controller
         $village->village = $request->input('village');
         $village->parish_id = $request->input('parish_id');
         $village->slug = Str::slug($request->input('village'));
-        return redirect()->route('parish.index')->with('success', 'The Village Has Been Updated Successfully');
+        return redirect()->route('village.index')->with('success', 'The Village Has Been Updated Successfully');
     }
 
     /**
@@ -96,13 +102,13 @@ class VillageController extends Controller
         if ($this_village) {
             if ($this_village->status == 1) {
                 $this_village->where('slug', $village)->update(['status' => 0]);
-                return redirect()->route('parish.index')->with('success', 'Village Deactivated successfully');
+                return redirect()->route('village.index')->with('success', 'Village Deactivated successfully');
             } else {
                 $this_village->where('slug', $village)->update(['status' => 1]);
-                return redirect()->route('parish.index')->with('success', 'Village Activated successfully');
+                return redirect()->route('village.index')->with('success', 'Village Activated successfully');
             }
         } else {
-            return redirect()->route('parish.index')->with('error', 'Village Not found');
+            return redirect()->route('village.index')->with('error', 'Village Not found');
         }
     }
 }

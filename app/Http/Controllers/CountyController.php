@@ -16,7 +16,6 @@ class CountyController extends Controller
      */
     public function index()
     {
-        
         $districts = District::on('mysql_locations')->latest()->get();
         $counties = County::on('mysql_locations')->latest()->get();
         $subcounties = Subcounty::on('mysql_locations')->latest()->get();
