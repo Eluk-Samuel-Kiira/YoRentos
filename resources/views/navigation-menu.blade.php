@@ -202,8 +202,16 @@
                                     {{ __('Counties') }}
                                 </x-dropdown-link>
                                 <div class="border-t border-gray-200"></div>
+                                <x-dropdown-link href="{{ route('subcounty.index') }}">
+                                    {{ __('Sub-Counties') }}
+                                </x-dropdown-link>
+                                <div class="border-t border-gray-200"></div>
                                 <x-dropdown-link href="{{ route('parish.index') }}">
                                     {{ __('Parishes') }}
+                                </x-dropdown-link>
+                                <div class="border-t border-gray-200"></div>
+                                <x-dropdown-link href="{{ route('village.index') }}">
+                                    {{ __('Villages') }}
                                 </x-dropdown-link>
                                 <div class="border-t border-gray-200"></div>
                             </x-slot>
@@ -436,8 +444,16 @@
                             {{ __('Counties') }}
                         </x-dropdown-link>
                         <div class="border-t border-gray-200"></div>
+                        <x-dropdown-link href="{{ route('subcounty.index') }}">
+                            {{ __('Sub-Counties') }}
+                        </x-dropdown-link>
+                        <div class="border-t border-gray-200"></div>
                         <x-dropdown-link href="{{ route('parish.index') }}">
                             {{ __('Parishes') }}
+                        </x-dropdown-link>
+                        <div class="border-t border-gray-200"></div>
+                        <x-dropdown-link href="{{ route('village.index') }}">
+                            {{ __('Villages') }}
                         </x-dropdown-link>
                         <div class="border-t border-gray-200"></div>
                     </x-slot>

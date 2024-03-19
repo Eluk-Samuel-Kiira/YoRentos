@@ -6,6 +6,7 @@ use App\Models\Subcounty;
 use App\Http\Requests\StoreSubcountyRequest;
 use App\Http\Requests\UpdateSubcountyRequest;
 use Illuminate\Support\Str;
+use App\Models\County;
 
 class SubcountyController extends Controller
 {
@@ -14,7 +15,12 @@ class SubcountyController extends Controller
      */
     public function index()
     {
-        //
+        $counties = County::on('mysql_locations')->latest()->get();
+        $subcounties = Subcounty::on('mysql_locations')->latest()->get();
+        return view('counties.index-subcounty', compact(
+            'counties',
+            'subcounties',
+        ))->render();
     }
 
     /**
@@ -50,7 +56,7 @@ class SubcountyController extends Controller
         $subcounty->slug = Str::slug($request->subcounty);
         $subcounty->uid = $randomId;
         $subcounty->save();
-        return redirect()->route('county.index')->with('success', 'New Subcounty/Division Created Successfully');
+        return redirect()->route('subcounty.index')->with('success', 'New Subcounty/Division Created Successfully');
         
     }
 
@@ -79,7 +85,7 @@ class SubcountyController extends Controller
         $subcounty->subcounty = $request->input('subcounty');
         $subcounty->county_id = $request->input('county_id');
         $subcounty->slug = Str::slug($request->input('subcounty'));
-        return redirect()->route('county.index')->with('success', 'The Subcounty Has Been Updated Successfully');
+        return redirect()->route('subcounty.index')->with('success', 'The Subcounty Has Been Updated Successfully');
     }
 
     /**
@@ -104,7 +110,7 @@ class SubcountyController extends Controller
                 return redirect()->route('county.index')->with('success', 'Subcounty/Division Activated successfully');
             }
         } else {
-            return redirect()->route('county.index')->with('error', 'Sub-County Not found');
+            return redirect()->route('subcounty.index')->with('error', 'Sub-County Not found');
         }
     }
 }
