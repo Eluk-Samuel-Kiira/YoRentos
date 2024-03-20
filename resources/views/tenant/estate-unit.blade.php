@@ -1,7 +1,13 @@
 @include('layouts.header')
 <title>Estate | YoRentos</title>
 @include('layouts.menu')
-
+<h4>  
+    <x-validation-errors class="mb-4" />  
+    <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 transition-opacity duration-500 hidden">
+        <!-- <x-validation-errors class="mb-4" />   -->
+        <span id="notificationMessage"></span>
+    </div>
+</h4>
 @if($estate)
     <section class="about_section layout_padding">
         <div class="container">
@@ -20,6 +26,9 @@
                     <div class="detail-box">
                         <div class="slider-container">
                             <div class="slider">
+                                @php 
+                                    $imageName = null;
+                                @endphp
                                 @if($estate->images)
                                     @foreach(explode(',', $estate->images) as $imageName)
                                         <div class="small">  
@@ -46,6 +55,17 @@
                                 <a href="{{ route('rental.map', $estate) }}">
                                     Navigate To Us
                                 </a>
+                                <meta property="og:title" content="{{ $estate->estate }}" />
+                                <meta property="og:description" content="Best House Property On Sale and Rentals/Apartments in Uganda" />
+                                <meta property="og:image" content="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName) }}" />
+                                
+                                <h6>
+                                    <a href="" id="copyLinkBtn" onclick="copyURL()">
+                                        <span class="btn btn-small">
+                                            Copy Link And Share
+                                        </span>
+                                    </a>
+                                </h6>
                             </div>
                         </p>
                     </div>
@@ -222,11 +242,38 @@
 @endif
 
 @include('layouts.footer')
+@include('dashboard.status')
 
 <script>
     function displayImage(element) {
         var clickedImageSrc = element.src;
         var displayedImage = document.getElementById('displayedImage');
         displayedImage.src = clickedImageSrc;
+    }
+
+    function copyURL() {
+        var url = '{{ request()->fullUrl() }}';
+
+        // Create a temporary input element to hold the URL
+        var tempInput = document.createElement('input');
+        tempInput.value = url;
+        document.body.appendChild(tempInput);
+
+        // Select the URL in the input element
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // For mobile devices
+
+        // Copy the selected URL to clipboard
+        document.execCommand('copy');
+
+        // Remove the temporary input element
+        document.body.removeChild(tempInput);
+
+        // Change the link text to "Link Copied"
+        var linkBtn = document.getElementById('copyLinkBtn');
+        linkBtn.innerHTML = '<span class="btn btn-small">Link Copied</span>';
+        
+        // Optionally, provide feedback to the user (e.g., alert or tooltip)
+        // alert('URL copied to clipboard: ' + url);
     }
 </script>

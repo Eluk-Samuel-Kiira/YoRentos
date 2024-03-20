@@ -8,6 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
+  <meta property="og:title" content="Rentals & Apartments in Uganda and House Property On Sale" />
+  <meta property="og:description" content="Best House Property On Sale and Rentals/Apartments in Uganda" />
+  <meta property="og:image" content="https://yorentos.stardena.com/frontend/images/logo.png" />
+
   <!-- Favicon -->
   <link href="{{asset('frontend/images/logo.png')}}" rel="icon">
 

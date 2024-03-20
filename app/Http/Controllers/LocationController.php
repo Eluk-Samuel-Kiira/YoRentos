@@ -89,7 +89,7 @@ class LocationController extends Controller
                 'users',
             ));
         } else {
-            return redirect()->route('tenant.dashboard')->with('error', 'Location Details Unavailable!');
+            return redirect()->back()->with('error', 'Location Details Unavailable!');
         }
     }
 

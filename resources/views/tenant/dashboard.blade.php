@@ -1,19 +1,12 @@
 @include('layouts.header')
 <title>Dashboard | YoRentos</title>
 @include('layouts.menu')
-    
     <h4>  
         <x-validation-errors class="mb-4" />  
-        @if(session('error'))
-            <span class="bg-red-500 text-white rounded">
-                {{ session('error') }}
-            </span>
-        @endif
-        @if(session('success'))
-            <span class="bg-green-500 text-white rounded">
-                {{ session('success') }}
-            </span>
-        @endif
+        <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 transition-opacity duration-500 hidden">
+            <!-- <x-validation-errors class="mb-4" />   -->
+            <span id="notificationMessage"></span>
+        </div>
     </h4>
                     
     <!-- find section -->
@@ -54,15 +47,15 @@
                             <h6>
                                 <a href="{{ route('unit.detail', $estate) }}">{{ $estate->estate }} </a>                           
                                 <span class="btn btn-small">
-                                @php
-                                    $minPrice = $estate->unitEstate->min('price');
-                                    $maxPrice = $estate->unitEstate->max('price');
-                                @endphp
-                                @if ($minPrice !== null && $maxPrice !== null)
-                                    {{ $minPrice }} - {{ $maxPrice }}
-                                @else
-                                    N/A
-                                @endif
+                                    @php
+                                        $minPrice = $estate->unitEstate->min('price');
+                                        $maxPrice = $estate->unitEstate->max('price');
+                                    @endphp
+                                    @if ($minPrice !== null && $maxPrice !== null)
+                                        {{ $minPrice }} - {{ $maxPrice }}
+                                    @else
+                                        N/A
+                                    @endif
                                 </span>
                             </h6>
                             <p>
@@ -225,6 +218,7 @@
 
 @include('layouts.footer')
 @include('dashboard.user_location')
+@include('dashboard.status')
 
 <script>
     let slideIndex = 0;
