@@ -19,7 +19,12 @@ class PaymodeController extends Controller
      */
     public function index()
     {
-        //
+        $units = Unitpay::get();
+        $total_units = Unitpay::where('status', 1)->sum('amount');
+        return view('dashboard.unit-sub', compact(
+            'units',
+            'total_units'
+        ));
     }
 
     /**
@@ -277,13 +282,9 @@ class PaymodeController extends Controller
     {
         $estates = Adverts::get();
         $total_estate = Adverts::where('status', 0)->sum('price');
-        $units = Unitpay::get();
-        $total_units = Unitpay::where('status', 1)->sum('amount');
         return view('dashboard.income', compact(
             'estates',
             'total_estate',
-            'units',
-            'total_units'
         ));
     }
 

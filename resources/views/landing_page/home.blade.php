@@ -45,6 +45,7 @@
             <div class="sale_container">
                 @php 
                     $imageCount = 0;
+                    $imageName = null;
                 @endphp
                 @forelse($newly_estates as $estate)
                     <div class="box">
