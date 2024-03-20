@@ -60,7 +60,7 @@
                                 <meta property="og:image" content="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName) }}" />
                                 
                                 <h6>
-                                    <a href="" id="copyLinkBtn" onclick="copyURL()">
+                                    <a href="#" id="copyLinkBtn" onclick="copyURL('{{ request()->fullUrl() }}')">
                                         <span class="btn btn-small">
                                             Copy Link And Share
                                         </span>
@@ -251,9 +251,7 @@
         displayedImage.src = clickedImageSrc;
     }
 
-    function copyURL() {
-        var url = '{{ request()->fullUrl() }}';
-
+    function copyURL(url) {
         // Create a temporary input element to hold the URL
         var tempInput = document.createElement('input');
         tempInput.value = url;
@@ -272,7 +270,7 @@
         // Change the link text to "Link Copied"
         var linkBtn = document.getElementById('copyLinkBtn');
         linkBtn.innerHTML = '<span class="btn btn-small">Link Copied</span>';
-        
+
         // Optionally, provide feedback to the user (e.g., alert or tooltip)
         // alert('URL copied to clipboard: ' + url);
     }
