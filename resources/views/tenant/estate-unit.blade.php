@@ -55,9 +55,8 @@
                                 <a href="{{ route('rental.map', $estate) }}">
                                     Navigate To Us
                                 </a>
-                                <meta property="og:title" content="{{ $estate->estate }}" />
-                                <meta property="og:description" content="Best House Property On Sale and Rentals/Apartments in Uganda" />
-                                <meta property="og:image" content="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName) }}" />
+                                @include('layouts.header', ['ogTitle' => $estate->estate, 'ogUrl' => request()->fullUrl(), 'ogDescription' => $estate->description, 
+                                    'ogImage' => asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName)])
                                 
                                 <h6>
                                     <a href="#" id="copyLinkBtn" onclick="copyURL('{{ request()->fullUrl() }}')">

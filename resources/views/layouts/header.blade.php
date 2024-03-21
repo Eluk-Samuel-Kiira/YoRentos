@@ -8,9 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <!-- <meta property="og:title" content="Rentals & Apartments in Uganda and House Property On Sale" />
-  <meta property="og:description" content="Best House Property On Sale and Rentals/Apartments in Uganda" />
-  <meta property="og:image" content="https://yorentos.stardena.com/frontend/images/logo.png" /> -->
+  <meta property="og:title" content="{{ $ogTitle ?? 'Default Title' }}" />
+  <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
+  <meta property="og:description" content="{{ $ogDescription ?? 'Default Description' }}" />
+  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? 'https://example.com/default-image.jpg' }}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="en_GB" />
 
   <!-- Favicon -->
   <link href="{{asset('frontend/images/logo.png')}}" rel="icon">
