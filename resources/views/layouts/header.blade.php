@@ -8,19 +8,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
-  <meta property="og:title" content="{{ $ogTitle ?? 'Default Title' }}" />
-  <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
-  <meta property="og:description" content="{{ $ogDescription ?? 'Default Description' }}" />
-  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? 'https://example.com/default-image.jpg' }}" />
-  <meta property="og:type" content="article" />
-  <meta property="og:locale" content="en_GB" />
-
   <!-- Favicon -->
   <link href="{{asset('frontend/images/logo.png')}}" rel="icon">
 
   <!-- Site Metas -->
   <meta content="Rentals In Uganda" name="keywords">
-  <meta content="Rental Houses Available" name="description">
+  <meta content="Rental Houses And Houses On Sale" name="description">
+
+  <meta property="og:title" content="{{ $ogTitle ?? 'Top And Best Houses On Sale' }}" />
+  <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
+  <meta property="og:description" content="{{ $ogDescription ?? 'Rental Houses And Houses On Sale' }}" />
+  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? '{{asset('frontend/images/logo.png')}}' }}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="en_GB" />
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/bootstrap.css')}}" />
