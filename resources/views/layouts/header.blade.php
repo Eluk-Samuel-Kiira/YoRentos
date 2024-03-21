@@ -18,8 +18,8 @@
   <meta property="og:title" content="{{ $ogTitle ?? 'Top And Best Houses On Sale' }}" />
   <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
   <meta property="og:description" content="{{ $ogDescription ?? 'Rental Houses And Houses On Sale' }}" />
-  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? '{{asset('frontend/images/logo.png')}}' }}" />
-  <meta property="og:type" content="article" />
+  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? asset('frontend/images/logo.png') }}" />
+  <meta property="og:type" content="House Type" />
   <meta property="og:locale" content="en_GB" />
 
   <!-- bootstrap core css -->

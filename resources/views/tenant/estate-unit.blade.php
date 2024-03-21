@@ -59,7 +59,7 @@
                                     'ogImage' => asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName)])
                                 
                                 <h6>
-                                    <a href="#" id="copyLinkBtn" onclick="copyURL('{{ request()->fullUrl() }}')">
+                                    <a href="//" id="copyLinkBtn" onclick="copyURL('{{ request()->fullUrl() }}')">
                                         <span class="btn btn-small">
                                             Copy Link And Share
                                         </span>
