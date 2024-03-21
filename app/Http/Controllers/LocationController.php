@@ -7,6 +7,7 @@ use App\Models\Estate;
 use App\Models\Rental;
 use App\Models\Unit;
 use App\Models\User;
+use DB;
 
 class LocationController extends Controller
 {
@@ -44,13 +45,11 @@ class LocationController extends Controller
                             ->where('status', 1)->where('slug', $slug)->first();
         $users = User::where('status', 1)->get();
 
-        
-        Estate::updateOrInsert(['slug' => $slug],[
-            'unit_no' => $estate->unit_no+1,
-        ]);
-
         if($estate)
         {
+            $estate->where('slug', $slug)->update([
+                'unit_no' => DB::raw('unit_no + 1'),
+            ]);
             return view('tenant.estate-unit', compact(
                 'estate',
                 'users',
