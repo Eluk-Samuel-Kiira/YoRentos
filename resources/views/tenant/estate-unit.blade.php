@@ -55,9 +55,12 @@
                                 <a href="{{ route('rental.map', $estate) }}">
                                     Navigate To Us
                                 </a>
-                                @include('layouts.header', ['ogTitle' => $estate->estate, 'ogUrl' => request()->fullUrl(), 
-                                    'ogImage' => asset('storage/estate_images/' . $estate->landlord_id . '/' . $estateShare['estate_image'])])
-                                
+                                @include('layouts.header', [
+                                    'ogTitle' => isset($estate) ? $estate->estate : null,
+                                    'ogUrl' => request()->fullUrl(),
+                                    'ogDescription' => isset($estate) ? $estate->description : null,
+                                    'ogImage' => isset($estateShare['estate_image']) ? asset('storage/estate_images/' . $estate->landlord_id . '/' . $estateShare['estate_image']) : null,
+                                ])
                                 <p>
                                     <span class="btn btn-small">
                                         {!! $shareButtons !!}
@@ -248,27 +251,4 @@
         displayedImage.src = clickedImageSrc;
     }
 
-    function copyURL(url) {
-        // Create a temporary input element to hold the URL
-        var tempInput = document.createElement('input');
-        tempInput.value = url;
-        document.body.appendChild(tempInput);
-
-        // Select the URL in the input element
-        tempInput.select();
-        tempInput.setSelectionRange(0, 99999); // For mobile devices
-
-        // Copy the selected URL to clipboard
-        document.execCommand('copy');
-
-        // Remove the temporary input element
-        document.body.removeChild(tempInput);
-
-        // Change the link text to "Link Copied"
-        var linkBtn = document.getElementById('copyLinkBtn');
-        linkBtn.innerHTML = '<span class="btn btn-small">Link Copied</span>';
-
-        // Optionally, provide feedback to the user (e.g., alert or tooltip)
-        // alert('URL copied to clipboard: ' + url);
-    }
 </script>
