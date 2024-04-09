@@ -45,18 +45,46 @@ class LocationController extends Controller
                             ->where('status', 1)->where('slug', $slug)->first();
         $users = User::where('status', 1)->get();
 
-        if($estate)
-        {
+        if($estate) {
+            $images = explode(',', $estate->images);
+            if(count($images) > 0) {
+                $firstImage = $images[0];
+            }
+        
+            // Share buttons
+            $estateShare = [
+                // 'estate_name' => $estate->estate,
+                // 'estate_description' => $estate->description,
+                'estate_image' => isset($firstImage) ? $firstImage : null,
+            ];
+            $shareButtons = \Share::page(
+                url(request()->fullUrl()),
+                'Select Unit Rental'
+            )
+            ->facebook()
+            ->telegram()
+            ->linkedin()
+            ->whatsapp()
+            ->reddit()
+            ->twitter()
+            ->pinterest();
+        
+            // Update the unit number
             $estate->where('slug', $slug)->update([
                 'unit_no' => DB::raw('unit_no + 1'),
             ]);
+        
+            // Return the view with data
             return view('tenant.estate-unit', compact(
-                'estate',
-                'users',
+                'estate', 
+                'users', 
+                'estateShare',
+                'shareButtons'
             ));
+
         } else {
             return redirect()->route('tenant.dashboard')->with('error', 'This Estate Not Found');
-        }
+        }        
    
     }
 
