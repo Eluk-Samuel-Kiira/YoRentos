@@ -56,15 +56,13 @@
                                     Navigate To Us
                                 </a>
                                 @include('layouts.header', ['ogTitle' => $estate->estate, 'ogUrl' => request()->fullUrl(), 'ogDescription' => $estate->description, 
-                                    'ogImage' => asset('storage/estate_images/' . $estate->landlord_id . '/' . $imageName)])
+                                    'ogImage' => asset('storage/estate_images/' . $estate->landlord_id . '/' . $estateShare['estate_image'])])
                                 
-                                <h6>
-                                    <a href="//" id="copyLinkBtn" onclick="copyURL('{{ request()->fullUrl() }}')">
-                                        <span class="btn btn-small">
-                                            Copy Link And Share
-                                        </span>
-                                    </a>
-                                </h6>
+                                <p>
+                                    <span class="btn btn-small">
+                                        {!! $shareButtons !!}
+                                    </span>
+                                </p>
                             </div>
                         </p>
                     </div>

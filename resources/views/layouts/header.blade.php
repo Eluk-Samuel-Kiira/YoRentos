@@ -15,12 +15,11 @@
   <meta content="Rentals In Uganda" name="keywords">
   <meta content="Rental Houses And Houses On Sale" name="description">
 
-  <meta property="og:title" content="{{ $ogTitle ?? 'Top And Best Houses On Sale' }}" />
+  <meta property="og:title" content="{{ $ogTitle ?? 'Best Estates In Uganda' }}" />
   <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
   <meta property="og:description" content="{{ $ogDescription ?? 'Rental Houses And Houses On Sale' }}" />
-  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? asset('frontend/images/logo.png') }}" />
-  <meta property="og:type" content="House Type" />
-  <meta property="og:locale" content="en_GB" />
+  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? asset('frontend/images/s-2.jpg') }}" />
+  <meta name="Keywords" content="php, laravel, css, html, javascript">
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/bootstrap.css')}}" />
@@ -38,6 +37,7 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -52,4 +52,17 @@
      crossorigin=""/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
+<style>
+  #social-links ul li{
+    display: inline-block;
+  }
+  #social-link ul li a{
+    padding: 20px;
+    margin: 2px;
+    font-size: 30px;
+    color: rgb(46, 41, 114);
+    background-color: #ccc;
+
+  }
+</style>
 
