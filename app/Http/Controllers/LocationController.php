@@ -59,7 +59,7 @@ class LocationController extends Controller
             ];
             $shareButtons = \Share::page(
                 url(request()->fullUrl()),
-                $estate->description,
+                'Esates Properties'
             )
             ->facebook()
             ->telegram()
