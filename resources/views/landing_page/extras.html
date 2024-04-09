@@ -3,3 +3,8 @@
 <!-- @else
     <h2 class="text-xl font-bold mb-2">Kindly Subscribe To Manage Rental Units</h2>
 @endif -->
+<meta property="og:title" content="{{ $ogTitle ?? 'Best Estates In Uganda' }}" />
+  <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
+  <meta property="og:description" content="{{ $ogDescription ?? 'Rental Houses And Houses On Sale' }}" />
+  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? asset('frontend/images/s-2.jpg') }}" />
+  <meta name="Keywords" content="php, laravel, css, html, javascript">
