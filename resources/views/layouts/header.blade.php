@@ -14,11 +14,14 @@
   <!-- Site Metas -->
   <meta content="Rentals In Uganda" name="keywords">
   <meta content="Rental Houses And Houses On Sale" name="description">
+  <meta property="og:type" content="Houses On Sale In Uganda" />
+  @if(isset($ogTitle))
+    <meta property="og:title" content="{{ $ogTitle }}" />
+  @endif
 
-  <meta property="og:title" content="{{ isset($ogTitle) }}" />
-  <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
-  <meta property="og:description" content="{{ isset($ogDescription) }}" />
-  <meta property="og:image" itemprop="image" content="{{ isset($ogImage) }}" />
+  @if(isset($ogImage))
+    <meta property="og:image" itemprop="image" content="{{ $ogImage }}" />
+  @endif
   <meta name="Keywords" content="php, laravel, css, html, javascript">
 
   <!-- bootstrap core css -->
