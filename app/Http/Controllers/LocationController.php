@@ -53,10 +53,11 @@ class LocationController extends Controller
         
             // Share buttons
             $estateShare = [
-                // 'estate_name' => $estate->estate,
-                // 'estate_description' => $estate->description,
-                'estate_image' => isset($firstImage) ? $firstImage : null,
+                'ogTitle' => $estate->estate,
+                'ogDescription' => $estate->description,
+                'ogImage' => isset($firstImage) ? $firstImage : null,
             ];
+            
             $shareButtons = \Share::page(
                 url(request()->fullUrl()),
                 'Esates Properties'
