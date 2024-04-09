@@ -11,9 +11,8 @@
   
   <!-- Open Graph meta tags -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="{{ $ogTitle ?? 'Best Estates In Uganda' }}" />
-  <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
-  <meta property="og:description" content="{{ $ogDescription ?? 'Rental Houses And Houses On Sale' }}" />
+  <meta property="og:title" content="{{ $estateShare['ogTitle'] ?? 'Best Estates In Uganda' }}" />
+  <meta property="og:description" content="{{ $estateShare['ogDescription'] ?? 'Rental Houses And Houses On Sale' }}" />
   <meta property="og:image" itemprop="image" content="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $estateShare['ogImage']) ?? asset('frontend/images/s-2.jpg') }}" />
   <meta name="Keywords" content="php, laravel, css, html, javascript">
   <!-- Favicon -->
