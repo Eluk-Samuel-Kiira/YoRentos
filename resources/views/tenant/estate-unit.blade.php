@@ -55,7 +55,7 @@
                                 <a href="{{ route('rental.map', $estate) }}">
                                     Navigate To Us
                                 </a>
-                                @include('layouts.header', ['ogTitle' => $estate->estate, 'ogUrl' => request()->fullUrl(), 'ogDescription' => $estate->description, 
+                                @include('layouts.header', ['ogTitle' => $estate->estate, 'ogUrl' => request()->fullUrl(), 
                                     'ogImage' => asset('storage/estate_images/' . $estate->landlord_id . '/' . $estateShare['estate_image'])])
                                 
                                 <p>
