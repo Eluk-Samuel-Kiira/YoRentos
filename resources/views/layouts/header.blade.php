@@ -8,21 +8,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
+  <meta property="og:title" content="{{ $ogTitle ?? 'Best Estates In Uganda' }}" />
+  <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
+  <meta property="og:description" content="{{ $ogDescription ?? 'Rental Houses And Houses On Sale' }}" />
+  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? asset('frontend/images/s-2.jpg') }}" />
+  <meta name="Keywords" content="php, laravel, css, html, javascript">
+
   <!-- Favicon -->
   <link href="{{asset('frontend/images/logo.png')}}" rel="icon">
 
   <!-- Site Metas -->
   <meta content="Rentals In Uganda" name="keywords">
   <meta content="Rental Houses And Houses On Sale" name="description">
-  <meta property="og:type" content="Houses On Sale In Uganda" />
-  @if(isset($ogTitle))
-    <meta property="og:title" content="{{ $ogTitle }}" />
-  @endif
-
-  @if(isset($ogImage))
-    <meta property="og:image" itemprop="image" content="{{ $ogImage }}" />
-  @endif
-  <meta name="Keywords" content="php, laravel, css, html, javascript">
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/bootstrap.css')}}" />
