@@ -15,10 +15,10 @@
   <meta content="Rentals In Uganda" name="keywords">
   <meta content="Rental Houses And Houses On Sale" name="description">
 
-  <meta property="og:title" content="{{ $ogTitle ?? 'Best Estates In Uganda' }}" />
+  <meta property="og:title" content="{{ isset($ogTitle) }}" />
   <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
-  <meta property="og:description" content="{{ $ogDescription ?? 'Rental Houses And Houses On Sale' }}" />
-  <meta property="og:image" itemprop="image" content="{{ $ogImage ?? asset('frontend/images/s-2.jpg') }}" />
+  <meta property="og:description" content="{{ isset($ogDescription) }}" />
+  <meta property="og:image" itemprop="image" content="{{ isset($ogImage) }}" />
   <meta name="Keywords" content="php, laravel, css, html, javascript">
 
   <!-- bootstrap core css -->
