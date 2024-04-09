@@ -31,7 +31,6 @@
   <link rel="preconnect" href="https://fonts.bunny.net">
   <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
   <!-- Scripts -->
   @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -46,22 +45,4 @@
      crossorigin=""/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
-<style>
-  #social-links ul li{
-    display: inline-block;
-  }
-  #social-link ul li a{
-    padding: 20px;
-    margin: 2px;
-    font-size: 30px;
-    color: rgb(46, 41, 114);
-    background-color: #ccc;
-
-  }
-</style>
-<!-- @if(isset($ogTitle))
-  Yes we are there
-  @else
-  No we are not
-  @endif -->
 

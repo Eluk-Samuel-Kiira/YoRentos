@@ -1,4 +1,68 @@
-@include('layouts.header')
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  
+  <!-- Open Graph meta tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="{{ $ogTitle ?? 'Best Estates In Uganda' }}" />
+  <meta property="og:url" content="{{ $ogUrl ?? request()->fullUrl() }}" />
+  <meta property="og:description" content="{{ $ogDescription ?? 'Rental Houses And Houses On Sale' }}" />
+  <meta property="og:image" itemprop="image" content="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $estateShare['ogImage']) ?? asset('frontend/images/s-2.jpg') }}" />
+  <meta name="Keywords" content="php, laravel, css, html, javascript">
+  <!-- Favicon -->
+  <link href="{{asset('frontend/images/logo.png')}}" rel="icon">
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{{asset('frontend/css/bootstrap.css')}}" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700|Raleway:400,700&display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="{{asset('frontend/css/style.css')}}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{{asset('frontend/css/responsive.css')}}" rel="stylesheet" />
+
+
+  <!-- jetstream helpers -->
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Scripts -->
+  @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <!-- Styles -->
+  @livewireStyles
+
+ 
+<!-- leaflet.js styles -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+<style>
+  #social-links ul li{
+    display: inline-block;
+  }
+  #social-link ul li a{
+    padding: 20px;
+    margin: 2px;
+    font-size: 30px;
+    color: rgb(46, 41, 114);
+    background-color: #ccc;
+
+  }
+</style>
 <title>Estate | YoRentos</title>
 @include('layouts.menu')
 <h4>  
@@ -55,12 +119,6 @@
                                 <a href="{{ route('rental.map', $estate) }}">
                                     Navigate To Us
                                 </a>
-                                @include('layouts.header', [
-                                    'ogTitle' => isset($estate) ? $estate->estate : null,
-                                    'ogUrl' => request()->fullUrl(),
-                                    'ogDescription' => isset($estate) ? $estate->description : null,
-                                    'ogImage' => isset($estateShare['estate_image']) ? asset('storage/estate_images/' . $estate->landlord_id . '/' . $estateShare['estate_image']) : null,
-                                ])
                                 <p>
                                     <span class="btn btn-small">
                                         {!! $shareButtons !!}
