@@ -63,8 +63,8 @@ class LocationController extends Controller
                 $description = 'Checkout This Amazing Apartment';
             }
             $shareButtons = \Share::page(
-                $description . "\n/", 
-                url(request()->fullUrl()),
+                url(request()->fullUrl())  . "\n",
+                $description, 
             )
             ->facebook()
             ->telegram()
