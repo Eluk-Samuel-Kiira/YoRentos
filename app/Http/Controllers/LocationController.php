@@ -58,9 +58,13 @@ class LocationController extends Controller
                 'ogImage' => isset($firstImage) ? $firstImage : null,
             ];
             
+            $description = $estate->description;
+            if (empty($description)) {
+                $description = 'Checkout This Amazing Apartment';
+            }
             $shareButtons = \Share::page(
+                $description . "\n/", 
                 url(request()->fullUrl()),
-                'Esates Properties'
             )
             ->facebook()
             ->telegram()
