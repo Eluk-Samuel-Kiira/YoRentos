@@ -12,7 +12,7 @@
   <!-- Open Graph meta tags -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="{{ $estateShare['ogTitle'] ?? 'Best Estates In Uganda' }}" />
-  <meta property="og:description" content="{{ $estateShare['ogDescription'] ?? 'Rental Houses And Houses On Sale' }}" />
+  <meta property="og:description" content="{{ $estateShare['ogDescription'] ?? 'Checkout This Amazing Apartment' }}" />
   <meta property="og:image" itemprop="image" content="{{ asset('storage/estate_images/' . $estate->landlord_id . '/' . $estateShare['ogImage']) ?? asset('frontend/images/s-2.jpg') }}" />
   <meta name="Keywords" content="php, laravel, css, html, javascript">
   <!-- Favicon -->
@@ -43,11 +43,7 @@
   @livewireStyles
 
  
-<!-- leaflet.js styles -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
-<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
 
 <style>
   #social-links ul li{

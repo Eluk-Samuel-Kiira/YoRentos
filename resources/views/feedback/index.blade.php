@@ -2,7 +2,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }} 
+            {{ __('Feedback Section') }} 
         </h2>
     </x-slot>
 
@@ -11,20 +11,15 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="max-w-7xl mx-auto p-6">
                     <h4>  
-                        <x-validation-errors class="mb-4" />  
-                        @if(session('error'))
-                            <span class="bg-red-500 text-white rounded">
-                                {{ session('error') }}
-                            </span>
-                        @endif
-                        @if(session('success'))
-                            <span class="bg-green-500 text-white rounded">
-                                {{ session('success') }}
-                            </span>
-                        @endif
+                        <x-validation-errors class="mb-4" /> 
+                        <div id="notification" class="fixed top-0 right-0 mb-4 mr-4 p-4 bg-gray-800 text-white rounded shadow-md opacity-0 transition-opacity duration-500 hidden">
+                            <!-- <x-validation-errors class="mb-4" />   -->
+                            <span id="notificationMessage"></span>
+                        </div>
                     </h4>
-                    <div class="table-responsive" style="overflow-x: auto;" id="rentalTable">
-                        <div class="container mx-auto mt-8">
+                    <div class="table-responsive" style="overflow-x: auto;">
+                        <div class="container mx-auto mt-8" id="resourceTable">
+                            <div class="bg-blue-300 rounded py-1 px-3">Feedback Table</div>
                             <table class="min-w-full border border-blue-500 text-gray-500">
                                 <thead>
                                     <tr>
@@ -70,3 +65,4 @@
         </div>
     </div>
 </x-app-layout>
+@include('dashboard.status')
