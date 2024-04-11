@@ -1,39 +1,94 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-400">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-mark class="block h-9 w-auto" />
-                    </a>
-                </div>
-
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+<nav x-show="open" class="hidden md:block bg-white shadow-lg w-full md:w-1/6 min-h-screen fixed inset-y-0 flex flex-col justify-left items-left md:items-start">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">    
+        <div class="flex bg-white shadow">    
+            <div class="flex-shrink-0 flex items-left justify-center w-full py-4">
+                <x-application-mark class="block h-9 w-auto" />
+            </div>
+        </div>
+        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" style="margin-left: -10px;">
+            <div class="flex flex-wrap justify-left">
+                <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    {{ __('Dashboard') }}
+                </x-nav-link>
+                @can('view unit')
                     <x-nav-link href="{{ route('my.unit') }}" :active="request()->routeIs('my.unit')">
                         {{ __('My Units') }}
                     </x-nav-link>
-                    {{--@can('view rentals')
-                        <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
-                            {{ __('Rentals') }}
-                        </x-nav-link>
-                    @endcan
-                    @can('view estate')
-                        <x-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
-                            {{ __('Estates') }}
-                        </x-nav-link>
-                    @endcan
-                    @can('view unit')
-                        <x-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
-                            {{ __('Units') }}
-                        </x-nav-link>
-                    @endcan --}}
-                    {{--@role('Admin')
+                @endcan 
+                @can('view amount')
+                    <x-nav-link href="{{ route('feedback.index') }}" :active="request()->routeIs('feedback.index')">
+                        {{ __('Feedback') }}
+                    </x-nav-link>
+                @endcan 
+                <!-- Users Dropdown -->
+                @can('view user')
+                    <div x-data="{ isOpenUser: false, init() { this.isOpenUser = window.location.href.includes('/user') || window.location.href.includes('/role-permissions'); } }" 
+                        class="inline-flex relative">
+                        <button @click="isOpenUser = !isOpenUser" class="inline-flex items-center px-4 py-2 text-sm font-medium focus:outline-none transition duration-150 ease-in-out w-35">
+                            {{__('Users & Roles')}}
+                            <span class="select-none absolute inset-y-0 right-0 flex items-center cursor-pointer pr-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                </svg>
+                            </span>
+                        </button>
+
+                        <div x-show="isOpenUser" class="absolute z-50 top-full left-0 w-full mt-1 bg-white shadow-lg">
+                            <x-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
+                                {{ __('Users List') }}
+                            </x-nav-link>
+                            <x-nav-link href="{{ route('role-permissions') }}" :active="request()->routeIs('role-permissions')">
+                                {{ __('Roles & Permissions') }}
+                            </x-nav-link>
+                        </div>
+                    </div>
+                @endcan
+                <div x-data="{ isOpenRental: false }" 
+                    class="inline-flex relative rental">
+                    <button @click="isOpenRental = !isOpenRental" class="inline-flex items-center px-4 py-2 text-sm font-medium focus:outline-none transition duration-150 ease-in-out w-35">
+                        {{__('Rentals & Estates')}}
+                        <span class="select-none absolute inset-y-0 right-0 flex items-center cursor-pointer pr-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </span>
+                    </button>
+
+                    <div x-show="isOpenRental" class="absolute z-50 top-full left-0 w-full mt-1 bg-white shadow-lg">
+                        @can('view rentals')
+                            <x-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
+                                {{ __('Rental Type') }}
+                            </x-nav-link>
+                        @endcan
+                        @can('view estate')
+                            <x-nav-link href="{{ route('rental.estate') }}" :active="request()->routeIs('rental.estate')">
+                                {{ __('Rental Estate') }}
+                            </x-nav-link>
+                            <x-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
+                              {{ __('Estate Details') }}
+                            </x-nav-link>
+                        @endcan
+                        @can('view unit')
+                            <x-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
+                                {{ __('Estate Unit') }}
+                            </x-nav-link>
+                        @endcan
+                    </div>
+                </div>
+                <!-- Locations Dropdown -->
+                @role('Admin')
+                <div x-data="{ isOpenLocation: false }" 
+                    class="inline-flex relative rental">
+                    <button @click="isOpenLocation = !isOpenLocation" class="inline-flex items-center px-4 py-2 text-sm font-medium focus:outline-none transition duration-150 ease-in-out">
+                        {{__('Location Names')}}
+                        <span class="select-none absolute inset-y-0 right-0 flex items-center cursor-pointer pr-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </span>
+                    </button>
+
+                    <div x-show="isOpenLocation" class="absolute z-50 top-full left-0 w-full mt-1 bg-white shadow-lg">
                         <x-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
                             {{ __('Durations') }}
                         </x-nav-link>
@@ -43,542 +98,31 @@
                         <x-nav-link href="{{ route('county.index') }}" :active="request()->routeIs('county.index')">
                             {{ __('Counties') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('subcounty.index') }}" :active="request()->routeIs('subcounty.index')">
+                            {{ __('Sub-Counties') }}
+                        </x-nav-link>
                         <x-nav-link href="{{ route('parish.index') }}" :active="request()->routeIs('parish.index')">
                             {{ __('Parishes') }}
                         </x-nav-link>
-                    @endrole --}}
-                    @can('view amount')
-                        <x-nav-link href="{{ route('feedback.index') }}" :active="request()->routeIs('feedback.index')">
-                            {{ __('Feedback') }}
-                        </x-nav-link>
-                        {{-- <x-nav-link href="{{ route('income.index') }}" :active="request()->routeIs('income.index')">
-                            {{ __('Income') }}
-                        </x-nav-link> --}}
-                    @endcan 
-                </div>
-            </div>
-
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <!-- Teams Dropdown -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                    <div class="ms-3 relative">
-                        <x-dropdown align="right" width="60">
-                            <x-slot name="trigger">
-                                <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        {{ Auth::user()->currentTeam->name }}
-
-                                        <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                <div class="w-60">
-                                    <!-- Team Management -->
-                                    <div class="block px-4 py-2 text-xs text-gray-400">
-                                        {{ __('Manage Team') }}
-                                    </div>
-
-                                    <!-- Team Settings -->
-                                    <x-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                        {{ __('Team Settings') }}
-                                    </x-dropdown-link>
-
-                                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                                        <x-dropdown-link href="{{ route('teams.create') }}">
-                                            {{ __('Create New Team') }}
-                                        </x-dropdown-link>
-                                    @endcan
-
-                                    <!-- Team Switcher -->
-                                    @if (Auth::user()->allTeams()->count() > 1)
-                                        <div class="border-t border-gray-200"></div>
-
-                                        <div class="block px-4 py-2 text-xs text-gray-400">
-                                            {{ __('Switch Teams') }}
-                                        </div>
-
-                                        @foreach (Auth::user()->allTeams() as $team)
-                                            <x-switchable-team :team="$team" />
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-                @endif
-
-                <!-- Users Dropdown -->
-                @can('view user')
-                    <div class="ms-3 relative">
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium 
-                                    leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                    {{__('Users')}}
-                                </button>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                @can('view user')
-                                    <x-dropdown-link href="{{ route('user') }}">
-                                        {{ __('Users List') }}
-                                    </x-dropdown-link>
-                                @endcan
-                                <div class="border-t border-gray-200"></div>
-                                @can('view user')
-                                    <x-dropdown-link href="{{ route('role-permissions') }}">
-                                        {{ __('Roles & Permissions') }}
-                                    </x-dropdown-link>
-                                @endcan
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-                @endcan
-                
-                <!-- Rentals Dropdown -->
-                <div class="ms-3 relative">
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium 
-                                leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                {{__('Rentals')}}
-                            </button>
-                        </x-slot>
-
-                        <x-slot name="content">
-                            @can('view rentals')
-                                <x-dropdown-link href="{{ route('rental.index') }}">
-                                    {{ __('Rental Block') }}
-                                </x-dropdown-link>
-                            @endcan
-                            <div class="border-t border-gray-200"></div>
-                            @can('view estate')
-                                <x-dropdown-link href="{{ route('rental.estate') }}">
-                                    {{ __('Rental Estate') }}
-                                </x-dropdown-link>
-                            @endcan
-                            <div class="border-t border-gray-200"></div>
-                            @can('view estate')
-                                <x-dropdown-link href="{{ route('estate.index') }}">
-                                    {{ __('Estate Details') }}
-                                </x-dropdown-link>
-                            @endcan
-                            <div class="border-t border-gray-200"></div>
-                            @can('view unit')
-                                <x-dropdown-link href="{{ route('unit.index') }}">
-                                    {{ __('Estate Unit') }}
-                                </x-dropdown-link>
-                            @endcan
-                            <div class="border-t border-gray-200"></div>
-                        </x-slot>
-                    </x-dropdown>
-                </div>
-                
-                <!-- Locations Dropdown -->
-                @role('Admin')
-                    <div class="ms-3 relative">
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium 
-                                    leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                    {{__('Locations')}}
-                                </button>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                <x-dropdown-link href="{{ route('duration.index') }}">
-                                    {{ __('Durations') }}
-                                </x-dropdown-link>
-                                <div class="border-t border-gray-200"></div>
-                                <x-dropdown-link href="{{ route('country.index') }}">
-                                    {{ __('Districts') }}
-                                </x-dropdown-link>
-                                <div class="border-t border-gray-200"></div>
-                                <x-dropdown-link href="{{ route('county.index') }}">
-                                    {{ __('Counties') }}
-                                </x-dropdown-link>
-                                <div class="border-t border-gray-200"></div>
-                                <x-dropdown-link href="{{ route('subcounty.index') }}">
-                                    {{ __('Sub-Counties') }}
-                                </x-dropdown-link>
-                                <div class="border-t border-gray-200"></div>
-                                <x-dropdown-link href="{{ route('parish.index') }}">
-                                    {{ __('Parishes') }}
-                                </x-dropdown-link>
-                                <div class="border-t border-gray-200"></div>
-                                <x-dropdown-link href="{{ route('village.index') }}">
-                                    {{ __('Villages') }}
-                                </x-dropdown-link>
-                                <div class="border-t border-gray-200"></div>
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-                @endrole
-
-                <!-- Amount Dropdown -->
-                @can('view amount')
-                    <div class="ms-3 relative">
-                        <x-dropdown align="right" width="48">
-                            <x-slot name="trigger">
-                                <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium 
-                                    leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                    {{__('Income')}}
-                                </button>
-                            </x-slot>
-
-                            <x-slot name="content">
-                                @can('view user')
-                                    <x-dropdown-link href="{{ route('income.index') }}">
-                                        {{ __('Estate Ad') }}
-                                    </x-dropdown-link>
-                                @endcan
-                                <div class="border-t border-gray-200"></div>
-                                @can('view user')
-                                    <x-dropdown-link href="{{ route('payment.index') }}">
-                                        {{ __('Unit Subscription') }}
-                                    </x-dropdown-link>
-                                @endcan
-                            </x-slot>
-                        </x-dropdown>
-                    </div>
-                @endcan
-                <!-- Settings Dropdown -->
-                <div class="ms-3 relative">
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition">
-                                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                                </button>
-                            @else
-                                <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none focus:bg-gray-50 active:bg-gray-50 transition ease-in-out duration-150">
-                                        {{ Auth::user()->name }}
-
-                                        <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-                                        </svg>
-                                    </button>
-                                </span>
-                            @endif
-                        </x-slot>
-
-                        <x-slot name="content">
-                            <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
-                            </div>
-
-                            <x-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
-                            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                                <x-dropdown-link href="{{ route('api-tokens.index') }}">
-                                    {{ __('API Tokens') }}
-                                </x-dropdown-link>
-                            @endif
-
-                            <div class="border-t border-gray-200"></div>
-
-                            <!-- Authentication -->
-                            <form method="POST" action="{{ route('logout') }}" x-data>
-                                @csrf
-
-                                <x-dropdown-link href="{{ route('logout') }}"
-                                         @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        </x-slot>
-                    </x-dropdown>
-                </div>
-            </div>
-
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link href="{{ route('my.unit') }}" :active="request()->routeIs('income.index')">
-                {{ __('My Units') }}
-            </x-responsive-nav-link>
-        </div>
-        {{--@can('view user')
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('user') }}" :active="request()->routeIs('user')">
-                    {{ __('Users') }}
-                </x-responsive-nav-link>
-            </div>
-        @endcan
-        @can('view rentals')
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('rental.index') }}" :active="request()->routeIs('rental.index')">
-                    {{ __('Rentals') }}
-                </x-responsive-nav-link>
-            </div>
-        @endcan
-        @can('view estate')
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('estate.index') }}" :active="request()->routeIs('estate.index')">
-                    {{ __('Estates') }}
-                </x-responsive-nav-link>
-            </div>
-        @endcan
-        @can('view unit')
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('unit.index') }}" :active="request()->routeIs('unit.index')">
-                    {{ __('Units') }}
-                </x-responsive-nav-link>
-            </div>
-        @endcan 
-        @role('Admin')
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('duration.index') }}" :active="request()->routeIs('duration.index')">
-                    {{ __('Durations') }}
-                </x-responsive-nav-link>
-            </div>
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('country.index') }}" :active="request()->routeIs('country.index')">
-                    {{ __('Districts') }}
-                </x-responsive-nav-link>
-            </div>
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('county.index') }}" :active="request()->routeIs('county.index')">
-                    {{ __('Counties') }}
-                </x-responsive-nav-link>
-            </div>
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('parish.index') }}" :active="request()->routeIs('parish.index')">
-                    {{ __('Parishes') }}
-                </x-responsive-nav-link>
-            </div>
-        @endrole --}}
-        @can('view amount')
-            <div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('feedback.index') }}" :active="request()->routeIs('feedback.index')">
-                    {{ __('Feedback') }}
-                </x-responsive-nav-link>
-            </div>
-            {{--<div class="pt-2 pb-3 space-y-1">
-                <x-responsive-nav-link href="{{ route('income.index') }}" :active="request()->routeIs('income.index')">
-                    {{ __('Income') }}
-                </x-responsive-nav-link>
-            </div>--}}
-        @endcan
-
-        @can('view user')
-            <div class="ms-3 relative">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="pt-2 pb-3 space-y-3 pl-1 text-gray-600 hover:text-gray-700">
-                            {{__('Users')}}
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        @can('view user')
-                            <x-dropdown-link href="{{ route('user') }}">
-                                {{ __('Users List') }}
-                            </x-dropdown-link>
-                        @endcan
-                        <div class="border-t border-gray-200"></div>
-                        @can('view user')
-                            <x-dropdown-link href="{{ route('role-permissions') }}">
-                                {{ __('Roles & Permissions') }}
-                            </x-dropdown-link>
-                        @endcan
-                    </x-slot>
-                </x-dropdown>
-            </div>
-        @endcan
-
-        <!-- Rentals Dropdown -->
-        <div class="ms-3 relative">
-            <x-dropdown align="right" width="48">
-                <x-slot name="trigger">
-                    <button class="pt-2 pb-3 space-y-3 pl-1 text-gray-600 hover:text-gray-700">
-                        {{__('Rentals')}}
-                    </button>
-                </x-slot>
-
-                <x-slot name="content">
-                    @can('view rentals')
-                        <x-dropdown-link href="{{ route('rental.index') }}">
-                            {{ __('Rental Block') }}
-                        </x-dropdown-link>
-                    @endcan
-                    <div class="border-t border-gray-200"></div>
-                    @can('view estate')
-                        <x-dropdown-link href="{{ route('rental.estate') }}">
-                            {{ __('Rental Estate') }}
-                        </x-dropdown-link>
-                        <div class="border-t border-gray-200"></div>
-                        <x-dropdown-link href="{{ route('estate.index') }}">
-                            {{ __('Estate Details') }}
-                        </x-dropdown-link>
-                    @endcan
-                    <div class="border-t border-gray-200"></div>
-                    @can('view unit')
-                        <x-dropdown-link href="{{ route('unit.index') }}">
-                            {{ __('Estate Unit') }}
-                        </x-dropdown-link>
-                    @endcan
-                    <div class="border-t border-gray-200"></div>
-                </x-slot>
-            </x-dropdown>
-        </div>
-
-        <!-- Locations Dropdown -->
-        @role('Admin')
-            <div class="ms-3 relative">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="pt-2 pb-3 space-y-3 pl-1 text-gray-600 hover:text-gray-700">
-                            {{__('Locations')}}
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link href="{{ route('duration.index') }}">
-                            {{ __('Durations') }}
-                        </x-dropdown-link>
-                        <div class="border-t border-gray-200"></div>
-                        <x-dropdown-link href="{{ route('country.index') }}">
-                            {{ __('Districts') }}
-                        </x-dropdown-link>
-                        <div class="border-t border-gray-200"></div>
-                        <x-dropdown-link href="{{ route('county.index') }}">
-                            {{ __('Counties') }}
-                        </x-dropdown-link>
-                        <div class="border-t border-gray-200"></div>
-                        <x-dropdown-link href="{{ route('subcounty.index') }}">
-                            {{ __('Sub-Counties') }}
-                        </x-dropdown-link>
-                        <div class="border-t border-gray-200"></div>
-                        <x-dropdown-link href="{{ route('parish.index') }}">
-                            {{ __('Parishes') }}
-                        </x-dropdown-link>
-                        <div class="border-t border-gray-200"></div>
-                        <x-dropdown-link href="{{ route('village.index') }}">
+                        <x-nav-link href="{{ route('village.index') }}" :active="request()->routeIs('village.index')">
                             {{ __('Villages') }}
-                        </x-dropdown-link>
-                        <div class="border-t border-gray-200"></div>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-        @endrole
-
-        @can('view user')
-            <div class="ms-3 relative">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="pt-2 pb-3 space-y-3 pl-1 text-gray-600 hover:text-gray-700">
-                            {{__('Income')}}
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link href="{{ route('income.index') }}">
-                            {{ __('Estate Ad') }}
-                        </x-dropdown-link>
-                        <div class="border-t border-gray-200"></div>
-                        <x-dropdown-link href="{{ route('payment.index') }}">
-                            {{ __('Unit Subscription') }}
-                        </x-dropdown-link>
-                    </x-slot>
-                </x-dropdown>
-            </div>
-        @endcan
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="flex items-center px-4">
-                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                    <div class="shrink-0 me-3">
-                        <img class="h-10 w-10 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                        </x-nav-link>
                     </div>
-                @endif
-
-                <div>
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
+                @endrole
             </div>
-
-            <div class="mt-3 space-y-1">
-                <!-- Account Management -->
-                <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                    <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
-                        {{ __('API Tokens') }}
-                    </x-responsive-nav-link>
-                @endif
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}" x-data>
-                    @csrf
-
-                    <x-responsive-nav-link href="{{ route('logout') }}"
-                                   @click.prevent="$root.submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-
-                <!-- Team Management -->
-                @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                    <div class="border-t border-gray-200"></div>
-
-                    <div class="block px-4 py-2 text-xs text-gray-400">
-                        {{ __('Manage Team') }}
-                    </div>
-
-                    <!-- Team Settings -->
-                    <x-responsive-nav-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}" :active="request()->routeIs('teams.show')">
-                        {{ __('Team Settings') }}
-                    </x-responsive-nav-link>
-
-                    @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
-                        <x-responsive-nav-link href="{{ route('teams.create') }}" :active="request()->routeIs('teams.create')">
-                            {{ __('Create New Team') }}
-                        </x-responsive-nav-link>
-                    @endcan
-
-                    <!-- Team Switcher -->
-                    @if (Auth::user()->allTeams()->count() > 1)
-                        <div class="border-t border-gray-200"></div>
-
-                        <div class="block px-4 py-2 text-xs text-gray-400">
-                            {{ __('Switch Teams') }}
-                        </div>
-
-                        @foreach (Auth::user()->allTeams() as $team)
-                            <x-switchable-team :team="$team" component="responsive-nav-link" />
-                        @endforeach
-                    @endif
-                @endif
-            </div>
-        </div>
-    </div>
+        </div>  
+    </div>       
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const dropdownContainer = document.querySelector('.inline-flex.relative');
+        const url = window.location.href;
+
+        if (url.includes('/user') || url.includes('/role-permissions')) {
+            dropdownContainer.querySelector('button').click(); 
+        }
+    });
+
+</script>

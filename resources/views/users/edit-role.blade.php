@@ -65,14 +65,14 @@
 
     function submitFormEdit() {
         const permissions = [];
-        const checkboxes = document.querySelectorAll('.permission-checkbox');
+        const checkboxes = document.querySelectorAll('.permission-checkbox2');
         checkboxes.forEach((checkbox) => {
             if (checkbox.checked) {
                 permissions.push(checkbox.value);
             }
         });
         const role = event.target.querySelector('#role').value;
-        // console.log(permissions);
+        console.log(permissions);
         
         if (role !== null) {
             $.ajaxSetup({
@@ -93,7 +93,7 @@
                         showNotification(response.success, response.message);
                         setTimeout(function() {
                             window.location.reload();
-                        }, 4000);
+                        }, 3000);
                     } else {
                         showNotification(response.success, response.message);
                     }

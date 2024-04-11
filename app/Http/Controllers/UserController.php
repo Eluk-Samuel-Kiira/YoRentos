@@ -71,6 +71,10 @@ class UserController extends Controller
         $roleName = $request->role;
         $permissions = $request->permissions;
 
+        if (empty($roleName) || empty($permissions)) {
+            return response()->json(['success' => false, 'message' => 'Role name or permissions are empty']);
+        }
+
         $userRole = Role::where('name', $roleName)->whereNot('name','Admin')->first();
         if ($userRole) {
             $userRole->syncPermissions($permissions);
