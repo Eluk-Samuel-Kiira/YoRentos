@@ -31,7 +31,7 @@
             <div class="flex-1 overflow-x-auto md:w-5/6" :class="{ 'ml-60': open, 'ml-0': !open }">
                 <!-- Page Heading -->
                 @if (isset($header))
-                    <header class="bg-white shadow fixed w-full z-10 top-0">
+                    <header class="bg-white shadow">
                         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex">
                             <button @click="open = !open" class="bg-white border-2 rounded border-gray-400 text-gray-600 px-1 py-0.5 mr-2 hidden sm:inline-block">
                                 <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
