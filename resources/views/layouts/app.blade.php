@@ -25,7 +25,7 @@
     <body class="font-sans antialiased">
         <x-banner />
 
-        <div x-data="{ open: false }" class="flex">
+        <div x-data="{ open: false, openRes:false }" class="flex">
             @livewire('navigation-menu')
 
             <div class="flex-1 overflow-x-auto md:w-5/6" :class="{ 'ml-60': open, 'ml-0': !open }">
@@ -97,8 +97,21 @@
                                     </x-slot>
                                 </x-dropdown>
                             </div> 
+                            <button @click="openRes = !openRes" class="bg-white border-2 rounded border-gray-400 text-gray-600 px-1 py-0.5 md:hidden">
+                                <svg x-show="!openRes" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                                </svg>
+                                <svg x-show="openRes" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+                                    <line x1="21" y1="10" x2="3" y2="10"></line>
+                                    <line x1="21" y1="6" x2="3" y2="6"></line>
+                                    <line x1="21" y1="14" x2="3" y2="14"></line>
+                                </svg>
+                            </button>
                         </div>
                     </header>
+                    @include('layouts.responsive')
                 @endif
 
                 <!-- Main Content -->
