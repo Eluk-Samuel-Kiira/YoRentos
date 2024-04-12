@@ -58,7 +58,7 @@ Route::middleware([
 
     Route::get('/users-permissions', [UserController::class, 'userPermissions'])->name('user.permissions');
     Route::post('/role', [UserController::class, 'createRolesAndPermissions'])->name('create.role');
-    Route::post('/role-permission', [UserController::class, 'editRolePermission'])->name('edit.role');
+    Route::post('/role-permission-edit', [UserController::class, 'editRolePermission'])->name('edit.role');
     Route::post('/role-change', [UserController::class, 'changeRole'])->name('change.role');
     Route::get('/change-status/{id}', [UserController::class, 'changeStatus'])->name('change-status'); 
     Route::get('/delete-role/{role_id}', [UserController::class, 'deleteRole'])->name('delete-role');
