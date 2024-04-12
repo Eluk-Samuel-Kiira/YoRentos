@@ -115,7 +115,7 @@
                 @endif
 
                 <!-- Main Content -->
-                <main class="pt-8">
+                <main>
                     {{ $slot }}
                 </main>
             </div>
