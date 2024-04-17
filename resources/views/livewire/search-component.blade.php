@@ -8,6 +8,15 @@
                     </h2>
                 </div>
                 <div class="form-row">
+                    <!-- Rental types -->
+                    <div class="col-md-2">
+                        <select class="form-control" wire:model.lazy="selectedRental">
+                            <option value="">Select Rental</option>
+                            @foreach ($rentals as $rental)
+                                <option value="{{ $rental->id }}">{{ $rental->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <!-- countries -->
                     <div class="col-md-2">
                         <select class="form-control" wire:model.lazy="selectedCountry">
@@ -62,15 +71,6 @@
                             @endforeach
                         </select>
                     </div>
-                    <!-- Rental types -->
-                    <div class="col-md-2">
-                        <select class="form-control" wire:model.lazy="selectedRental">
-                            <option value="">Select Rental</option>
-                            @foreach ($rentals as $rental)
-                                <option value="{{ $rental->id }}">{{ $rental->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
                 </div>
             </form>
         </div>
@@ -87,8 +87,8 @@
         </div>
         <div class="container-fluid">
             <div class="sale_container">
-                @if($selected_rental && $select_estates)
-                    @forelse($select_estates as $estate)
+                @if($selected_rental && $selected_estates->isNotEmpty())
+                    @forelse($selected_estates as $estate)
                         <div class="box">
                             <div class="img-box">
                                 <div class="carousel">
@@ -141,8 +141,18 @@
                             </div>
                         </div>
                     @empty
+                        <div class="container-header">
+                            <h2 class="rental_heading">
+                                {{ ('No Estate Found') }}
+                            </h2>
+                        </div>
                     @endforelse
                 @else
+                    <div class="container-header">
+                        <h2 class="rental_heading">
+                            {{ ('No Rental or Estate Found') }}
+                        </h2>
+                    </div>
                 @endif
             </div>
         </div>
